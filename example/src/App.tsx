@@ -164,11 +164,29 @@ function ComponentShowcase() {
               <Badge content="5" color="danger" placement="top-right">
                 <Avatar name="John Doe" size="lg" color="primary" />
               </Badge>
-              <Badge showDot color="success" placement="bottom-right">
+              <Badge isDot color="success" placement="bottom-right">
                 <Avatar name="Jane Smith" size="lg" color="secondary" />
               </Badge>
-              <Avatar name="Bob Wilson" size="lg" color="warning" />
-              <Avatar name="Alice Brown" size="lg" color="danger" isBordered />
+              <Badge content="99+" color="primary" variant="flat">
+                <Avatar name="Bob Wilson" size="lg" color="warning" />
+              </Badge>
+              <Badge content="NEW" color="secondary" shape="rectangle">
+                <Avatar name="Alice Brown" size="lg" color="danger" />
+              </Badge>
+            </View>
+            <View style={[styles.avatarRow, { marginTop: 16 }]}>
+              <Badge content="1" variant="solid" color="danger">
+                <Avatar name="Solid" size="lg" />
+              </Badge>
+              <Badge content="2" variant="flat" color="primary">
+                <Avatar name="Flat" size="lg" />
+              </Badge>
+              <Badge content="3" variant="faded" color="success">
+                <Avatar name="Faded" size="lg" />
+              </Badge>
+              <Badge content="4" variant="shadow" color="warning">
+                <Avatar name="Shadow" size="lg" />
+              </Badge>
             </View>
           </CardBody>
         </Card>
