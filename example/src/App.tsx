@@ -14,6 +14,7 @@ import {
   Switch,
   Accordion,
   AccordionItem,
+  Alert,
   useTheme,
 } from 'react-native-heroui';
 import Constants from 'expo-constants';
@@ -460,6 +461,49 @@ function ComponentShowcase() {
                 </Text>
               </AccordionItem>
             </Accordion>
+          </CardBody>
+        </Card>
+
+        {/* Alerts */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Alerts
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ gap: 12 }}>
+              <Alert
+                title="Success"
+                description="Your changes have been saved successfully."
+                color="success"
+                isClosable
+              />
+              <Alert
+                title="Warning"
+                description="Your storage is almost full."
+                color="warning"
+              />
+              <Alert
+                title="Info"
+                description="New features are now available!"
+                color="primary"
+                endContent={
+                  <Button size="sm" variant="ghost" colorScheme="primary">
+                    View
+                  </Button>
+                }
+              />
+              <Alert
+                title="Error"
+                description="Unable to connect to the server."
+                color="danger"
+                variant="bordered"
+                isClosable
+              />
+            </View>
           </CardBody>
         </Card>
 

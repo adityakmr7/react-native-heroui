@@ -36,6 +36,13 @@ export {
   type SelectionMode,
   type IndicatorProps,
 } from './components/Accordion/Accordion';
+export {
+  Alert,
+  type AlertProps,
+  type AlertColor,
+  type AlertVariant,
+  type AlertRadius,
+} from './components/Alert/Alert';
 
 // Providers
 export {

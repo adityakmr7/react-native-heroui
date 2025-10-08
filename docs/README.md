@@ -5,6 +5,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 ## 📦 Components
 
 - [Accordion](./components/accordion.html) - Expandable content panels
+- [Alert](./components/alert.html) - Feedback and notifications
 - [Button](./components/button.html) - Versatile button component
 - [Input](./components/input.html) - Text input with validation
 - [Card](./components/card.html) - Container component
