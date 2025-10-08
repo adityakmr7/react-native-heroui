@@ -11,6 +11,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Card](./components/card.html) - Container component
 - [Avatar](./components/avatar.html) - User profile images
 - [Badge](./components/badge.html) - Status indicators
+- [Checkbox](./components/checkbox.html) - Multi-selection control
 - [Chip](./components/chip.html) - Tag and category chips
 - [Switch](./components/switch.html) - Toggle switches
 

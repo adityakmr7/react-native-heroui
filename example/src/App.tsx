@@ -10,6 +10,7 @@ import {
   CardFooter,
   Avatar,
   Badge,
+  Checkbox,
   Chip,
   Switch,
   Accordion,
@@ -23,6 +24,12 @@ function ComponentShowcase() {
   const { theme, themeMode, toggleTheme } = useTheme();
   const [email, setEmail] = React.useState('');
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+  const [agreedToTerms, setAgreedToTerms] = React.useState(false);
+  const [tasks, setTasks] = React.useState([
+    { id: 1, text: 'Review documentation', done: false },
+    { id: 2, text: 'Test components', done: true },
+    { id: 3, text: 'Deploy to production', done: false },
+  ]);
 
   return (
     <ScrollView
@@ -169,6 +176,64 @@ function ComponentShowcase() {
               </Badge>
               <Avatar name="Bob Wilson" size="lg" color="warning" />
               <Avatar name="Alice Brown" size="lg" color="danger" isBordered />
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* Checkboxes */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Checkboxes
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ gap: 12 }}>
+              <Checkbox
+                radius="sm"
+                isSelected={agreedToTerms}
+                onValueChange={setAgreedToTerms}
+                color="primary"
+              >
+                I agree to the terms and conditions
+              </Checkbox>
+
+              {/* Todo list with line-through */}
+              {tasks.map((task) => (
+                <Checkbox
+                  key={task.id}
+                  isSelected={task.done}
+                  onValueChange={() =>
+                    setTasks(
+                      tasks.map((t) =>
+                        t.id === task.id ? { ...t, done: !t.done } : t
+                      )
+                    )
+                  }
+                  lineThrough
+                  color="success"
+                >
+                  {task.text}
+                </Checkbox>
+              ))}
+
+              {/* Different colors and states */}
+              <View style={styles.chipContainer}>
+                <Checkbox defaultSelected color="primary" size="sm">
+                  Primary
+                </Checkbox>
+                <Checkbox defaultSelected color="secondary" size="sm">
+                  Secondary
+                </Checkbox>
+                <Checkbox isIndeterminate color="warning" size="sm">
+                  Partial
+                </Checkbox>
+                <Checkbox isDisabled size="sm">
+                  Disabled
+                </Checkbox>
+              </View>
             </View>
           </CardBody>
         </Card>
