@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import {
   HeroUIProvider,
+  ToastProvider,
+  toast,
   Button,
   Input,
   Card,
@@ -590,6 +592,76 @@ function ComponentShowcase() {
           </CardBody>
         </Card>
 
+        {/* Toast Examples */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Toasts
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={styles.buttonGrid}>
+              <Button
+                size="sm"
+                colorScheme="success"
+                onPress={() => toast.success('Operation successful!')}
+              >
+                Success
+              </Button>
+              <Button
+                size="sm"
+                colorScheme="danger"
+                onPress={() => toast.error('Error occurred!')}
+              >
+                Error
+              </Button>
+              <Button
+                size="sm"
+                colorScheme="warning"
+                onPress={() => toast.warning('Warning message!')}
+              >
+                Warning
+              </Button>
+              <Button
+                size="sm"
+                colorScheme="primary"
+                onPress={() => toast.info('Information')}
+              >
+                Info
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                colorScheme="primary"
+                onPress={() =>
+                  toast.success({
+                    title: 'With Title',
+                    description: 'This toast has both title and description',
+                  })
+                }
+              >
+                Detailed
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                colorScheme="secondary"
+                onPress={() =>
+                  toast.show({
+                    description: 'Auto-dismiss in 5s',
+                    timeout: 5000,
+                    shouldShowTimeoutProgress: true,
+                  })
+                }
+              >
+                Progress Bar
+              </Button>
+            </View>
+          </CardBody>
+        </Card>
+
         <View style={{ height: 40 }} />
       </View>
     </ScrollView>
@@ -599,7 +671,9 @@ function ComponentShowcase() {
 function App() {
   return (
     <HeroUIProvider initialTheme="light">
-      <ComponentShowcase />
+      <ToastProvider placement="bottom-right" maxVisibleToasts={3}>
+        <ComponentShowcase />
+      </ToastProvider>
     </HeroUIProvider>
   );
 }
