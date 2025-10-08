@@ -43,6 +43,17 @@ export {
   type AlertVariant,
   type AlertRadius,
 } from './components/Alert/Alert';
+export {
+  Calendar,
+  dateToCalendarDate,
+  calendarDateToDate,
+  getToday,
+  type CalendarProps,
+  type CalendarDate,
+  type WeekDay,
+  type PageBehavior,
+  type WeekdayStyle,
+} from './components/Calendar/Calendar';
 
 // Providers
 export {

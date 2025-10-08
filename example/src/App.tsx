@@ -15,6 +15,8 @@ import {
   Accordion,
   AccordionItem,
   Alert,
+  Calendar,
+  getToday,
   useTheme,
 } from 'react-native-heroui';
 import Constants from 'expo-constants';
@@ -23,6 +25,7 @@ function ComponentShowcase() {
   const { theme, themeMode, toggleTheme } = useTheme();
   const [email, setEmail] = React.useState('');
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+  const [selectedDate, setSelectedDate] = React.useState(getToday());
 
   return (
     <ScrollView
@@ -504,6 +507,63 @@ function ComponentShowcase() {
                 isClosable
               />
             </View>
+          </CardBody>
+        </Card>
+
+        {/* Calendar */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Calendar
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Calendar
+              value={selectedDate}
+              onChange={setSelectedDate}
+              showShadow
+              topContent={
+                <View style={styles.buttonGrid}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    colorScheme="primary"
+                    onPress={() => setSelectedDate(getToday())}
+                  >
+                    Today
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    colorScheme="secondary"
+                    onPress={() =>
+                      setSelectedDate({
+                        ...getToday(),
+                        day: getToday().day + 7,
+                      })
+                    }
+                  >
+                    Next Week
+                  </Button>
+                </View>
+              }
+              bottomContent={
+                selectedDate && (
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 12,
+                      color: theme.colors['default-600'],
+                    }}
+                  >
+                    Selected: {selectedDate.month}/{selectedDate.day}/
+                    {selectedDate.year}
+                  </Text>
+                )
+              }
+            />
           </CardBody>
         </Card>
 

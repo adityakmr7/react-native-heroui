@@ -7,6 +7,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Accordion](./components/accordion.html) - Expandable content panels
 - [Alert](./components/alert.html) - Feedback and notifications
 - [Button](./components/button.html) - Versatile button component
+- [Calendar](./components/calendar.html) - Date picker with validation
 - [Input](./components/input.html) - Text input with validation
 - [Card](./components/card.html) - Container component
 - [Avatar](./components/avatar.html) - User profile images
