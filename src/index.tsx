@@ -41,6 +41,13 @@ export {
   type DividerOrientation,
 } from './components/Divider/Divider';
 export {
+  Spinner,
+  type SpinnerProps,
+  type SpinnerColor,
+  type SpinnerSize,
+  type SpinnerVariant,
+} from './components/Spinner/Spinner';
+export {
   Checkbox,
   type CheckboxProps,
   type CheckboxColor,

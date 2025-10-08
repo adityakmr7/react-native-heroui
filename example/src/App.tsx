@@ -15,6 +15,7 @@ import {
   Checkbox,
   Chip,
   Divider,
+  Spinner,
   Switch,
   Accordion,
   AccordionItem,
@@ -33,6 +34,7 @@ function ComponentShowcase() {
     { id: 2, text: 'Test components', done: true },
     { id: 3, text: 'Deploy to production', done: false },
   ]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   return (
     <ScrollView
@@ -326,6 +328,51 @@ function ComponentShowcase() {
                 Email Marketing
               </Text>
               <Switch defaultValue={false} color="primary" />
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* Spinners */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Spinners - Variants
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={styles.chipContainer}>
+              <Spinner variant="default" color="primary" label="Default" />
+              <Spinner variant="simple" color="success" label="Simple" />
+              <Spinner variant="gradient" color="secondary" label="Gradient" />
+            </View>
+            <Divider style={{ marginVertical: 12 }} />
+            <View style={styles.chipContainer}>
+              <Spinner variant="wave" color="warning" label="Wave" />
+              <Spinner variant="dots" color="danger" label="Dots" />
+              <Spinner variant="spinner" color="primary" label="Spinner" />
+            </View>
+            <Divider style={{ marginVertical: 16 }} />
+            <View style={{ alignItems: 'center' }}>
+              {isLoading ? (
+                <Spinner
+                  size="lg"
+                  color="primary"
+                  variant="gradient"
+                  label="Loading data..."
+                />
+              ) : (
+                <Button
+                  onPress={() => {
+                    setIsLoading(true);
+                    setTimeout(() => setIsLoading(false), 3000);
+                  }}
+                  colorScheme="primary"
+                >
+                  Simulate Loading
+                </Button>
+              )}
             </View>
           </CardBody>
         </Card>
