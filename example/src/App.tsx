@@ -11,6 +11,7 @@ import {
   Avatar,
   Badge,
   Chip,
+  Divider,
   Switch,
   Accordion,
   AccordionItem,
@@ -244,15 +245,16 @@ function ComponentShowcase() {
           </CardBody>
         </Card>
 
-        {/* Card Examples */}
+        {/* Card Examples with Dividers */}
         <Card variant="elevated" style={styles.section}>
           <CardHeader>
             <Text
               style={[styles.sectionTitle, { color: theme.colors.foreground }]}
             >
-              Interactive Card
+              Interactive Card with Dividers
             </Text>
           </CardHeader>
+          <Divider />
           <CardBody>
             <Text
               style={[styles.bodyText, { color: theme.colors['default-600'] }]}
@@ -260,12 +262,20 @@ function ComponentShowcase() {
               This is a card with header, body, and footer sections. Cards can
               be elevated, flat, or bordered.
             </Text>
+            <Divider style={{ marginVertical: 12 }} />
+            <Text
+              style={[styles.bodyText, { color: theme.colors['default-500'] }]}
+            >
+              Dividers help separate content sections clearly.
+            </Text>
           </CardBody>
+          <Divider />
           <CardFooter>
             <View style={styles.cardFooter}>
               <Button variant="ghost" colorScheme="danger" size="sm">
                 Cancel
               </Button>
+              <Divider orientation="vertical" style={{ height: 32 }} />
               <Button variant="solid" colorScheme="primary" size="sm">
                 Confirm
               </Button>

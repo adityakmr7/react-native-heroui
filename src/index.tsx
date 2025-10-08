@@ -28,6 +28,11 @@ export { Badge, type BadgeProps } from './components/Badge/Badge';
 export { Chip, type ChipProps } from './components/Chip/Chip';
 export { Switch, type SwitchProps } from './components/Switch/Switch';
 export {
+  Divider,
+  type DividerProps,
+  type DividerOrientation,
+} from './components/Divider/Divider';
+export {
   Accordion,
   AccordionItem,
   type AccordionProps,
