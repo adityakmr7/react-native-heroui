@@ -17,6 +17,7 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Skeleton,
   Spinner,
   Switch,
   Accordion,
@@ -38,6 +39,19 @@ function ComponentShowcase() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedFramework, setSelectedFramework] = React.useState('react');
   const [selectedPlan, setSelectedPlan] = React.useState('free');
+  const [profileLoaded, setProfileLoaded] = React.useState(false);
+  const [contentLoaded, setContentLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => setContentLoaded(true), 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const reloadProfile = () => {
+    setProfileLoaded(false);
+    setTimeout(() => setProfileLoaded(true), 2000);
+  };
 
   return (
     <ScrollView
@@ -483,6 +497,132 @@ function ComponentShowcase() {
               <Radio value="1">Option 1</Radio>
               <Radio value="2">Option 2</Radio>
             </RadioGroup>
+          </CardBody>
+        </Card>
+
+        {/* Skeletons - Standalone */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Skeletons - Standalone
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Skeleton style={{ width: '100%', height: 20, marginBottom: 8 }} />
+            <Skeleton style={{ width: '80%', height: 20, marginBottom: 8 }} />
+            <Skeleton style={{ width: '60%', height: 20 }} />
+          </CardBody>
+        </Card>
+
+        {/* Skeletons - Loading Card */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Skeletons - Loading Card
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
+              <Skeleton style={{ width: 60, height: 60, borderRadius: 30 }} />
+              <View style={{ flex: 1, gap: 8 }}>
+                <Skeleton style={{ width: '80%', height: 16 }} />
+                <Skeleton style={{ width: '60%', height: 16 }} />
+              </View>
+            </View>
+            <Skeleton style={{ width: '100%', height: 100, borderRadius: 8 }} />
+          </CardBody>
+        </Card>
+
+        {/* Skeletons - With isLoaded */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Skeletons - With isLoaded
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
+              <Skeleton isLoaded={contentLoaded}>
+                <Avatar
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                  size="lg"
+                />
+              </Skeleton>
+              <View style={{ flex: 1, gap: 4 }}>
+                <Skeleton isLoaded={contentLoaded}>
+                  <Text
+                    style={[
+                      { fontSize: 18, fontWeight: 'bold' },
+                      { color: theme.colors.foreground },
+                    ]}
+                  >
+                    Jane Smith
+                  </Text>
+                </Skeleton>
+                <Skeleton isLoaded={contentLoaded}>
+                  <Text style={{ color: theme.colors['default-500'] }}>
+                    Product Designer
+                  </Text>
+                </Skeleton>
+              </View>
+            </View>
+            <Skeleton isLoaded={contentLoaded}>
+              <Text style={{ color: theme.colors.foreground }}>
+                Creating delightful user experiences with attention to detail.
+              </Text>
+            </Skeleton>
+          </CardBody>
+        </Card>
+
+        {/* Skeletons - Interactive */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Skeletons - Interactive
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
+              <Skeleton isLoaded={profileLoaded}>
+                <Avatar
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                  size="lg"
+                />
+              </Skeleton>
+              <View style={{ flex: 1, gap: 4 }}>
+                <Skeleton isLoaded={profileLoaded}>
+                  <Text
+                    style={[
+                      { fontSize: 18, fontWeight: 'bold' },
+                      { color: theme.colors.foreground },
+                    ]}
+                  >
+                    Alex Johnson
+                  </Text>
+                </Skeleton>
+                <Skeleton isLoaded={profileLoaded}>
+                  <Text style={{ color: theme.colors['default-500'] }}>
+                    Full Stack Developer
+                  </Text>
+                </Skeleton>
+              </View>
+            </View>
+            <Skeleton isLoaded={profileLoaded} style={{ marginBottom: 16 }}>
+              <Text style={{ color: theme.colors.foreground }}>
+                Building scalable applications with modern technologies.
+              </Text>
+            </Skeleton>
+            <Button onPress={reloadProfile} colorScheme="primary" size="sm">
+              {profileLoaded ? 'Reload Profile' : 'Loading...'}
+            </Button>
           </CardBody>
         </Card>
 

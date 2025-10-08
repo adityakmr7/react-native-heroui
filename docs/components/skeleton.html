@@ -1,0 +1,394 @@
+<h1>Skeleton</h1>
+<p>Skeleton is a placeholder to show a loading state and the expected shape of a component.</p>
+<h2>Installation</h2>
+<pre><code class="language-bash">npm install react-native-heroui
+</code></pre>
+<h2>Import</h2>
+<pre><code class="language-tsx">import { Skeleton } from &#39;react-native-heroui&#39;;
+</code></pre>
+<h2>Usage</h2>
+<h3>Basic (Shape of Children)</h3>
+<p>Skeleton automatically takes the shape of its children component.</p>
+<pre><code class="language-tsx">import { Skeleton, Card, CardBody, Avatar } from &#39;react-native-heroui&#39;;
+
+function App() {
+  return (
+    &lt;Card&gt;
+      &lt;CardBody&gt;
+        &lt;Skeleton&gt;
+          &lt;Avatar size=&quot;lg&quot; /&gt;
+        &lt;/Skeleton&gt;
+      &lt;/CardBody&gt;
+    &lt;/Card&gt;
+  );
+}
+</code></pre>
+<h3>Standalone</h3>
+<p>Use Skeleton as a standalone component without children for simple loading bars.</p>
+<pre><code class="language-tsx">&lt;Skeleton style={{ width: 200, height: 20, borderRadius: 8 }} /&gt;
+&lt;Skeleton style={{ width: 150, height: 20, borderRadius: 8, marginTop: 8 }} /&gt;
+&lt;Skeleton style={{ width: 180, height: 20, borderRadius: 8, marginTop: 8 }} /&gt;
+</code></pre>
+<h3>Loaded State</h3>
+<p>Use the <code>isLoaded</code> prop to stop the skeleton animation and show the actual content.</p>
+<pre><code class="language-tsx">import { useState, useEffect } from &#39;react&#39;;
+import { Skeleton, Card, CardBody, Text } from &#39;react-native-heroui&#39;;
+
+function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() =&gt; {
+    setTimeout(() =&gt; setIsLoaded(true), 2000);
+  }, []);
+
+  return (
+    &lt;Card&gt;
+      &lt;CardBody&gt;
+        &lt;Skeleton isLoaded={isLoaded}&gt;
+          &lt;Text&gt;This content appears after loading!&lt;/Text&gt;
+        &lt;/Skeleton&gt;
+      &lt;/CardBody&gt;
+    &lt;/Card&gt;
+  );
+}
+</code></pre>
+<h3>Loading Cards</h3>
+<p>Create beautiful loading card skeletons.</p>
+<pre><code class="language-tsx">&lt;Card style={{ width: 300 }}&gt;
+  &lt;CardBody&gt;
+    &lt;View style={{ flexDirection: &#39;row&#39;, gap: 12, alignItems: &#39;center&#39; }}&gt;
+      &lt;Skeleton style={{ width: 60, height: 60, borderRadius: 30 }} /&gt;
+      &lt;View style={{ flex: 1, gap: 8 }}&gt;
+        &lt;Skeleton style={{ width: &#39;80%&#39;, height: 16, borderRadius: 4 }} /&gt;
+        &lt;Skeleton style={{ width: &#39;60%&#39;, height: 16, borderRadius: 4 }} /&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+    &lt;Skeleton style={{ width: &#39;100%&#39;, height: 80, marginTop: 16, borderRadius: 8 }} /&gt;
+  &lt;/CardBody&gt;
+&lt;/Card&gt;
+</code></pre>
+<h3>Loading Profile</h3>
+<pre><code class="language-tsx">&lt;View style={{ padding: 16 }}&gt;
+  {/* Avatar */}
+  &lt;Skeleton style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 16 }} /&gt;
+  
+  {/* Name */}
+  &lt;Skeleton style={{ width: 200, height: 24, borderRadius: 4, marginBottom: 8 }} /&gt;
+  
+  {/* Bio */}
+  &lt;Skeleton style={{ width: &#39;100%&#39;, height: 16, borderRadius: 4, marginBottom: 4 }} /&gt;
+  &lt;Skeleton style={{ width: &#39;90%&#39;, height: 16, borderRadius: 4, marginBottom: 4 }} /&gt;
+  &lt;Skeleton style={{ width: &#39;80%&#39;, height: 16, borderRadius: 4 }} /&gt;
+&lt;/View&gt;
+</code></pre>
+<h3>Disable Animation</h3>
+<p>Disable the shimmer animation if needed.</p>
+<pre><code class="language-tsx">&lt;Skeleton disableAnimation style={{ width: 200, height: 20 }} /&gt;
+</code></pre>
+<h3>With Controlled Loading</h3>
+<pre><code class="language-tsx">import React, { useState } from &#39;react&#39;;
+import {
+  View,
+  Button,
+  Skeleton,
+  Card,
+  CardBody,
+  Avatar,
+  Text,
+} from &#39;react-native-heroui&#39;;
+
+function ProfileCard() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleLoad = () =&gt; {
+    setIsLoaded(false);
+    setTimeout(() =&gt; setIsLoaded(true), 2000);
+  };
+
+  return (
+    &lt;View&gt;
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardBody&gt;
+          &lt;View style={{ flexDirection: &#39;row&#39;, gap: 12, alignItems: &#39;center&#39; }}&gt;
+            &lt;Skeleton isLoaded={isLoaded}&gt;
+              &lt;Avatar
+                src=&quot;https://i.pravatar.cc/150?u=a042581f4e29026024d&quot;
+                size=&quot;lg&quot;
+              /&gt;
+            &lt;/Skeleton&gt;
+            &lt;View style={{ flex: 1, gap: 4 }}&gt;
+              &lt;Skeleton isLoaded={isLoaded}&gt;
+                &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+                  John Doe
+                &lt;/Text&gt;
+              &lt;/Skeleton&gt;
+              &lt;Skeleton isLoaded={isLoaded}&gt;
+                &lt;Text style={{ color: &#39;#666&#39; }}&gt;Senior Developer&lt;/Text&gt;
+              &lt;/Skeleton&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+          &lt;Skeleton isLoaded={isLoaded} style={{ marginTop: 12 }}&gt;
+            &lt;Text&gt;
+              Passionate about creating beautiful and functional user interfaces.
+            &lt;/Text&gt;
+          &lt;/Skeleton&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      &lt;Button onPress={handleLoad} colorScheme=&quot;primary&quot;&gt;
+        {isLoaded ? &#39;Reload&#39; : &#39;Loading...&#39;}
+      &lt;/Button&gt;
+    &lt;/View&gt;
+  );
+}
+</code></pre>
+<h2>API</h2>
+<h3>Skeleton Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Content to wrap</td>
+</tr>
+<tr>
+<td><code>isLoaded</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether content is loaded</td>
+</tr>
+<tr>
+<td><code>disableAnimation</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Disable shimmer animation</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>StyleProp&lt;ViewStyle&gt;</code></td>
+<td>-</td>
+<td>Custom container style</td>
+</tr>
+<tr>
+<td><code>classNames</code></td>
+<td><code>SkeletonClassNames</code></td>
+<td>-</td>
+<td>Custom slot styles</td>
+</tr>
+</tbody></table>
+<h3>SkeletonClassNames</h3>
+<pre><code class="language-tsx">interface SkeletonClassNames {
+  base?: StyleProp&lt;ViewStyle&gt;;
+  content?: StyleProp&lt;ViewStyle&gt;;
+}
+</code></pre>
+<h2>Slots</h2>
+<ul>
+<li><strong>base</strong>: The base skeleton wrapper with shimmer animation</li>
+<li><strong>content</strong>: The wrapped content (visible only when <code>isLoaded</code> is <code>true</code>)</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>✅ Uses <code>accessibilityRole=&quot;progressbar&quot;</code> for screen readers</li>
+<li>✅ Includes <code>accessibilityLabel=&quot;Loading&quot;</code> for context</li>
+<li>✅ Updates <code>accessibilityState</code> based on loading state</li>
+<li>✅ Properly announces when content is loaded</li>
+</ul>
+<h2>Complete Example</h2>
+<pre><code class="language-tsx">import React, { useState, useEffect } from &#39;react&#39;;
+import { View, Text, ScrollView, StyleSheet } from &#39;react-native&#39;;
+import {
+  Skeleton,
+  Card,
+  CardBody,
+  CardHeader,
+  Avatar,
+  Button,
+  Divider,
+} from &#39;react-native-heroui&#39;;
+
+export default function SkeletonExample() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [profileLoaded, setProfileLoaded] = useState(false);
+
+  useEffect(() =&gt; {
+    // Simulate data loading
+    const timer = setTimeout(() =&gt; setIsLoaded(true), 2000);
+    return () =&gt; clearTimeout(timer);
+  }, []);
+
+  const reloadProfile = () =&gt; {
+    setProfileLoaded(false);
+    setTimeout(() =&gt; setProfileLoaded(true), 2000);
+  };
+
+  return (
+    &lt;ScrollView style={styles.container}&gt;
+      {/* Standalone Skeletons */}
+      &lt;Card style={styles.card}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={styles.title}&gt;Standalone Skeletons&lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;Skeleton style={{ width: &#39;100%&#39;, height: 20, marginBottom: 8 }} /&gt;
+          &lt;Skeleton style={{ width: &#39;80%&#39;, height: 20, marginBottom: 8 }} /&gt;
+          &lt;Skeleton style={{ width: &#39;60%&#39;, height: 20 }} /&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* Loading Card */}
+      &lt;Card style={styles.card}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={styles.title}&gt;Loading Card&lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;View style={{ flexDirection: &#39;row&#39;, gap: 12, marginBottom: 16 }}&gt;
+            &lt;Skeleton style={{ width: 60, height: 60, borderRadius: 30 }} /&gt;
+            &lt;View style={{ flex: 1, gap: 8 }}&gt;
+              &lt;Skeleton style={{ width: &#39;80%&#39;, height: 16 }} /&gt;
+              &lt;Skeleton style={{ width: &#39;60%&#39;, height: 16 }} /&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+          &lt;Skeleton style={{ width: &#39;100%&#39;, height: 100, borderRadius: 8 }} /&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* With isLoaded Toggle */}
+      &lt;Card style={styles.card}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={styles.title}&gt;With isLoaded Prop&lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;View style={{ flexDirection: &#39;row&#39;, gap: 12, marginBottom: 16 }}&gt;
+            &lt;Skeleton isLoaded={isLoaded}&gt;
+              &lt;Avatar
+                src=&quot;https://i.pravatar.cc/150?u=a042581f4e29026024d&quot;
+                size=&quot;lg&quot;
+              /&gt;
+            &lt;/Skeleton&gt;
+            &lt;View style={{ flex: 1, gap: 4 }}&gt;
+              &lt;Skeleton isLoaded={isLoaded}&gt;
+                &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+                  Jane Smith
+                &lt;/Text&gt;
+              &lt;/Skeleton&gt;
+              &lt;Skeleton isLoaded={isLoaded}&gt;
+                &lt;Text style={{ color: &#39;#666&#39; }}&gt;Product Designer&lt;/Text&gt;
+              &lt;/Skeleton&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+          &lt;Skeleton isLoaded={isLoaded}&gt;
+            &lt;Text&gt;
+              Creating delightful user experiences with attention to detail.
+            &lt;/Text&gt;
+          &lt;/Skeleton&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* Interactive Profile Loading */}
+      &lt;Card style={styles.card}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={styles.title}&gt;Interactive Loading&lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;View style={{ flexDirection: &#39;row&#39;, gap: 12, marginBottom: 16 }}&gt;
+            &lt;Skeleton isLoaded={profileLoaded}&gt;
+              &lt;Avatar
+                src=&quot;https://i.pravatar.cc/150?u=a042581f4e29026704d&quot;
+                size=&quot;lg&quot;
+              /&gt;
+            &lt;/Skeleton&gt;
+            &lt;View style={{ flex: 1, gap: 4 }}&gt;
+              &lt;Skeleton isLoaded={profileLoaded}&gt;
+                &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+                  Alex Johnson
+                &lt;/Text&gt;
+              &lt;/Skeleton&gt;
+              &lt;Skeleton isLoaded={profileLoaded}&gt;
+                &lt;Text style={{ color: &#39;#666&#39; }}&gt;Full Stack Developer&lt;/Text&gt;
+              &lt;/Skeleton&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+          &lt;Skeleton isLoaded={profileLoaded} style={{ marginBottom: 16 }}&gt;
+            &lt;Text&gt;
+              Building scalable applications with modern technologies.
+            &lt;/Text&gt;
+          &lt;/Skeleton&gt;
+          &lt;Button
+            onPress={reloadProfile}
+            colorScheme=&quot;primary&quot;
+            size=&quot;sm&quot;
+          &gt;
+            {profileLoaded ? &#39;Reload Profile&#39; : &#39;Loading...&#39;}
+          &lt;/Button&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* Without Animation */}
+      &lt;Card style={styles.card}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={styles.title}&gt;Without Animation&lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;Skeleton
+            disableAnimation
+            style={{ width: &#39;100%&#39;, height: 20, marginBottom: 8 }}
+          /&gt;
+          &lt;Skeleton
+            disableAnimation
+            style={{ width: &#39;70%&#39;, height: 20, marginBottom: 8 }}
+          /&gt;
+          &lt;Skeleton
+            disableAnimation
+            style={{ width: &#39;50%&#39;, height: 20 }}
+          /&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  card: {
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: &#39;bold&#39;,
+  },
+});
+</code></pre>
+<h2>Use Cases</h2>
+<ul>
+<li><strong>Content Loading</strong>: Show skeleton while fetching data from API</li>
+<li><strong>Image Loading</strong>: Display skeleton before images load</li>
+<li><strong>List Items</strong>: Show skeleton for list items during pagination</li>
+<li><strong>Profile Cards</strong>: Create realistic loading states for user profiles</li>
+<li><strong>Forms</strong>: Display skeleton while form validation is processing</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>Skeleton automatically takes the shape of its children</li>
+<li>Use standalone mode for simple rectangular skeletons</li>
+<li>The shimmer animation runs on the native thread for 60fps</li>
+<li>Combine multiple skeletons to create complex loading states</li>
+<li>Use <code>isLoaded</code> prop to smoothly transition from skeleton to content</li>
+</ul>
+<h2>Related Components</h2>
+<ul>
+<li><a href="./spinner.md">Spinner</a> - For centered loading indicators</li>
+<li><a href="./card.md">Card</a> - For container layouts</li>
+<li><a href="./avatar.md">Avatar</a> - For profile images</li>
+</ul>
+

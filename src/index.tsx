@@ -64,6 +64,7 @@ export {
   type RadioSize,
   type RadioOrientation,
 } from './components/Radio/Radio';
+export { Skeleton, type SkeletonProps } from './components/Skeleton/Skeleton';
 export {
   Accordion,
   AccordionItem,
