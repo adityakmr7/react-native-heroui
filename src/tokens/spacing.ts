@@ -2,7 +2,9 @@ export const SPACING = {
   // Unit-based spacing (4px base unit)
   'unit-0': 0,
   'unit-1': 4,
+  'unit-1.5': 6,
   'unit-2': 8,
+  'unit-2.5': 10,
   'unit-3': 12,
   'unit-3.5': 14,
   'unit-4': 16,
