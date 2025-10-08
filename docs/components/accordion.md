@@ -59,7 +59,7 @@ export default function App() {
     title="How to get started?"
     subtitle="Installation guide"
   >
-    <Text>Install the package and wrap your app with ThemeProvider.</Text>
+    <Text>Install the package and wrap your app with HeroUIProvider.</Text>
   </AccordionItem>
 </Accordion>
 ```
@@ -409,7 +409,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import {
   Accordion,
   AccordionItem,
-  ThemeProvider,
+  HeroUIProvider,
   useTheme,
   Button,
 } from 'react-native-heroui';
@@ -457,7 +457,7 @@ function AdvancedAccordionExample() {
           )}
         >
           <Text style={{ color: theme.colors['default-600'] }}>
-            Install the package and wrap your app with ThemeProvider.
+            Install the package and wrap your app with HeroUIProvider.
           </Text>
         </AccordionItem>
 
@@ -526,9 +526,9 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <HeroUIProvider>
       <AdvancedAccordionExample />
-    </ThemeProvider>
+    </HeroUIProvider>
   );
 }
 ```

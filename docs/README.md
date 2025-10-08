@@ -25,13 +25,13 @@ yarn add react-native-heroui
 ## 📖 Usage
 
 ```tsx
-import { ThemeProvider, Button } from 'react-native-heroui';
+import { HeroUIProvider, Button } from 'react-native-heroui';
 
 function App() {
   return (
-    <ThemeProvider>
+    <HeroUIProvider>
       <Button colorScheme="primary">Click Me</Button>
-    </ThemeProvider>
+    </HeroUIProvider>
   );
 }
 ```

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import {
-  ThemeProvider,
+  HeroUIProvider,
   Button,
   Input,
   Card,
@@ -515,9 +515,9 @@ function ComponentShowcase() {
 
 function App() {
   return (
-    <ThemeProvider initialTheme="light">
+    <HeroUIProvider initialTheme="light">
       <ComponentShowcase />
-    </ThemeProvider>
+    </HeroUIProvider>
   );
 }
 

@@ -14,12 +14,12 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined
 );
 
-interface ThemeProviderProps {
+export interface HeroUIProviderProps {
   children: ReactNode;
   initialTheme?: ThemeMode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export const HeroUIProvider: React.FC<HeroUIProviderProps> = ({
   children,
   initialTheme = 'light',
 }) => {
@@ -41,3 +41,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     </ThemeContext.Provider>
   );
 };
+
+// Backward compatibility alias
+export const ThemeProvider = HeroUIProvider;
+
+// Type alias for backward compatibility
+export type ThemeProviderProps = HeroUIProviderProps;

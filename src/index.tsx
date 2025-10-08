@@ -46,9 +46,12 @@ export {
 
 // Providers
 export {
-  ThemeProvider,
+  HeroUIProvider,
+  ThemeProvider, // Backward compatibility alias
   ThemeContext,
   type ThemeContextType,
+  type HeroUIProviderProps,
+  type ThemeProviderProps, // Backward compatibility alias
 } from './providers/ThemeProvider';
 
 // Hooks
