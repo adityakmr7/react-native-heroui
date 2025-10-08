@@ -12,6 +12,8 @@ import {
   Badge,
   Chip,
   Switch,
+  Accordion,
+  AccordionItem,
   useTheme,
 } from 'react-native-heroui';
 import Constants from 'expo-constants';
@@ -268,6 +270,197 @@ function ComponentShowcase() {
               </Button>
             </View>
           </CardFooter>
+        </Card>
+
+        {/* Accordion - Light Variant (Default) */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Accordion - Light Variant
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Accordion variant="light" defaultExpandedKeys={['1']}>
+              <AccordionItem
+                itemKey="1"
+                title="What is React Native HeroUI?"
+                subtitle="Learn about this library"
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  React Native HeroUI is a modern, beautiful UI component
+                  library for React Native applications, inspired by NextUI.
+                </Text>
+              </AccordionItem>
+              <AccordionItem
+                itemKey="2"
+                title="How to get started?"
+                subtitle="Installation guide"
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Install the package using npm or yarn and wrap your app with
+                  ThemeProvider to get started.
+                </Text>
+              </AccordionItem>
+              <AccordionItem
+                itemKey="3"
+                title="Key Features"
+                subtitle="What makes it special"
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Built-in dark mode, TypeScript support, customizable themes,
+                  and a wide range of beautiful components.
+                </Text>
+              </AccordionItem>
+            </Accordion>
+          </CardBody>
+        </Card>
+
+        {/* Accordion - Multiple Selection & Bordered Variant */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Accordion - Bordered & Multiple
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Accordion variant="bordered" selectionMode="multiple">
+              <AccordionItem itemKey="a1" title="Components">
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Button, Input, Card, Avatar, Badge, Chip, Switch, Accordion,
+                  and more!
+                </Text>
+              </AccordionItem>
+              <AccordionItem itemKey="a2" title="Hooks">
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  useTheme, useColorMode, useResponsive, useDisclosure for
+                  powerful functionality.
+                </Text>
+              </AccordionItem>
+              <AccordionItem itemKey="a3" title="Theming">
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Fully customizable theme system with light and dark mode
+                  support out of the box.
+                </Text>
+              </AccordionItem>
+            </Accordion>
+          </CardBody>
+        </Card>
+
+        {/* Accordion - Splitted Variant */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Accordion - Splitted Variant
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Accordion variant="splitted" isCompact>
+              <AccordionItem
+                itemKey="s1"
+                title="💡 Installation"
+                startContent={
+                  <View
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: theme.colors.primary,
+                    }}
+                  />
+                }
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  npm install react-native-heroui
+                </Text>
+              </AccordionItem>
+              <AccordionItem
+                itemKey="s2"
+                title="🎨 Customization"
+                startContent={
+                  <View
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: theme.colors.secondary,
+                    }}
+                  />
+                }
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Customize themes, colors, spacing, and more to match your
+                  brand.
+                </Text>
+              </AccordionItem>
+              <AccordionItem
+                itemKey="s3"
+                title="🚀 Performance"
+                startContent={
+                  <View
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: theme.colors.success,
+                    }}
+                  />
+                }
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Optimized for performance with minimal re-renders and smooth
+                  animations.
+                </Text>
+              </AccordionItem>
+            </Accordion>
+          </CardBody>
+        </Card>
+
+        {/* Accordion - Shadow Variant with Custom Indicator */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Accordion - Custom Indicator
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Accordion variant="shadow">
+              <AccordionItem
+                itemKey="c1"
+                title="Premium Features"
+                indicator={({ isOpen }) => (
+                  <Text style={{ fontSize: 16, color: theme.colors.primary }}>
+                    {isOpen ? '−' : '+'}
+                  </Text>
+                )}
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Get access to premium components, priority support, and
+                  advanced features.
+                </Text>
+              </AccordionItem>
+              <AccordionItem
+                itemKey="c2"
+                title="Documentation"
+                indicator={({ isOpen }) => (
+                  <Text style={{ fontSize: 16, color: theme.colors.primary }}>
+                    {isOpen ? '−' : '+'}
+                  </Text>
+                )}
+              >
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  Comprehensive documentation with examples and API references.
+                </Text>
+              </AccordionItem>
+            </Accordion>
+          </CardBody>
         </Card>
 
         <View style={{ height: 40 }} />

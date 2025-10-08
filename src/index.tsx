@@ -27,6 +27,15 @@ export { Avatar, type AvatarProps } from './components/Avatar/Avatar';
 export { Badge, type BadgeProps } from './components/Badge/Badge';
 export { Chip, type ChipProps } from './components/Chip/Chip';
 export { Switch, type SwitchProps } from './components/Switch/Switch';
+export {
+  Accordion,
+  AccordionItem,
+  type AccordionProps,
+  type AccordionItemProps,
+  type AccordionVariant,
+  type SelectionMode,
+  type IndicatorProps,
+} from './components/Accordion/Accordion';
 
 // Providers
 export {

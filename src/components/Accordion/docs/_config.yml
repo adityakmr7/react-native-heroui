@@ -1,0 +1,48 @@
+# GitHub Pages Configuration for Accordion Documentation
+
+# Theme
+theme: jekyll-theme-cayman
+title: "Accordion Component"
+description: "Beautiful, accessible accordion component for React Native HeroUI"
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Relative links
+relative_links:
+  enabled: true
+  collections: true
+
+# Include/Exclude
+include:
+  - README.md
+  - index.html
+
+exclude:
+  - node_modules
+  - package.json
+  - yarn.lock
+
+# GitHub metadata
+repository: yourusername/rn-heroui
+github:
+  is_project_page: true
+  
+# SEO
+author: Your Name
+twitter:
+  username: yourusername
+  card: summary
+  
+# Google Analytics (optional)
+# google_analytics: UA-XXXXXXXXX-X
+
