@@ -14,6 +14,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Checkbox](./components/checkbox.html) - Multi-selection control
 - [Chip](./components/chip.html) - Tag and category chips
 - [Divider](./components/divider.html) - Content separator
+- [Radio](./components/radio.html) - Single selection radio group
 - [Spinner](./components/spinner.html) - Loading indicator
 - [Switch](./components/switch.html) - Toggle switches
 - [Toast](./components/toast.html) - Temporary notifications

@@ -15,6 +15,8 @@ import {
   Checkbox,
   Chip,
   Divider,
+  Radio,
+  RadioGroup,
   Spinner,
   Switch,
   Accordion,
@@ -22,7 +24,6 @@ import {
   Alert,
   useTheme,
 } from 'react-native-heroui';
-import Constants from 'expo-constants';
 
 function ComponentShowcase() {
   const { theme, themeMode, toggleTheme } = useTheme();
@@ -35,6 +36,8 @@ function ComponentShowcase() {
     { id: 3, text: 'Deploy to production', done: false },
   ]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [selectedFramework, setSelectedFramework] = React.useState('react');
+  const [selectedPlan, setSelectedPlan] = React.useState('free');
 
   return (
     <ScrollView
@@ -374,6 +377,112 @@ function ComponentShowcase() {
                 </Button>
               )}
             </View>
+          </CardBody>
+        </Card>
+
+        {/* Radio Groups */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Radio Groups - Single Selection
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <RadioGroup
+              label="Select your favorite framework"
+              description="Choose the one you use most often"
+              value={selectedFramework}
+              onValueChange={setSelectedFramework}
+              style={{ marginBottom: 20 }}
+            >
+              <Radio value="react">React</Radio>
+              <Radio value="vue">Vue.js</Radio>
+              <Radio value="angular">Angular</Radio>
+              <Radio value="svelte">Svelte</Radio>
+            </RadioGroup>
+            <Text
+              style={[
+                styles.helperText,
+                { color: theme.colors['default-500'] },
+              ]}
+            >
+              Selected: {selectedFramework}
+            </Text>
+
+            <Divider style={{ marginVertical: 20 }} />
+
+            <RadioGroup
+              orientation="horizontal"
+              label="Size"
+              defaultValue="md"
+              color="secondary"
+              style={{ marginBottom: 20 }}
+            >
+              <Radio value="sm">Small</Radio>
+              <Radio value="md">Medium</Radio>
+              <Radio value="lg">Large</Radio>
+            </RadioGroup>
+
+            <Divider style={{ marginVertical: 20 }} />
+
+            <RadioGroup
+              label="Choose your plan"
+              value={selectedPlan}
+              onValueChange={setSelectedPlan}
+              color="success"
+            >
+              <Radio value="free" description="Best for personal projects">
+                Free
+              </Radio>
+              <Radio value="pro" description="For professional developers">
+                Pro ($10/month)
+              </Radio>
+              <Radio value="team" description="For teams and organizations">
+                Team ($50/month)
+              </Radio>
+            </RadioGroup>
+            <Text
+              style={[
+                styles.helperText,
+                { color: theme.colors['default-500'], marginTop: 12 },
+              ]}
+            >
+              Selected plan: {selectedPlan}
+            </Text>
+          </CardBody>
+        </Card>
+
+        {/* Radio Colors */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Radio Groups - Colors
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 16 }}>
+            <RadioGroup color="primary" defaultValue="1" label="Primary">
+              <Radio value="1">Option 1</Radio>
+              <Radio value="2">Option 2</Radio>
+            </RadioGroup>
+
+            <RadioGroup color="success" defaultValue="1" label="Success">
+              <Radio value="1">Option 1</Radio>
+              <Radio value="2">Option 2</Radio>
+            </RadioGroup>
+
+            <RadioGroup color="warning" defaultValue="1" label="Warning">
+              <Radio value="1">Option 1</Radio>
+              <Radio value="2">Option 2</Radio>
+            </RadioGroup>
+
+            <RadioGroup color="danger" defaultValue="1" label="Danger">
+              <Radio value="1">Option 1</Radio>
+              <Radio value="2">Option 2</Radio>
+            </RadioGroup>
           </CardBody>
         </Card>
 

@@ -1,0 +1,545 @@
+<h1>Radio &amp; Radio Group</h1>
+<p>Radio Group allows users to select a single option from a list of mutually exclusive options.</p>
+<h2>Installation</h2>
+<pre><code class="language-bash">npm install react-native-heroui
+</code></pre>
+<h2>Import</h2>
+<pre><code class="language-tsx">import { Radio, RadioGroup } from &#39;react-native-heroui&#39;;
+</code></pre>
+<h2>Usage</h2>
+<h3>Basic</h3>
+<pre><code class="language-tsx">import { RadioGroup, Radio } from &#39;react-native-heroui&#39;;
+
+function App() {
+  return (
+    &lt;RadioGroup defaultValue=&quot;option1&quot;&gt;
+      &lt;Radio value=&quot;option1&quot;&gt;Option 1&lt;/Radio&gt;
+      &lt;Radio value=&quot;option2&quot;&gt;Option 2&lt;/Radio&gt;
+      &lt;Radio value=&quot;option3&quot;&gt;Option 3&lt;/Radio&gt;
+    &lt;/RadioGroup&gt;
+  );
+}
+</code></pre>
+<h3>With Label &amp; Description</h3>
+<pre><code class="language-tsx">&lt;RadioGroup 
+  label=&quot;Select your favorite framework&quot;
+  description=&quot;Choose the one you use most often&quot;
+  defaultValue=&quot;react&quot;
+&gt;
+  &lt;Radio value=&quot;react&quot;&gt;React&lt;/Radio&gt;
+  &lt;Radio value=&quot;vue&quot;&gt;Vue.js&lt;/Radio&gt;
+  &lt;Radio value=&quot;angular&quot;&gt;Angular&lt;/Radio&gt;
+  &lt;Radio value=&quot;svelte&quot;&gt;Svelte&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>Horizontal Orientation</h3>
+<pre><code class="language-tsx">&lt;RadioGroup orientation=&quot;horizontal&quot; defaultValue=&quot;sm&quot;&gt;
+  &lt;Radio value=&quot;sm&quot;&gt;Small&lt;/Radio&gt;
+  &lt;Radio value=&quot;md&quot;&gt;Medium&lt;/Radio&gt;
+  &lt;Radio value=&quot;lg&quot;&gt;Large&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>Colors</h3>
+<pre><code class="language-tsx">&lt;RadioGroup color=&quot;primary&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Primary&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Secondary&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+
+&lt;RadioGroup color=&quot;success&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Success&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Success Alt&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+
+&lt;RadioGroup color=&quot;warning&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Warning&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Warning Alt&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+
+&lt;RadioGroup color=&quot;danger&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Danger&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Danger Alt&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>Sizes</h3>
+<pre><code class="language-tsx">&lt;RadioGroup size=&quot;sm&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Small&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Small Alt&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+
+&lt;RadioGroup size=&quot;md&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Medium&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Medium Alt&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+
+&lt;RadioGroup size=&quot;lg&quot; defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Large&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Large Alt&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>Disabled</h3>
+<pre><code class="language-tsx">&lt;RadioGroup defaultValue=&quot;1&quot; isDisabled&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Option 1&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Option 2&lt;/Radio&gt;
+  &lt;Radio value=&quot;3&quot;&gt;Option 3&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+
+{/* Or disable individual radios */}
+&lt;RadioGroup defaultValue=&quot;1&quot;&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Enabled&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot; isDisabled&gt;Disabled&lt;/Radio&gt;
+  &lt;Radio value=&quot;3&quot;&gt;Enabled&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>With Description (Individual Radios)</h3>
+<pre><code class="language-tsx">&lt;RadioGroup label=&quot;Select a plan&quot; defaultValue=&quot;free&quot;&gt;
+  &lt;Radio 
+    value=&quot;free&quot;
+    description=&quot;Best for personal projects&quot;
+  &gt;
+    Free
+  &lt;/Radio&gt;
+  &lt;Radio 
+    value=&quot;pro&quot;
+    description=&quot;For professional developers&quot;
+  &gt;
+    Pro ($10/month)
+  &lt;/Radio&gt;
+  &lt;Radio 
+    value=&quot;team&quot;
+    description=&quot;For teams and organizations&quot;
+  &gt;
+    Team ($50/month)
+  &lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>Controlled</h3>
+<pre><code class="language-tsx">import { useState } from &#39;react&#39;;
+import { RadioGroup, Radio } from &#39;react-native-heroui&#39;;
+
+function App() {
+  const [selected, setSelected] = useState(&#39;react&#39;);
+
+  return (
+    &lt;&gt;
+      &lt;RadioGroup 
+        value={selected} 
+        onValueChange={setSelected}
+      &gt;
+        &lt;Radio value=&quot;react&quot;&gt;React&lt;/Radio&gt;
+        &lt;Radio value=&quot;vue&quot;&gt;Vue&lt;/Radio&gt;
+        &lt;Radio value=&quot;angular&quot;&gt;Angular&lt;/Radio&gt;
+      &lt;/RadioGroup&gt;
+      
+      &lt;Text&gt;Selected: {selected}&lt;/Text&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3>Invalid State</h3>
+<pre><code class="language-tsx">&lt;RadioGroup 
+  label=&quot;Select an option&quot;
+  isRequired
+  isInvalid
+  errorMessage=&quot;Please select an option&quot;
+  defaultValue=&quot;&quot;
+&gt;
+  &lt;Radio value=&quot;1&quot;&gt;Option 1&lt;/Radio&gt;
+  &lt;Radio value=&quot;2&quot;&gt;Option 2&lt;/Radio&gt;
+  &lt;Radio value=&quot;3&quot;&gt;Option 3&lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h3>Custom Styles</h3>
+<pre><code class="language-tsx">&lt;RadioGroup
+  defaultValue=&quot;1&quot;
+  classNames={{
+    base: { padding: 16, backgroundColor: &#39;#f5f5f5&#39; },
+    label: { fontSize: 18, fontWeight: &#39;bold&#39; },
+  }}
+&gt;
+  &lt;Radio 
+    value=&quot;1&quot;
+    classNames={{
+      base: { padding: 12 },
+      label: { color: &#39;#0070f3&#39; },
+    }}
+  &gt;
+    Custom Styled Radio
+  &lt;/Radio&gt;
+&lt;/RadioGroup&gt;
+</code></pre>
+<h2>API</h2>
+<h3>RadioGroup Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Radio components</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+<td>Radio group label</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+<td>Radio group description</td>
+</tr>
+<tr>
+<td><code>errorMessage</code></td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>string</code></td>
+<td>-</td>
+<td>Selected value (controlled)</td>
+</tr>
+<tr>
+<td><code>defaultValue</code></td>
+<td><code>string</code></td>
+<td><code>&#39;&#39;</code></td>
+<td>Default selected value (uncontrolled)</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>-</td>
+<td>Radio group name</td>
+</tr>
+<tr>
+<td><code>orientation</code></td>
+<td><code>&#39;horizontal&#39; | &#39;vertical&#39;</code></td>
+<td><code>&#39;vertical&#39;</code></td>
+<td>Orientation</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td><code>&#39;default&#39; | &#39;primary&#39; | &#39;secondary&#39; | &#39;success&#39; | &#39;warning&#39; | &#39;danger&#39;</code></td>
+<td><code>&#39;primary&#39;</code></td>
+<td>Color for all radios</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>&#39;sm&#39; | &#39;md&#39; | &#39;lg&#39;</code></td>
+<td><code>&#39;md&#39;</code></td>
+<td>Size for all radios</td>
+</tr>
+<tr>
+<td><code>isDisabled</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether group is disabled</td>
+</tr>
+<tr>
+<td><code>isRequired</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether group is required</td>
+</tr>
+<tr>
+<td><code>isReadOnly</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether group is read-only</td>
+</tr>
+<tr>
+<td><code>isInvalid</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether group is invalid</td>
+</tr>
+<tr>
+<td><code>validationState</code></td>
+<td><code>&#39;valid&#39; | &#39;invalid&#39;</code></td>
+<td>-</td>
+<td>Validation state</td>
+</tr>
+<tr>
+<td><code>disableAnimation</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Disable animations</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>StyleProp&lt;ViewStyle&gt;</code></td>
+<td>-</td>
+<td>Custom container style</td>
+</tr>
+<tr>
+<td><code>classNames</code></td>
+<td><code>RadioGroupClassNames</code></td>
+<td>-</td>
+<td>Custom slot styles</td>
+</tr>
+<tr>
+<td><code>onValueChange</code></td>
+<td><code>(value: string) =&gt; void</code></td>
+<td>-</td>
+<td>Value change handler</td>
+</tr>
+</tbody></table>
+<h3>RadioGroupClassNames</h3>
+<pre><code class="language-tsx">interface RadioGroupClassNames {
+  base?: StyleProp&lt;ViewStyle&gt;;
+  wrapper?: StyleProp&lt;ViewStyle&gt;;
+  label?: StyleProp&lt;TextStyle&gt;;
+  description?: StyleProp&lt;TextStyle&gt;;
+  errorMessage?: StyleProp&lt;TextStyle&gt;;
+}
+</code></pre>
+<h3>Radio Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>value</code></td>
+<td><code>string</code></td>
+<td>-</td>
+<td>Radio value (required)</td>
+</tr>
+<tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Radio label</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+<td>Radio description</td>
+</tr>
+<tr>
+<td><code>isDisabled</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether radio is disabled</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>StyleProp&lt;ViewStyle&gt;</code></td>
+<td>-</td>
+<td>Custom container style</td>
+</tr>
+<tr>
+<td><code>classNames</code></td>
+<td><code>RadioClassNames</code></td>
+<td>-</td>
+<td>Custom slot styles</td>
+</tr>
+</tbody></table>
+<h3>RadioClassNames</h3>
+<pre><code class="language-tsx">interface RadioClassNames {
+  base?: StyleProp&lt;ViewStyle&gt;;
+  wrapper?: StyleProp&lt;ViewStyle&gt;;
+  labelWrapper?: StyleProp&lt;ViewStyle&gt;;
+  label?: StyleProp&lt;TextStyle&gt;;
+  control?: StyleProp&lt;ViewStyle&gt;;
+  description?: StyleProp&lt;TextStyle&gt;;
+}
+</code></pre>
+<h2>Accessibility</h2>
+<ul>
+<li>✅ Radio groups are exposed to assistive technology via ARIA</li>
+<li>✅ Each radio is built with native accessibility support</li>
+<li>✅ Full support for keyboard navigation</li>
+<li>✅ Group and radio labeling support for screen readers</li>
+<li>✅ Required and invalid states are properly announced</li>
+</ul>
+<h2>Complete Example</h2>
+<pre><code class="language-tsx">import React, { useState } from &#39;react&#39;;
+import { View, Text, ScrollView } from &#39;react-native&#39;;
+import { RadioGroup, Radio, Card, CardBody, CardHeader } from &#39;react-native-heroui&#39;;
+
+export default function RadioExample() {
+  const [framework, setFramework] = useState(&#39;react&#39;);
+  const [plan, setPlan] = useState(&#39;free&#39;);
+
+  return (
+    &lt;ScrollView style={{ padding: 16 }}&gt;
+      {/* Basic Radio Group */}
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+            Basic Radio Group
+          &lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;RadioGroup defaultValue=&quot;option1&quot;&gt;
+            &lt;Radio value=&quot;option1&quot;&gt;Option 1&lt;/Radio&gt;
+            &lt;Radio value=&quot;option2&quot;&gt;Option 2&lt;/Radio&gt;
+            &lt;Radio value=&quot;option3&quot;&gt;Option 3&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* With Description */}
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+            With Description
+          &lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;RadioGroup
+            label=&quot;Select your favorite framework&quot;
+            description=&quot;Choose the one you use most often&quot;
+            value={framework}
+            onValueChange={setFramework}
+          &gt;
+            &lt;Radio value=&quot;react&quot;&gt;React&lt;/Radio&gt;
+            &lt;Radio value=&quot;vue&quot;&gt;Vue.js&lt;/Radio&gt;
+            &lt;Radio value=&quot;angular&quot;&gt;Angular&lt;/Radio&gt;
+            &lt;Radio value=&quot;svelte&quot;&gt;Svelte&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+          &lt;Text style={{ marginTop: 12 }}&gt;Selected: {framework}&lt;/Text&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* Horizontal Orientation */}
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+            Horizontal Orientation
+          &lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;RadioGroup 
+            orientation=&quot;horizontal&quot; 
+            defaultValue=&quot;md&quot;
+            label=&quot;Size&quot;
+          &gt;
+            &lt;Radio value=&quot;sm&quot;&gt;Small&lt;/Radio&gt;
+            &lt;Radio value=&quot;md&quot;&gt;Medium&lt;/Radio&gt;
+            &lt;Radio value=&quot;lg&quot;&gt;Large&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* Colors */}
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+            Colors
+          &lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody style={{ gap: 16 }}&gt;
+          &lt;RadioGroup color=&quot;primary&quot; defaultValue=&quot;1&quot; label=&quot;Primary&quot;&gt;
+            &lt;Radio value=&quot;1&quot;&gt;Option 1&lt;/Radio&gt;
+            &lt;Radio value=&quot;2&quot;&gt;Option 2&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+          
+          &lt;RadioGroup color=&quot;success&quot; defaultValue=&quot;1&quot; label=&quot;Success&quot;&gt;
+            &lt;Radio value=&quot;1&quot;&gt;Option 1&lt;/Radio&gt;
+            &lt;Radio value=&quot;2&quot;&gt;Option 2&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+          
+          &lt;RadioGroup color=&quot;warning&quot; defaultValue=&quot;1&quot; label=&quot;Warning&quot;&gt;
+            &lt;Radio value=&quot;1&quot;&gt;Option 1&lt;/Radio&gt;
+            &lt;Radio value=&quot;2&quot;&gt;Option 2&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+          
+          &lt;RadioGroup color=&quot;danger&quot; defaultValue=&quot;1&quot; label=&quot;Danger&quot;&gt;
+            &lt;Radio value=&quot;1&quot;&gt;Option 1&lt;/Radio&gt;
+            &lt;Radio value=&quot;2&quot;&gt;Option 2&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* With Radio Descriptions */}
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+            Select a Plan
+          &lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;RadioGroup 
+            label=&quot;Pricing Plans&quot; 
+            value={plan}
+            onValueChange={setPlan}
+          &gt;
+            &lt;Radio 
+              value=&quot;free&quot;
+              description=&quot;Best for personal projects&quot;
+            &gt;
+              Free
+            &lt;/Radio&gt;
+            &lt;Radio 
+              value=&quot;pro&quot;
+              description=&quot;For professional developers&quot;
+            &gt;
+              Pro ($10/month)
+            &lt;/Radio&gt;
+            &lt;Radio 
+              value=&quot;team&quot;
+              description=&quot;For teams and organizations&quot;
+            &gt;
+              Team ($50/month)
+            &lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+          &lt;Text style={{ marginTop: 12 }}&gt;Selected plan: {plan}&lt;/Text&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+
+      {/* Invalid State */}
+      &lt;Card style={{ marginBottom: 16 }}&gt;
+        &lt;CardHeader&gt;
+          &lt;Text style={{ fontSize: 18, fontWeight: &#39;bold&#39; }}&gt;
+            Validation
+          &lt;/Text&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardBody&gt;
+          &lt;RadioGroup
+            label=&quot;Terms and Conditions&quot;
+            isRequired
+            isInvalid
+            errorMessage=&quot;You must accept the terms to continue&quot;
+            defaultValue=&quot;&quot;
+          &gt;
+            &lt;Radio value=&quot;accept&quot;&gt;I accept the terms&lt;/Radio&gt;
+            &lt;Radio value=&quot;decline&quot;&gt;I decline&lt;/Radio&gt;
+          &lt;/RadioGroup&gt;
+        &lt;/CardBody&gt;
+      &lt;/Card&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Radio must be used within a RadioGroup</li>
+<li>Only one radio can be selected at a time within a group</li>
+<li>Use <code>value</code> and <code>onValueChange</code> for controlled components</li>
+<li>Use <code>defaultValue</code> for uncontrolled components</li>
+<li>Individual radios can be disabled while others remain enabled</li>
+<li>The group&#39;s color and size apply to all child radios</li>
+</ul>
+<h2>Related Components</h2>
+<ul>
+<li><a href="./checkbox.md">Checkbox</a> - For multi-selection</li>
+<li><a href="./switch.md">Switch</a> - For binary on/off states</li>
+<li><a href="./button.md">Button</a> - For action triggers</li>
+</ul>
+
