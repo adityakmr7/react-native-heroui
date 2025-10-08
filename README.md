@@ -7,7 +7,7 @@ A beautiful, modern, and fully-featured React Native UI component library inspir
 
 ## ✨ Features
 
-- 🎯 **14+ Production-Ready Components** - Button, Input, Card, Avatar, Badge, Chip, Switch, Spinner, Skeleton, Radio, Accordion, Alert, Toast, and more
+- 🎯 **19+ Production-Ready Components** - Button, Input, Textarea, Card, Avatar, Badge, Chip, Switch, Spinner, Skeleton, Radio, Slider, Select, Progress, Image, Accordion, Alert, Toast, and more
 - 🌗 **Dark Mode Support** - Built-in light and dark themes
 - 🎨 **Fully Customizable** - Comprehensive design token system
 - ♿️ **Accessibility First** - ARIA support and screen reader friendly

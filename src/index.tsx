@@ -66,6 +66,38 @@ export {
 } from './components/Radio/Radio';
 export { Skeleton, type SkeletonProps } from './components/Skeleton/Skeleton';
 export {
+  Image,
+  type ImageProps,
+  type ImageRadius,
+} from './components/Image/Image';
+export {
+  Textarea,
+  type TextareaProps,
+  type TextareaVariant,
+  type TextareaColor,
+  type TextareaSize,
+} from './components/Textarea/Textarea';
+export {
+  Slider,
+  type SliderProps,
+  type SliderColor,
+  type SliderSize,
+} from './components/Slider/Slider';
+export {
+  Select,
+  type SelectProps,
+  type SelectItem,
+  type SelectVariant,
+  type SelectColor,
+  type SelectSize,
+} from './components/Select/Select';
+export {
+  Progress,
+  type ProgressProps,
+  type ProgressColor,
+  type ProgressSize,
+} from './components/Progress/Progress';
+export {
   Accordion,
   AccordionItem,
   type AccordionProps,

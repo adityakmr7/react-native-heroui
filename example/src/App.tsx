@@ -20,6 +20,11 @@ import {
   Skeleton,
   Spinner,
   Switch,
+  Image,
+  Textarea,
+  Slider,
+  Select,
+  Progress,
   Accordion,
   AccordionItem,
   Alert,
@@ -41,11 +46,23 @@ function ComponentShowcase() {
   const [selectedPlan, setSelectedPlan] = React.useState('free');
   const [profileLoaded, setProfileLoaded] = React.useState(false);
   const [contentLoaded, setContentLoaded] = React.useState(false);
+  const [sliderValue, setSliderValue] = React.useState(50);
+  const [selectedCountry, setSelectedCountry] = React.useState('');
+  const [progressValue, setProgressValue] = React.useState(0);
+  const [message, setMessage] = React.useState('');
 
   React.useEffect(() => {
     // Simulate content loading
     const timer = setTimeout(() => setContentLoaded(true), 2500);
     return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    // Animate progress
+    const interval = setInterval(() => {
+      setProgressValue((prev) => (prev >= 100 ? 0 : prev + 10));
+    }, 500);
+    return () => clearInterval(interval);
   }, []);
 
   const reloadProfile = () => {
@@ -623,6 +640,183 @@ function ComponentShowcase() {
             <Button onPress={reloadProfile} colorScheme="primary" size="sm">
               {profileLoaded ? 'Reload Profile' : 'Loading...'}
             </Button>
+          </CardBody>
+        </Card>
+
+        {/* Image Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Image Component
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ flexDirection: 'row', gap: 12, flexWrap: 'wrap' }}>
+              <Image
+                src="https://i.pravatar.cc/300?u=a042581f4e29026024d"
+                width={150}
+                height={150}
+                radius="lg"
+                alt="Avatar"
+              />
+              <Image
+                src="https://picsum.photos/300"
+                width={150}
+                height={150}
+                radius="full"
+                alt="Random"
+              />
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* Textarea Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Textarea Component
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 16 }}>
+            <Textarea
+              label="Message"
+              placeholder="Enter your message"
+              value={message}
+              onChangeText={setMessage}
+              variant="bordered"
+              minRows={3}
+            />
+            <Textarea
+              label="Description"
+              placeholder="Enter description"
+              variant="flat"
+              description="Maximum 500 characters"
+              minRows={4}
+            />
+          </CardBody>
+        </Card>
+
+        {/* Slider Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Slider Component
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 16 }}>
+            <Slider
+              label="Volume"
+              value={sliderValue}
+              onChange={setSliderValue}
+              color="primary"
+              showValue
+              minValue={0}
+              maxValue={100}
+            />
+            <Slider
+              label="Brightness"
+              defaultValue={75}
+              color="success"
+              showValue
+              size="sm"
+            />
+            <Slider
+              label="Temperature"
+              defaultValue={20}
+              color="danger"
+              showValue
+              minValue={0}
+              maxValue={40}
+              size="lg"
+            />
+          </CardBody>
+        </Card>
+
+        {/* Select Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Select Component
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 16 }}>
+            <Select
+              label="Country"
+              placeholder="Select a country"
+              value={selectedCountry}
+              onChange={setSelectedCountry}
+              items={[
+                { label: 'United States', value: 'us' },
+                { label: 'Canada', value: 'ca' },
+                { label: 'United Kingdom', value: 'uk' },
+                { label: 'Australia', value: 'au' },
+                { label: 'Germany', value: 'de' },
+              ]}
+              variant="bordered"
+            />
+            <Select
+              label="Framework"
+              placeholder="Choose framework"
+              defaultValue="react"
+              items={[
+                {
+                  label: 'React',
+                  value: 'react',
+                  description: 'A JavaScript library',
+                },
+                {
+                  label: 'Vue',
+                  value: 'vue',
+                  description: 'The Progressive Framework',
+                },
+                {
+                  label: 'Angular',
+                  value: 'angular',
+                  description: 'Platform for building apps',
+                },
+              ]}
+              variant="flat"
+            />
+          </CardBody>
+        </Card>
+
+        {/* Progress Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Progress Component
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 16 }}>
+            <Progress
+              label="Loading"
+              value={progressValue}
+              color="primary"
+              showValueLabel
+            />
+            <Progress
+              label="Upload"
+              value={65}
+              color="success"
+              size="sm"
+              showValueLabel
+            />
+            <Progress
+              label="Processing"
+              isIndeterminate
+              color="secondary"
+              size="lg"
+            />
           </CardBody>
         </Card>
 
