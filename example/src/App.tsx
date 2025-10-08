@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import {
   HeroUIProvider,
+  ToastProvider,
+  toast,
   Button,
   Input,
   Card,
@@ -10,6 +12,7 @@ import {
   CardFooter,
   Avatar,
   Badge,
+  Checkbox,
   Chip,
   Divider,
   Switch,
@@ -24,6 +27,12 @@ function ComponentShowcase() {
   const { theme, themeMode, toggleTheme } = useTheme();
   const [email, setEmail] = React.useState('');
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+  const [agreedToTerms, setAgreedToTerms] = React.useState(false);
+  const [tasks, setTasks] = React.useState([
+    { id: 1, text: 'Review documentation', done: false },
+    { id: 2, text: 'Test components', done: true },
+    { id: 3, text: 'Deploy to production', done: false },
+  ]);
 
   return (
     <ScrollView
@@ -165,11 +174,87 @@ function ComponentShowcase() {
               <Badge content="5" color="danger" placement="top-right">
                 <Avatar name="John Doe" size="lg" color="primary" />
               </Badge>
-              <Badge showDot color="success" placement="bottom-right">
+              <Badge isDot color="success" placement="bottom-right">
                 <Avatar name="Jane Smith" size="lg" color="secondary" />
               </Badge>
-              <Avatar name="Bob Wilson" size="lg" color="warning" />
-              <Avatar name="Alice Brown" size="lg" color="danger" isBordered />
+              <Badge content="99+" color="primary" variant="flat">
+                <Avatar name="Bob Wilson" size="lg" color="warning" />
+              </Badge>
+              <Badge content="NEW" color="secondary" shape="rectangle">
+                <Avatar name="Alice Brown" size="lg" color="danger" />
+              </Badge>
+            </View>
+            <View style={[styles.avatarRow, { marginTop: 16 }]}>
+              <Badge content="1" variant="solid" color="danger">
+                <Avatar name="Solid" size="lg" />
+              </Badge>
+              <Badge content="2" variant="flat" color="primary">
+                <Avatar name="Flat" size="lg" />
+              </Badge>
+              <Badge content="3" variant="faded" color="success">
+                <Avatar name="Faded" size="lg" />
+              </Badge>
+              <Badge content="4" variant="shadow" color="warning">
+                <Avatar name="Shadow" size="lg" />
+              </Badge>
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* Checkboxes */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Checkboxes
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={{ gap: 12 }}>
+              <Checkbox
+                radius="sm"
+                isSelected={agreedToTerms}
+                onValueChange={setAgreedToTerms}
+                color="primary"
+              >
+                I agree to the terms and conditions
+              </Checkbox>
+
+              {/* Todo list with line-through */}
+              {tasks.map((task) => (
+                <Checkbox
+                  key={task.id}
+                  isSelected={task.done}
+                  onValueChange={() =>
+                    setTasks(
+                      tasks.map((t) =>
+                        t.id === task.id ? { ...t, done: !t.done } : t
+                      )
+                    )
+                  }
+                  lineThrough
+                  color="success"
+                >
+                  {task.text}
+                </Checkbox>
+              ))}
+
+              {/* Different colors and states */}
+              <View style={styles.chipContainer}>
+                <Checkbox defaultSelected color="primary" size="sm">
+                  Primary
+                </Checkbox>
+                <Checkbox defaultSelected color="secondary" size="sm">
+                  Secondary
+                </Checkbox>
+                <Checkbox isIndeterminate color="warning" size="sm">
+                  Partial
+                </Checkbox>
+                <Checkbox isDisabled size="sm">
+                  Disabled
+                </Checkbox>
+              </View>
             </View>
           </CardBody>
         </Card>
@@ -517,6 +602,76 @@ function ComponentShowcase() {
           </CardBody>
         </Card>
 
+        {/* Toast Examples */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Toasts
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <View style={styles.buttonGrid}>
+              <Button
+                size="sm"
+                colorScheme="success"
+                onPress={() => toast.success('Operation successful!')}
+              >
+                Success
+              </Button>
+              <Button
+                size="sm"
+                colorScheme="danger"
+                onPress={() => toast.error('Error occurred!')}
+              >
+                Error
+              </Button>
+              <Button
+                size="sm"
+                colorScheme="warning"
+                onPress={() => toast.warning('Warning message!')}
+              >
+                Warning
+              </Button>
+              <Button
+                size="sm"
+                colorScheme="primary"
+                onPress={() => toast.info('Information')}
+              >
+                Info
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                colorScheme="primary"
+                onPress={() =>
+                  toast.success({
+                    title: 'With Title',
+                    description: 'This toast has both title and description',
+                  })
+                }
+              >
+                Detailed
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                colorScheme="secondary"
+                onPress={() =>
+                  toast.show({
+                    description: 'Auto-dismiss in 5s',
+                    timeout: 5000,
+                    shouldShowTimeoutProgress: true,
+                  })
+                }
+              >
+                Progress Bar
+              </Button>
+            </View>
+          </CardBody>
+        </Card>
+
         <View style={{ height: 40 }} />
       </View>
     </ScrollView>
@@ -526,7 +681,9 @@ function ComponentShowcase() {
 function App() {
   return (
     <HeroUIProvider initialTheme="light">
-      <ComponentShowcase />
+      <ToastProvider placement="bottom-right" maxVisibleToasts={3}>
+        <ComponentShowcase />
+      </ToastProvider>
     </HeroUIProvider>
   );
 }

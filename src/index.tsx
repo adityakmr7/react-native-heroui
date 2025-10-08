@@ -24,7 +24,15 @@ export {
   type CardFooterProps,
 } from './components/Card/Card';
 export { Avatar, type AvatarProps } from './components/Avatar/Avatar';
-export { Badge, type BadgeProps } from './components/Badge/Badge';
+export {
+  Badge,
+  type BadgeProps,
+  type BadgeColor,
+  type BadgeVariant,
+  type BadgeSize,
+  type BadgeShape,
+  type BadgePlacement,
+} from './components/Badge/Badge';
 export { Chip, type ChipProps } from './components/Chip/Chip';
 export { Switch, type SwitchProps } from './components/Switch/Switch';
 export {
@@ -32,6 +40,14 @@ export {
   type DividerProps,
   type DividerOrientation,
 } from './components/Divider/Divider';
+export {
+  Checkbox,
+  type CheckboxProps,
+  type CheckboxColor,
+  type CheckboxSize,
+  type CheckboxRadius,
+  type CheckboxIconProps,
+} from './components/Checkbox/Checkbox';
 export {
   Accordion,
   AccordionItem,
@@ -48,6 +64,17 @@ export {
   type AlertVariant,
   type AlertRadius,
 } from './components/Alert/Alert';
+export {
+  ToastProvider,
+  toast,
+  useToast,
+  type ToastOptions,
+  type ToastColor,
+  type ToastVariant,
+  type ToastRadius,
+  type ToastPlacement,
+  type ToastProviderProps,
+} from './components/Toast/Toast';
 
 // Providers
 export {
