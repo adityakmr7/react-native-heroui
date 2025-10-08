@@ -268,7 +268,7 @@
         // Load markdown content
         async function loadMarkdown() {
             try {
-                const response = await fetch('../../src/components/Accordion/README.md');
+                const response = await fetch('./accordion.md');
                 const markdown = await response.text();
                 
                 // Configure marked options
