@@ -1,0 +1,51 @@
+# GitHub Pages Configuration for React Native HeroUI
+
+# Site settings
+title: "React Native HeroUI"
+description: "Beautiful, modern UI component library for React Native"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://adityakmr7.github.io/react-native-heroui" # the base hostname & protocol
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Relative links
+relative_links:
+  enabled: true
+  collections: true
+
+# Include/Exclude
+include:
+  - README.md
+  - index.html
+  - components
+
+exclude:
+  - node_modules
+  - package.json
+  - yarn.lock
+  - generate-docs.sh
+
+# GitHub metadata
+repository: adityakmr7/react-native-heroui
+github:
+  is_project_page: true
+  
+# SEO
+author: Aditya Kumar
+twitter:
+  username: adityakmr7
+  card: summary_large_image
+
+# Theme
+theme: minima
+
