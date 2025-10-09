@@ -286,5 +286,3 @@ export const Center = React.forwardRef<any, BoxProps>((props, ref) => (
   <Box ref={ref} alignItems="center" justifyContent="center" {...props} />
 ));
 Center.displayName = 'Center';
-
-export const Spacer = () => <Box flex={1} />;

@@ -8,11 +8,25 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Alert](./components/alert.html) - Feedback and notifications
 - [Button](./components/button.html) - Versatile button component
 - [Input](./components/input.html) - Text input with validation
+- [InputOtp](./components/inputotp.html) - OTP/PIN code input
 - [Card](./components/card.html) - Container component
 - [Avatar](./components/avatar.html) - User profile images
 - [Badge](./components/badge.html) - Status indicators
+- [Checkbox](./components/checkbox.html) - Multi-selection control
 - [Chip](./components/chip.html) - Tag and category chips
+- [Divider](./components/divider.html) - Content separator
+- [Image](./components/image.html) - Image with loading & fallback
+- [Modal](./components/modal.html) - Dialog with custom content
+- [Progress](./components/progress.html) - Progress indicator
+- [Radio](./components/radio.html) - Single selection radio group
+- [Select](./components/select.html) - Dropdown select
+- [Skeleton](./components/skeleton.html) - Loading placeholder
+- [Slider](./components/slider.html) - Range slider
+- [Spacer](./components/spacer.html) - Layout spacing helper
+- [Spinner](./components/spinner.html) - Loading indicator
 - [Switch](./components/switch.html) - Toggle switches
+- [Textarea](./components/textarea.html) - Multi-line text input
+- [Toast](./components/toast.html) - Temporary notifications
 
 ## 🚀 Quick Start
 

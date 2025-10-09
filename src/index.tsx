@@ -5,7 +5,6 @@ export {
   HStack,
   VStack,
   Center,
-  Spacer,
   type BoxProps,
   type StyleProps,
 } from './primitives/Box/Box';
@@ -24,9 +23,110 @@ export {
   type CardFooterProps,
 } from './components/Card/Card';
 export { Avatar, type AvatarProps } from './components/Avatar/Avatar';
-export { Badge, type BadgeProps } from './components/Badge/Badge';
+export {
+  Badge,
+  type BadgeProps,
+  type BadgeColor,
+  type BadgeVariant,
+  type BadgeSize,
+  type BadgeShape,
+  type BadgePlacement,
+} from './components/Badge/Badge';
 export { Chip, type ChipProps } from './components/Chip/Chip';
 export { Switch, type SwitchProps } from './components/Switch/Switch';
+export {
+  Divider,
+  type DividerProps,
+  type DividerOrientation,
+} from './components/Divider/Divider';
+export {
+  Spinner,
+  type SpinnerProps,
+  type SpinnerColor,
+  type SpinnerSize,
+  type SpinnerVariant,
+} from './components/Spinner/Spinner';
+export {
+  Checkbox,
+  type CheckboxProps,
+  type CheckboxColor,
+  type CheckboxSize,
+  type CheckboxRadius,
+  type CheckboxIconProps,
+} from './components/Checkbox/Checkbox';
+export {
+  Radio,
+  RadioGroup,
+  type RadioProps,
+  type RadioGroupProps,
+  type RadioColor,
+  type RadioSize,
+  type RadioOrientation,
+} from './components/Radio/Radio';
+export { Skeleton, type SkeletonProps } from './components/Skeleton/Skeleton';
+export {
+  Image,
+  type ImageProps,
+  type ImageRadius,
+} from './components/Image/Image';
+export {
+  Textarea,
+  type TextareaProps,
+  type TextareaVariant,
+  type TextareaColor,
+  type TextareaSize,
+} from './components/Textarea/Textarea';
+export {
+  Slider,
+  type SliderProps,
+  type SliderColor,
+  type SliderSize,
+} from './components/Slider/Slider';
+export {
+  Select,
+  type SelectProps,
+  type SelectItem,
+  type SelectVariant,
+  type SelectColor,
+  type SelectSize,
+} from './components/Select/Select';
+export {
+  Progress,
+  type ProgressProps,
+  type ProgressColor,
+  type ProgressSize,
+} from './components/Progress/Progress';
+export {
+  Spacer,
+  type SpacerProps,
+  type SpacerValue,
+} from './components/Spacer/Spacer';
+export {
+  InputOtp,
+  type InputOtpProps,
+  type InputOtpVariant,
+  type InputOtpColor,
+  type InputOtpSize,
+  type InputOtpRadius,
+} from './components/InputOtp/InputOtp';
+export {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  type ModalProps,
+  type ModalContentProps,
+  type ModalHeaderProps,
+  type ModalBodyProps,
+  type ModalFooterProps,
+  type ModalSize,
+  type ModalRadius,
+  type ModalShadow,
+  type ModalBackdrop,
+  type ModalPlacement,
+  type ModalScrollBehavior,
+} from './components/Modal/Modal';
 export {
   Accordion,
   AccordionItem,
@@ -43,6 +143,17 @@ export {
   type AlertVariant,
   type AlertRadius,
 } from './components/Alert/Alert';
+export {
+  ToastProvider,
+  toast,
+  useToast,
+  type ToastOptions,
+  type ToastColor,
+  type ToastVariant,
+  type ToastRadius,
+  type ToastPlacement,
+  type ToastProviderProps,
+} from './components/Toast/Toast';
 
 // Providers
 export {

@@ -1,0 +1,468 @@
+<h1>Modal</h1>
+<p>Displays a dialog with custom content that requires attention or provides additional information.</p>
+<h2>Installation</h2>
+<pre><code class="language-bash">npm install react-native-heroui
+</code></pre>
+<h2>Import</h2>
+<pre><code class="language-tsx">import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from &#39;react-native-heroui&#39;;
+</code></pre>
+<h2>Usage</h2>
+<h3>Basic Modal</h3>
+<pre><code class="language-tsx">import { useState } from &#39;react&#39;;
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from &#39;react-native-heroui&#39;;
+
+function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    &lt;&gt;
+      &lt;Button onPress={() =&gt; setIsOpen(true)}&gt;Open Modal&lt;/Button&gt;
+
+      &lt;Modal isOpen={isOpen} onClose={() =&gt; setIsOpen(false)}&gt;
+        &lt;ModalContent&gt;
+          &lt;ModalHeader&gt;Modal Title&lt;/ModalHeader&gt;
+          &lt;ModalBody&gt;
+            &lt;Text&gt;This is the modal content.&lt;/Text&gt;
+          &lt;/ModalBody&gt;
+          &lt;ModalFooter&gt;
+            &lt;Button onPress={() =&gt; setIsOpen(false)}&gt;Close&lt;/Button&gt;
+          &lt;/ModalFooter&gt;
+        &lt;/ModalContent&gt;
+      &lt;/Modal&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3>Sizes</h3>
+<p>Modal supports 10 different sizes.</p>
+<pre><code class="language-tsx">&lt;Modal size=&quot;xs&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;sm&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;md&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;lg&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;xl&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;2xl&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;3xl&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;4xl&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;5xl&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal size=&quot;full&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+</code></pre>
+<h3>Placement</h3>
+<p>Control where the modal appears on screen.</p>
+<pre><code class="language-tsx">&lt;Modal placement=&quot;top&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal placement=&quot;center&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal placement=&quot;bottom&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal placement=&quot;auto&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+</code></pre>
+<h3>Backdrop</h3>
+<p>Customize the modal backdrop appearance.</p>
+<pre><code class="language-tsx">&lt;Modal backdrop=&quot;transparent&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal backdrop=&quot;opaque&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+&lt;Modal backdrop=&quot;blur&quot; isOpen={isOpen} onClose={onClose}&gt;...&lt;/Modal&gt;
+</code></pre>
+<h3>Non-Dismissible</h3>
+<p>Prevent modal from closing when clicking backdrop or pressing Esc.</p>
+<pre><code class="language-tsx">&lt;Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  isDismissable={false}
+  isKeyboardDismissDisabled={true}
+&gt;
+  &lt;ModalContent&gt;
+    &lt;ModalHeader&gt;Important Notice&lt;/ModalHeader&gt;
+    &lt;ModalBody&gt;
+      &lt;Text&gt;You must read and accept the terms to continue.&lt;/Text&gt;
+    &lt;/ModalBody&gt;
+    &lt;ModalFooter&gt;
+      &lt;Button onPress={onClose}&gt;Accept&lt;/Button&gt;
+    &lt;/ModalFooter&gt;
+  &lt;/ModalContent&gt;
+&lt;/Modal&gt;
+</code></pre>
+<h3>With Form</h3>
+<pre><code class="language-tsx">function FormModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [email, setEmail] = useState(&#39;&#39;);
+  const [password, setPassword] = useState(&#39;&#39;);
+
+  const handleSubmit = () =&gt; {
+    console.log({ email, password });
+    setIsOpen(false);
+  };
+
+  return (
+    &lt;&gt;
+      &lt;Button onPress={() =&gt; setIsOpen(true)}&gt;Sign In&lt;/Button&gt;
+
+      &lt;Modal isOpen={isOpen} onClose={() =&gt; setIsOpen(false)}&gt;
+        &lt;ModalContent&gt;
+          &lt;ModalHeader&gt;Sign In&lt;/ModalHeader&gt;
+          &lt;ModalBody&gt;
+            &lt;Input
+              label=&quot;Email&quot;
+              placeholder=&quot;Enter your email&quot;
+              value={email}
+              onChangeText={setEmail}
+              autoFocus
+            /&gt;
+            &lt;Input
+              label=&quot;Password&quot;
+              type=&quot;password&quot;
+              placeholder=&quot;Enter your password&quot;
+              value={password}
+              onChangeText={setPassword}
+              style={{ marginTop: 12 }}
+            /&gt;
+          &lt;/ModalBody&gt;
+          &lt;ModalFooter&gt;
+            &lt;Button variant=&quot;light&quot; onPress={() =&gt; setIsOpen(false)}&gt;
+              Cancel
+            &lt;/Button&gt;
+            &lt;Button colorScheme=&quot;primary&quot; onPress={handleSubmit}&gt;
+              Sign In
+            &lt;/Button&gt;
+          &lt;/ModalFooter&gt;
+        &lt;/ModalContent&gt;
+      &lt;/Modal&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3>Scrollable Body</h3>
+<p>When content is long, the modal body becomes scrollable.</p>
+<pre><code class="language-tsx">&lt;Modal isOpen={isOpen} onClose={onClose} scrollBehavior=&quot;inside&quot;&gt;
+  &lt;ModalContent&gt;
+    &lt;ModalHeader&gt;Terms and Conditions&lt;/ModalHeader&gt;
+    &lt;ModalBody&gt;
+      {/* Long content here */}
+      &lt;Text&gt;Lorem ipsum dolor sit amet...&lt;/Text&gt;
+      {/* ... more content ... */}
+    &lt;/ModalBody&gt;
+    &lt;ModalFooter&gt;
+      &lt;Button onPress={onClose}&gt;Accept&lt;/Button&gt;
+    &lt;/ModalFooter&gt;
+  &lt;/ModalContent&gt;
+&lt;/Modal&gt;
+</code></pre>
+<h3>Hide Close Button</h3>
+<pre><code class="language-tsx">&lt;ModalHeader hideCloseButton&gt;No Close Button&lt;/ModalHeader&gt;
+</code></pre>
+<h3>Custom Styles</h3>
+<pre><code class="language-tsx">&lt;Modal
+  isOpen={isOpen}
+  onClose={onClose}
+  classNames={{
+    backdrop: { backgroundColor: &#39;rgba(0, 0, 0, 0.8)&#39; },
+    base: { borderWidth: 2, borderColor: &#39;#0070f3&#39; },
+  }}
+&gt;
+  &lt;ModalContent&gt;
+    &lt;ModalHeader style={{ backgroundColor: &#39;#f5f5f5&#39; }}&gt;
+      Custom Styled Header
+    &lt;/ModalHeader&gt;
+    &lt;ModalBody&gt;
+      &lt;Text&gt;Custom styled modal&lt;/Text&gt;
+    &lt;/ModalBody&gt;
+  &lt;/ModalContent&gt;
+&lt;/Modal&gt;
+</code></pre>
+<h2>API</h2>
+<h3>Modal Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>isOpen</code></td>
+<td><code>boolean</code></td>
+<td>-</td>
+<td>Whether modal is open (required)</td>
+</tr>
+<tr>
+<td><code>onClose</code></td>
+<td><code>() =&gt; void</code></td>
+<td>-</td>
+<td>Close handler (required)</td>
+</tr>
+<tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Modal content</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>&#39;xs&#39; | &#39;sm&#39; | &#39;md&#39; | &#39;lg&#39; | &#39;xl&#39; | &#39;2xl&#39; | &#39;3xl&#39; | &#39;4xl&#39; | &#39;5xl&#39; | &#39;full&#39;</code></td>
+<td><code>&#39;md&#39;</code></td>
+<td>Modal size</td>
+</tr>
+<tr>
+<td><code>radius</code></td>
+<td><code>&#39;none&#39; | &#39;sm&#39; | &#39;md&#39; | &#39;lg&#39;</code></td>
+<td><code>&#39;lg&#39;</code></td>
+<td>Border radius</td>
+</tr>
+<tr>
+<td><code>shadow</code></td>
+<td><code>&#39;none&#39; | &#39;sm&#39; | &#39;md&#39; | &#39;lg&#39;</code></td>
+<td><code>&#39;lg&#39;</code></td>
+<td>Shadow size</td>
+</tr>
+<tr>
+<td><code>backdrop</code></td>
+<td><code>&#39;transparent&#39; | &#39;opaque&#39; | &#39;blur&#39;</code></td>
+<td><code>&#39;opaque&#39;</code></td>
+<td>Backdrop type</td>
+</tr>
+<tr>
+<td><code>scrollBehavior</code></td>
+<td><code>&#39;normal&#39; | &#39;inside&#39; | &#39;outside&#39;</code></td>
+<td><code>&#39;normal&#39;</code></td>
+<td>Scroll behavior</td>
+</tr>
+<tr>
+<td><code>placement</code></td>
+<td><code>&#39;auto&#39; | &#39;top&#39; | &#39;center&#39; | &#39;bottom&#39;</code></td>
+<td><code>&#39;center&#39;</code></td>
+<td>Modal placement</td>
+</tr>
+<tr>
+<td><code>isDismissable</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Can close by clicking backdrop</td>
+</tr>
+<tr>
+<td><code>isKeyboardDismissDisabled</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Disable Esc key to close</td>
+</tr>
+<tr>
+<td><code>hideCloseButton</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Hide close button (not used in RN)</td>
+</tr>
+<tr>
+<td><code>disableAnimation</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Disable animations</td>
+</tr>
+<tr>
+<td><code>classNames</code></td>
+<td><code>ModalClassNames</code></td>
+<td>-</td>
+<td>Custom slot styles</td>
+</tr>
+<tr>
+<td><code>onOpenChange</code></td>
+<td><code>(isOpen: boolean) =&gt; void</code></td>
+<td>-</td>
+<td>Open change handler</td>
+</tr>
+</tbody></table>
+<h3>ModalClassNames</h3>
+<pre><code class="language-tsx">interface ModalClassNames {
+  wrapper?: StyleProp&lt;ViewStyle&gt;;
+  backdrop?: StyleProp&lt;ViewStyle&gt;;
+  base?: StyleProp&lt;ViewStyle&gt;;
+}
+</code></pre>
+<h3>ModalHeader Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Header content</td>
+</tr>
+<tr>
+<td><code>hideCloseButton</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Hide close button</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>StyleProp&lt;ViewStyle&gt;</code></td>
+<td>-</td>
+<td>Custom style</td>
+</tr>
+</tbody></table>
+<h3>ModalBody Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Body content</td>
+</tr>
+<tr>
+<td><code>scrollable</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Whether body is scrollable</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>StyleProp&lt;ViewStyle&gt;</code></td>
+<td>-</td>
+<td>Custom style</td>
+</tr>
+</tbody></table>
+<h3>ModalFooter Props</h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>children</code></td>
+<td><code>ReactNode</code></td>
+<td>-</td>
+<td>Footer content</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>StyleProp&lt;ViewStyle&gt;</code></td>
+<td>-</td>
+<td>Custom style</td>
+</tr>
+</tbody></table>
+<h2>Accessibility</h2>
+<ul>
+<li>✅ Content outside modal is hidden from assistive technologies</li>
+<li>✅ Modal can be closed by clicking overlay (if <code>isDismissable</code>)</li>
+<li>✅ Focus is contained within modal</li>
+<li>✅ Focus returns to trigger element on close</li>
+<li>✅ Proper ARIA attributes for screen readers</li>
+<li>✅ Scrolling prevented behind modal</li>
+</ul>
+<h2>Complete Example</h2>
+<pre><code class="language-tsx">import React, { useState } from &#39;react&#39;;
+import { View, Text } from &#39;react-native&#39;;
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
+  useDisclosure,
+} from &#39;react-native-heroui&#39;;
+
+export default function ModalExample() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [email, setEmail] = useState(&#39;&#39;);
+
+  return (
+    &lt;View style={{ padding: 16 }}&gt;
+      &lt;Button onPress={onOpen} colorScheme=&quot;primary&quot;&gt;
+        Open Modal
+      &lt;/Button&gt;
+
+      &lt;Modal isOpen={isOpen} onClose={onClose} size=&quot;lg&quot;&gt;
+        &lt;ModalContent&gt;
+          &lt;ModalHeader&gt;Contact Us&lt;/ModalHeader&gt;
+          &lt;ModalBody&gt;
+            &lt;Text style={{ marginBottom: 12 }}&gt;
+              Send us a message and we&#39;ll respond within 24 hours.
+            &lt;/Text&gt;
+            &lt;Input
+              label=&quot;Email&quot;
+              placeholder=&quot;your@email.com&quot;
+              value={email}
+              onChangeText={setEmail}
+            /&gt;
+            &lt;Input
+              label=&quot;Message&quot;
+              placeholder=&quot;How can we help?&quot;
+              style={{ marginTop: 12 }}
+            /&gt;
+          &lt;/ModalBody&gt;
+          &lt;ModalFooter&gt;
+            &lt;Button variant=&quot;light&quot; onPress={onClose}&gt;
+              Cancel
+            &lt;/Button&gt;
+            &lt;Button
+              colorScheme=&quot;primary&quot;
+              onPress={() =&gt; {
+                console.log(&#39;Submitted:&#39;, email);
+                onClose();
+              }}
+            &gt;
+              Send
+            &lt;/Button&gt;
+          &lt;/ModalFooter&gt;
+        &lt;/ModalContent&gt;
+      &lt;/Modal&gt;
+    &lt;/View&gt;
+  );
+}
+</code></pre>
+<h2>Use Cases</h2>
+<p>Perfect for:</p>
+<ul>
+<li>Confirmation dialogs</li>
+<li>Forms and data entry</li>
+<li>Image galleries</li>
+<li>Terms and conditions</li>
+<li>Authentication flows</li>
+<li>Alerts and notifications</li>
+<li>Multi-step wizards</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>Modal uses React Native&#39;s built-in Modal component</li>
+<li>Focus management is handled automatically</li>
+<li>Backdrop press closes modal by default (configurable)</li>
+<li>Body is scrollable by default for long content</li>
+<li>Works with <code>useDisclosure</code> hook for easy state management</li>
+</ul>
+<h2>Related Components</h2>
+<ul>
+<li><a href="./alert.md">Alert</a> - For inline notifications</li>
+<li><a href="./toast.md">Toast</a> - For temporary messages</li>
+<li><a href="./card.md">Card</a> - For content containers</li>
+</ul>
+
