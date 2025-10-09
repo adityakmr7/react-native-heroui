@@ -27,6 +27,11 @@ import {
   Progress,
   Spacer,
   InputOtp,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Accordion,
   AccordionItem,
   Alert,
@@ -54,6 +59,10 @@ function ComponentShowcase() {
   const [message, setMessage] = React.useState('');
   const [otpValue, setOtpValue] = React.useState('');
   const [pinValue, setPinValue] = React.useState('');
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = React.useState(false);
+  const [modalEmail, setModalEmail] = React.useState('');
+  const [modalPassword, setModalPassword] = React.useState('');
 
   React.useEffect(() => {
     // Simulate content loading
@@ -942,6 +951,110 @@ function ComponentShowcase() {
                 />
               </View>
             </View>
+          </CardBody>
+        </Card>
+
+        {/* Modal Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Modal Component
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 12 }}>
+            <Button colorScheme="primary" onPress={() => setIsModalOpen(true)}>
+              Open Basic Modal
+            </Button>
+
+            <Button
+              colorScheme="secondary"
+              onPress={() => setIsFormModalOpen(true)}
+            >
+              Open Form Modal
+            </Button>
+
+            {/* Basic Modal */}
+            <Modal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              size="md"
+              placement="center"
+            >
+              <ModalContent>
+                <ModalHeader>Welcome to HeroUI</ModalHeader>
+                <ModalBody>
+                  <Text style={{ color: theme.colors.foreground }}>
+                    This is a basic modal example with header, body, and footer
+                    sections.
+                  </Text>
+                  <Spacer y={4} />
+                  <Text style={{ color: theme.colors['default-500'] }}>
+                    Click the backdrop or close button to dismiss.
+                  </Text>
+                </ModalBody>
+                <ModalFooter>
+                  <Button variant="ghost" onPress={() => setIsModalOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    colorScheme="primary"
+                    onPress={() => {
+                      toast.success('Action confirmed!');
+                      setIsModalOpen(false);
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+
+            {/* Form Modal */}
+            <Modal
+              isOpen={isFormModalOpen}
+              onClose={() => setIsFormModalOpen(false)}
+              size="lg"
+              placement="center"
+            >
+              <ModalContent>
+                <ModalHeader>Sign In</ModalHeader>
+                <ModalBody>
+                  <Input
+                    label="Email"
+                    placeholder="Enter your email"
+                    value={modalEmail}
+                    onChangeText={setModalEmail}
+                  />
+                  <Spacer y={3} />
+                  <Input
+                    label="Password"
+                    placeholder="Enter your password"
+                    value={modalPassword}
+                    onChangeText={setModalPassword}
+                    secureTextEntry
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    variant="ghost"
+                    onPress={() => setIsFormModalOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    colorScheme="primary"
+                    onPress={() => {
+                      toast.success(`Signed in as ${modalEmail}`);
+                      setIsFormModalOpen(false);
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </CardBody>
         </Card>
 

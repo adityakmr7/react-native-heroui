@@ -16,6 +16,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Chip](./components/chip.html) - Tag and category chips
 - [Divider](./components/divider.html) - Content separator
 - [Image](./components/image.html) - Image with loading & fallback
+- [Modal](./components/modal.html) - Dialog with custom content
 - [Progress](./components/progress.html) - Progress indicator
 - [Radio](./components/radio.html) - Single selection radio group
 - [Select](./components/select.html) - Dropdown select

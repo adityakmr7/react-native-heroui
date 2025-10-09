@@ -110,6 +110,24 @@ export {
   type InputOtpRadius,
 } from './components/InputOtp/InputOtp';
 export {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  type ModalProps,
+  type ModalContentProps,
+  type ModalHeaderProps,
+  type ModalBodyProps,
+  type ModalFooterProps,
+  type ModalSize,
+  type ModalRadius,
+  type ModalShadow,
+  type ModalBackdrop,
+  type ModalPlacement,
+  type ModalScrollBehavior,
+} from './components/Modal/Modal';
+export {
   Accordion,
   AccordionItem,
   type AccordionProps,
