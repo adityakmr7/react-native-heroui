@@ -25,6 +25,7 @@ import {
   Slider,
   Select,
   Progress,
+  Spacer,
   Accordion,
   AccordionItem,
   Alert,
@@ -817,6 +818,38 @@ function ComponentShowcase() {
               color="secondary"
               size="lg"
             />
+          </CardBody>
+        </Card>
+
+        {/* Spacer Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Spacer Component
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Text
+              style={[{ color: theme.colors['default-600'], marginBottom: 12 }]}
+            >
+              Spacer adds space between components using x (horizontal) and y
+              (vertical) props:
+            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Chip color="primary">Item 1</Chip>
+              <Spacer x={2} />
+              <Chip color="secondary">Item 2</Chip>
+              <Spacer x={4} />
+              <Chip color="success">Item 3</Chip>
+            </View>
+            <Spacer y={6} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Chip color="warning">Row 1</Chip>
+              <Spacer x={8} />
+              <Chip color="danger">Row 2</Chip>
+            </View>
           </CardBody>
         </Card>
 

@@ -20,6 +20,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Select](./components/select.html) - Dropdown select
 - [Skeleton](./components/skeleton.html) - Loading placeholder
 - [Slider](./components/slider.html) - Range slider
+- [Spacer](./components/spacer.html) - Layout spacing helper
 - [Spinner](./components/spinner.html) - Loading indicator
 - [Switch](./components/switch.html) - Toggle switches
 - [Textarea](./components/textarea.html) - Multi-line text input

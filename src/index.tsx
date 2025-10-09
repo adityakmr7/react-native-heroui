@@ -5,7 +5,6 @@ export {
   HStack,
   VStack,
   Center,
-  Spacer,
   type BoxProps,
   type StyleProps,
 } from './primitives/Box/Box';
@@ -97,6 +96,11 @@ export {
   type ProgressColor,
   type ProgressSize,
 } from './components/Progress/Progress';
+export {
+  Spacer,
+  type SpacerProps,
+  type SpacerValue,
+} from './components/Spacer/Spacer';
 export {
   Accordion,
   AccordionItem,
