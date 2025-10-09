@@ -1,0 +1,208 @@
+<h1>Tree-Shaking Guide</h1>
+<p>React Native HeroUI is designed with tree-shaking in mind, ensuring you only bundle the components you actually use.</p>
+<h2>What is Tree-Shaking?</h2>
+<p>Tree-shaking is a term for dead code elimination. When you import components from a library, modern bundlers analyze your imports and only include the code you&#39;re actually using in your final bundle.</p>
+<h2>How It Works</h2>
+<h3>✅ Automatic Optimization</h3>
+<pre><code class="language-tsx">// You import
+import { Button, Card, Avatar } from &#39;react-native-heroui&#39;;
+
+// Bundler includes ONLY these 3 components
+// The other 18+ components are automatically removed
+</code></pre>
+<h3>Bundle Size Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Bundle Size (minified + gzipped)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Import 1 component (<code>Button</code>)</td>
+<td>~5-8 KB</td>
+</tr>
+<tr>
+<td>Import 5 components</td>
+<td>~20-25 KB</td>
+</tr>
+<tr>
+<td>Import 10 components</td>
+<td>~40-50 KB</td>
+</tr>
+<tr>
+<td>Import all 21 components</td>
+<td>~60-80 KB</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>These are approximate sizes and include the shared theme utilities.</p>
+</blockquote>
+<h2>Best Practices</h2>
+<h3>✅ DO: Named Imports</h3>
+<p><strong>Option 1: Single line</strong></p>
+<pre><code class="language-tsx">import { Button, Card, Avatar } from &#39;react-native-heroui&#39;;
+</code></pre>
+<p><strong>Option 2: Multiple lines</strong></p>
+<pre><code class="language-tsx">import { Button } from &#39;react-native-heroui&#39;;
+import { Card } from &#39;react-native-heroui&#39;;
+import { Avatar } from &#39;react-native-heroui&#39;;
+</code></pre>
+<p>Both approaches work equally well for tree-shaking.</p>
+<h3>❌ DON&#39;T: Namespace Imports</h3>
+<pre><code class="language-tsx">// Bad - May prevent tree-shaking in some bundlers
+import * as HeroUI from &#39;react-native-heroui&#39;;
+const { Button, Card } = HeroUI;
+</code></pre>
+<h3>❌ DON&#39;T: Default Imports</h3>
+<pre><code class="language-tsx">// Wrong - Library doesn&#39;t export a default
+import HeroUI from &#39;react-native-heroui&#39;; // ❌ Error
+</code></pre>
+<h2>Component Dependencies</h2>
+<p>React Native HeroUI components are architected to minimize dependencies:</p>
+<h3>Shared Code (~2-3 KB)</h3>
+<p>These utilities are shared by all components and included once:</p>
+<ul>
+<li><code>useTheme</code> hook</li>
+<li><code>ThemeProvider</code> context</li>
+<li>Theme type definitions</li>
+</ul>
+<h3>Component-Specific Code</h3>
+<p>Each component only imports:</p>
+<ul>
+<li>Its own implementation</li>
+<li>Shared utilities (theme)</li>
+<li>No other components</li>
+</ul>
+<p>Example: <code>Button</code> component doesn&#39;t import <code>Card</code>, <code>Avatar</code>, etc.</p>
+<h2>Supported Bundlers</h2>
+<p>Tree-shaking works automatically with:</p>
+<h3>React Native</h3>
+<ul>
+<li>✅ <strong>Metro</strong> (default React Native bundler)</li>
+<li>✅ <strong>Expo</strong> (uses Metro)</li>
+</ul>
+<h3>Web</h3>
+<ul>
+<li>✅ <strong>Next.js</strong> (with React Native Web)</li>
+<li>✅ <strong>Webpack 5+</strong></li>
+<li>✅ <strong>Vite</strong></li>
+<li>✅ <strong>Rollup</strong></li>
+<li>✅ <strong>esbuild</strong></li>
+</ul>
+<h2>Verifying Bundle Size</h2>
+<h3>React Native Apps</h3>
+<p>Use React Native Bundle Visualizer:</p>
+<pre><code class="language-bash"># Install
+npm install --save-dev react-native-bundle-visualizer
+
+# Analyze your bundle
+npx react-native-bundle-visualizer
+</code></pre>
+<p>This opens an interactive visualization showing:</p>
+<ul>
+<li>What&#39;s in your bundle</li>
+<li>Size of each component</li>
+<li>Dependencies between modules</li>
+</ul>
+<h3>React Native Web</h3>
+<p>Use webpack-bundle-analyzer:</p>
+<pre><code class="language-bash"># Install
+npm install --save-dev webpack-bundle-analyzer
+
+# Add to your webpack config
+const { BundleAnalyzerPlugin } = require(&#39;webpack-bundle-analyzer&#39;);
+
+module.exports = {
+  plugins: [new BundleAnalyzerPlugin()]
+};
+</code></pre>
+<h2>Advanced: Understanding the Package</h2>
+<h3>Package Structure</h3>
+<pre><code>react-native-heroui/
+├── lib/
+│   ├── module/           # ES Modules (tree-shakeable)
+│   │   ├── index.js      # Main entry point
+│   │   ├── components/   # Individual components
+│   │   ├── hooks/        # Shared hooks
+│   │   └── utils/        # Shared utilities
+│   └── typescript/       # Type definitions
+└── package.json
+</code></pre>
+<h3>package.json Configuration</h3>
+<pre><code class="language-json">{
+  &quot;main&quot;: &quot;lib/module/index.js&quot;,
+  &quot;module&quot;: &quot;lib/module/index.js&quot;,
+  &quot;types&quot;: &quot;lib/typescript/src/index.d.ts&quot;,
+  &quot;sideEffects&quot;: false
+}
+</code></pre>
+<p>The <code>&quot;sideEffects&quot;: false</code> tells bundlers that no files have side effects, making tree-shaking more aggressive.</p>
+<h2>FAQ</h2>
+<h3>Q: Do I need to configure my bundler?</h3>
+<p><strong>A:</strong> No! Tree-shaking works automatically with Metro (React Native&#39;s default bundler) and other modern bundlers.</p>
+<h3>Q: Can I use <code>import { Button } from &#39;react-native-heroui/button&#39;</code>?</h3>
+<p><strong>A:</strong> Not currently, but it&#39;s not needed. Named imports from the main package already provide optimal tree-shaking.</p>
+<h3>Q: Why is my bundle size larger than expected?</h3>
+<p><strong>A:</strong> Check:</p>
+<ol>
+<li>Are you using <code>import *</code> instead of named imports?</li>
+<li>Are you in development mode? (Production builds are smaller)</li>
+<li>Are you measuring minified + gzipped size?</li>
+</ol>
+<h3>Q: How do separate component packages compare?</h3>
+<p><strong>A:</strong> Some libraries offer separate packages like <code>@library/button</code>, <code>@library/card</code>. We chose a single package because:</p>
+<ul>
+<li>Modern tree-shaking makes separate packages unnecessary</li>
+<li>Simpler to install and manage</li>
+<li>No version conflicts between component packages</li>
+<li>Better developer experience</li>
+</ul>
+<h3>Q: Are there any components I should avoid importing?</h3>
+<p><strong>A:</strong> No! All components are optimized. Import what you need without worrying about size.</p>
+<h3>Q: What about peer dependencies?</h3>
+<p><strong>A:</strong> Only <code>react</code> and <code>react-native</code> which you already have in your project. No hidden dependencies that could bloat your bundle.</p>
+<h2>Performance Tips</h2>
+<ol>
+<li><strong>Import only what you use</strong> - Don&#39;t import entire component sets if you only need one</li>
+<li><strong>Use production builds</strong> - Run <code>react-native bundle</code> with <code>--dev false</code></li>
+<li><strong>Enable Hermes</strong> - React Native&#39;s Hermes engine optimizes bundle size</li>
+<li><strong>Measure regularly</strong> - Use bundle analyzers to track size over time</li>
+</ol>
+<h2>Real-World Example</h2>
+<h3>Before Optimization</h3>
+<pre><code class="language-tsx">// Importing everything &quot;just in case&quot;
+import {
+  Button, Card, Avatar, Badge, Chip, Switch,
+  Spinner, Skeleton, Radio, RadioGroup, Slider,
+  Select, Progress, Image, Spacer, Input,
+  Textarea, Divider, Accordion, Alert, Toast
+} from &#39;react-native-heroui&#39;;
+
+// Only using 3 components
+&lt;Button /&gt;
+&lt;Card /&gt;
+&lt;Avatar /&gt;
+</code></pre>
+<p><strong>Bundle size:</strong> ~60-80 KB</p>
+<h3>After Optimization</h3>
+<pre><code class="language-tsx">// Import only what you use
+import { Button, Card, Avatar } from &#39;react-native-heroui&#39;;
+
+&lt;Button /&gt;
+&lt;Card /&gt;
+&lt;Avatar /&gt;
+</code></pre>
+<p><strong>Bundle size:</strong> ~12-15 KB (4-5x smaller!)</p>
+<h2>Conclusion</h2>
+<p>Tree-shaking with React Native HeroUI is:</p>
+<ul>
+<li>✅ <strong>Automatic</strong> - No configuration needed</li>
+<li>✅ <strong>Efficient</strong> - Only bundle what you use</li>
+<li>✅ <strong>Simple</strong> - Just use named imports</li>
+<li>✅ <strong>Transparent</strong> - Use bundle analyzers to verify</li>
+</ul>
+<p>Focus on building great apps, and let the bundler handle optimization!</p>
+<hr>
+<p><strong>Need help?</strong> Check out our <a href="./README.md">documentation</a> or <a href="https://github.com/adityakmr7/react-native-heroui/issues">open an issue</a>.</p>
+
