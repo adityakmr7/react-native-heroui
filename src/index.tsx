@@ -102,6 +102,14 @@ export {
   type SpacerValue,
 } from './components/Spacer/Spacer';
 export {
+  InputOtp,
+  type InputOtpProps,
+  type InputOtpVariant,
+  type InputOtpColor,
+  type InputOtpSize,
+  type InputOtpRadius,
+} from './components/InputOtp/InputOtp';
+export {
   Accordion,
   AccordionItem,
   type AccordionProps,

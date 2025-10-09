@@ -26,6 +26,7 @@ import {
   Select,
   Progress,
   Spacer,
+  InputOtp,
   Accordion,
   AccordionItem,
   Alert,
@@ -51,6 +52,8 @@ function ComponentShowcase() {
   const [selectedCountry, setSelectedCountry] = React.useState('');
   const [progressValue, setProgressValue] = React.useState(0);
   const [message, setMessage] = React.useState('');
+  const [otpValue, setOtpValue] = React.useState('');
+  const [pinValue, setPinValue] = React.useState('');
 
   React.useEffect(() => {
     // Simulate content loading
@@ -849,6 +852,95 @@ function ComponentShowcase() {
               <Chip color="warning">Row 1</Chip>
               <Spacer x={8} />
               <Chip color="danger">Row 2</Chip>
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* InputOtp Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Input OTP Component
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 16 }}>
+            <View>
+              <Text
+                style={[{ color: theme.colors.foreground, marginBottom: 8 }]}
+              >
+                6-digit OTP (Primary):
+              </Text>
+              <InputOtp
+                length={6}
+                value={otpValue}
+                onChange={setOtpValue}
+                variant="bordered"
+                color="primary"
+                description="Enter the code sent to your phone"
+              />
+              {otpValue.length === 6 && (
+                <Text
+                  style={{
+                    color: theme.colors.success,
+                    marginTop: 8,
+                    fontSize: 14,
+                  }}
+                >
+                  ✓ Code entered: {otpValue}
+                </Text>
+              )}
+            </View>
+
+            <View>
+              <Text
+                style={[{ color: theme.colors.foreground, marginBottom: 8 }]}
+              >
+                4-digit PIN (Password):
+              </Text>
+              <InputOtp
+                length={4}
+                type="password"
+                value={pinValue}
+                onChange={setPinValue}
+                variant="flat"
+                color="secondary"
+                size="lg"
+                onComplete={(value) => {
+                  toast.success(`PIN completed: ${value}`);
+                }}
+              />
+            </View>
+
+            <View>
+              <Text
+                style={[{ color: theme.colors.foreground, marginBottom: 8 }]}
+              >
+                Variants:
+              </Text>
+              <View style={{ gap: 12 }}>
+                <InputOtp
+                  length={4}
+                  defaultValue="1234"
+                  variant="bordered"
+                  size="sm"
+                />
+                <InputOtp
+                  length={4}
+                  defaultValue="5678"
+                  variant="faded"
+                  color="success"
+                  size="sm"
+                />
+                <InputOtp
+                  length={4}
+                  defaultValue="9012"
+                  variant="underlined"
+                  color="warning"
+                  size="sm"
+                />
+              </View>
             </View>
           </CardBody>
         </Card>

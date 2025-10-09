@@ -8,6 +8,7 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Alert](./components/alert.html) - Feedback and notifications
 - [Button](./components/button.html) - Versatile button component
 - [Input](./components/input.html) - Text input with validation
+- [InputOtp](./components/inputotp.html) - OTP/PIN code input
 - [Card](./components/card.html) - Container component
 - [Avatar](./components/avatar.html) - User profile images
 - [Badge](./components/badge.html) - Status indicators
