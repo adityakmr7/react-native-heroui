@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip - React Native HeroUI</title>
+    <link rel="stylesheet" href="../_config.yml">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0066FF;
+            border-bottom: 3px solid #0066FF;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .badge {
+            display: inline-block;
+            background: #0066FF;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li:before {
+            content: "✓ ";
+            color: #0066FF;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tooltip Component <span class="badge">NEW</span></h1>
+        
+        <p>Display brief, informative messages that appear when users interact with elements. Optimized for mobile with press and long-press interactions.</p>
+
+        <h2>Features</h2>
+        <ul class="feature-list">
+            <li>12 placement options (top, bottom, left, right + variants)</li>
+            <li>6 color schemes with theme integration</li>
+            <li>3 sizes (sm, md, lg)</li>
+            <li>Arrow support pointing to trigger element</li>
+            <li>Smooth Reanimated animations (60fps+)</li>
+            <li>Press or long-press activation</li>
+            <li>Controlled and uncontrolled modes</li>
+            <li>Custom content support</li>
+            <li>Overlay background option</li>
+            <li>Full TypeScript support</li>
+        </ul>
+
+        <h2>Basic Usage</h2>
+        <pre><code>import { Tooltip, Button } from 'react-native-heroui';
+
+&lt;Tooltip content="Click to save your work" placement="top" showArrow&gt;
+  &lt;Button colorScheme="primary" onPress={() => save()}&gt;
+    Save
+  &lt;/Button&gt;
+&lt;/Tooltip&gt;</code></pre>
+
+        <h2>Action Types</h2>
+        
+        <h3>Long Press (Default)</h3>
+        <pre><code>&lt;Tooltip content="Tooltip hint"&gt;
+  &lt;Button onPress={handleClick}&gt;Click me&lt;/Button&gt;
+&lt;/Tooltip&gt;
+
+// Quick tap → Button action fires
+// Long press → Tooltip appears</code></pre>
+
+        <h3>Press</h3>
+        <pre><code>&lt;Tooltip content="Info text" actionType="press"&gt;
+  &lt;Button&gt;Info&lt;/Button&gt;
+&lt;/Tooltip&gt;
+
+// Tap → Tooltip appears</code></pre>
+
+        <h2>Variants</h2>
+        
+        <h3>Colors</h3>
+        <pre><code>&lt;Tooltip content="Success!" color="success" showArrow&gt;
+  &lt;Button colorScheme="success"&gt;Save&lt;/Button&gt;
+&lt;/Tooltip&gt;
+
+&lt;Tooltip content="Warning!" color="warning" showArrow&gt;
+  &lt;Button colorScheme="warning"&gt;Caution&lt;/Button&gt;
+&lt;/Tooltip&gt;
+
+&lt;Tooltip content="Danger!" color="danger" showArrow&gt;
+  &lt;Button colorScheme="danger"&gt;Delete&lt;/Button&gt;
+&lt;/Tooltip&gt;</code></pre>
+
+        <h3>Placements</h3>
+        <pre><code>&lt;Tooltip content="Top" placement="top"&gt;...&lt;/Tooltip&gt;
+&lt;Tooltip content="Bottom" placement="bottom"&gt;...&lt;/Tooltip&gt;
+&lt;Tooltip content="Left" placement="left"&gt;...&lt;/Tooltip&gt;
+&lt;Tooltip content="Right" placement="right"&gt;...&lt;/Tooltip&gt;
+
+// Also supports: top-start, top-end, bottom-start, bottom-end,
+// left-start, left-end, right-start, right-end</code></pre>
+
+        <h2>Props</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prop</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>content</td>
+                    <td>ReactNode</td>
+                    <td>required</td>
+                    <td>Tooltip content</td>
+                </tr>
+                <tr>
+                    <td>children</td>
+                    <td>ReactElement</td>
+                    <td>required</td>
+                    <td>Trigger element</td>
+                </tr>
+                <tr>
+                    <td>color</td>
+                    <td>TooltipColor</td>
+                    <td>"default"</td>
+                    <td>Color theme</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>TooltipSize</td>
+                    <td>"md"</td>
+                    <td>Size variant</td>
+                </tr>
+                <tr>
+                    <td>placement</td>
+                    <td>TooltipPlacement</td>
+                    <td>"top"</td>
+                    <td>Position</td>
+                </tr>
+                <tr>
+                    <td>showArrow</td>
+                    <td>boolean</td>
+                    <td>false</td>
+                    <td>Show arrow</td>
+                </tr>
+                <tr>
+                    <td>actionType</td>
+                    <td>"press" | "longPress"</td>
+                    <td>"longPress"</td>
+                    <td>Trigger method</td>
+                </tr>
+                <tr>
+                    <td>withOverlay</td>
+                    <td>boolean</td>
+                    <td>true</td>
+                    <td>Show backdrop</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Accessibility</h2>
+        <ul>
+            <li>Screen reader friendly</li>
+            <li>Proper ARIA attributes</li>
+            <li>Touch-optimized for mobile</li>
+            <li>Keyboard navigation support</li>
+        </ul>
+
+        <h2>Links</h2>
+        <ul>
+            <li><a href="tooltip.md">Markdown Documentation</a></li>
+            <li><a href="../index.html">Back to Components</a></li>
+        </ul>
+    </div>
+</body>
+</html>
+

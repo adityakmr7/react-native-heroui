@@ -1,34 +1,49 @@
 # React Native HeroUI Documentation
 
-Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all components in the library.
+Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **25 production-ready components** in the library.
 
 ## 📦 Components
 
-- [Accordion](./components/accordion.html) - Expandable content panels
-- [Alert](./components/alert.html) - Feedback and notifications
-- [Button](./components/button.html) - Versatile button component
+### Form & Input (9)
+
+- [Button](./components/button.html) - Versatile button with Reanimated animations ⚡
 - [Input](./components/input.html) - Text input with validation
 - [InputOtp](./components/inputotp.html) - OTP/PIN code input
+- [Textarea](./components/textarea.html) - Multi-line text input
+- [Checkbox](./components/checkbox.html) - Multi-selection control
+- [Radio](./components/radio.html) - Single selection radio group
+- [Switch](./components/switch.html) - Toggle switches
+- [Slider](./components/slider.html) - Range slider with Gesture Handler ⚡
+- [Select](./components/select.html) - Dropdown select
+
+### Layout (6)
+
 - [Card](./components/card.html) - Container component
+- [Divider](./components/divider.html) - Content separator
+- [Spacer](./components/spacer.html) - Layout spacing helper
+- [Modal](./components/modal.html) - Dialog with custom content
+- [Accordion](./components/accordion.html) - Expandable content panels
+- [Tabs](./components/tabs.html) - Tabbed navigation with animated cursor ⚡ **NEW**
+
+### Feedback (5)
+
+- [Alert](./components/alert.html) - Feedback and notifications
+- [Toast](./components/toast.html) - Temporary notifications
+- [Spinner](./components/spinner.html) - Loading indicator
+- [Progress](./components/progress.html) - Progress indicator
+- [Skeleton](./components/skeleton.html) - Loading placeholder
+
+### Data Display (5)
+
 - [Avatar](./components/avatar.html) - User profile images
 - [Badge](./components/badge.html) - Status indicators
-- [Checkbox](./components/checkbox.html) - Multi-selection control
 - [Chip](./components/chip.html) - Tag and category chips
-- [Divider](./components/divider.html) - Content separator
 - [Image](./components/image.html) - Image with loading & fallback
-- [Modal](./components/modal.html) - Dialog with custom content
-- [Progress](./components/progress.html) - Progress indicator
-- [Radio](./components/radio.html) - Single selection radio group
-- [Select](./components/select.html) - Dropdown select
-- [Skeleton](./components/skeleton.html) - Loading placeholder
-- [Slider](./components/slider.html) - Range slider
-- [Spacer](./components/spacer.html) - Layout spacing helper
-- [Spinner](./components/spinner.html) - Loading indicator
-- [Switch](./components/switch.html) - Toggle switches
-- [Textarea](./components/textarea.html) - Multi-line text input
-- [Toast](./components/toast.html) - Temporary notifications
+- [Tooltip](./components/tooltip.html) - Informative tooltips ⚡ **NEW**
 
 ## 🚀 Quick Start
+
+### Step 1: Install the library
 
 ```bash
 npm install react-native-heroui
@@ -36,19 +51,62 @@ npm install react-native-heroui
 yarn add react-native-heroui
 ```
 
+### Step 2: Install peer dependencies (for animations)
+
+```bash
+# For Expo projects
+npx expo install react-native-reanimated react-native-gesture-handler
+
+# For bare React Native projects
+npm install react-native-reanimated react-native-gesture-handler
+cd ios && pod install
+```
+
+### Step 3: Configure Babel
+
+Add Reanimated plugin to your `babel.config.js`:
+
+```js
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: ['react-native-reanimated/plugin'], // Must be last!
+};
+```
+
 ## 📖 Usage
 
 ```tsx
-import { HeroUIProvider, Button } from 'react-native-heroui';
+import { HeroUIProvider, Button, Tabs, Tab } from 'react-native-heroui';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function App() {
   return (
-    <HeroUIProvider>
-      <Button colorScheme="primary">Click Me</Button>
-    </HeroUIProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUIProvider>
+        <Button colorScheme="primary">Click Me</Button>
+
+        <Tabs>
+          <Tab tabKey="1" title="Tab 1">
+            Content 1
+          </Tab>
+          <Tab tabKey="2" title="Tab 2">
+            Content 2
+          </Tab>
+        </Tabs>
+      </HeroUIProvider>
+    </GestureHandlerRootView>
   );
 }
 ```
+
+## ⚡ Animated Components
+
+Components marked with ⚡ use **React Native Reanimated** for smooth 60fps+ animations:
+
+- Button - Press scale animation
+- Slider - Gesture Handler with scale feedback
+- Tabs - Animated cursor with spring physics
+- Tooltip - Fade and scale animations
 
 ## 🔗 Links
 

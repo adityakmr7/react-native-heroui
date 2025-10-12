@@ -41,6 +41,15 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
+        .header .component-count {
+            font-size: 20px;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
         .header p {
             font-size: 24px;
             opacity: 0.95;
@@ -324,11 +333,13 @@
 <body>
     <div class="header">
         <h1>🎨 React Native HeroUI</h1>
+        <div class="component-count">✨ 25 Production-Ready Components</div>
         <p>Beautiful, modern UI component library for React Native</p>
         <div class="badges">
             <span class="badge">React Native</span>
             <span class="badge">TypeScript</span>
-                <span class="badge">22+ Components</span>
+            <span class="badge">Reanimated</span>
+            <span class="badge">60fps Animations</span>
             <span class="badge">Dark Mode</span>
             <span class="badge">Accessible</span>
         </div>
@@ -621,16 +632,27 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                     </div>
                 </a>
 
-                <div class="component-card" style="border: 2px dashed #d0d7de; opacity: 0.7;">
-                    <div class="component-icon">➕</div>
-                    <h3 class="component-name">More Coming</h3>
-                    <p class="component-desc">We're constantly adding new components. Stay tuned!</p>
+                <a href="./components/tooltip.html" class="component-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                    <div class="component-icon">💬</div>
+                    <h3 class="component-name">Tooltip ✨ NEW</h3>
+                    <p class="component-desc" style="color: rgba(255,255,255,0.95);">Informative tooltips with press/long-press activation and smooth animations</p>
                     <div class="component-tags">
-                        <span class="tag">Modal</span>
-                        <span class="tag">Dropdown</span>
-                        <span class="tag">Tabs</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3);">12 placements</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3);">6 colors</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3);">60fps+</span>
                     </div>
-                </div>
+                </a>
+
+                <a href="./components/tabs.html" class="component-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <div class="component-icon">📑</div>
+                    <h3 class="component-name">Tabs ✨ NEW</h3>
+                    <p class="component-desc" style="color: rgba(255,255,255,0.95);">Tabbed navigation with animated cursor sliding between selections</p>
+                    <div class="component-tags">
+                        <span class="tag" style="background: rgba(255,255,255,0.3);">4 variants</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3);">Spring physics</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3);">Icons</span>
+                    </div>
+                </a>
             </div>
         </section>
 
@@ -656,7 +678,7 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                 </div>
                 <div class="feature-item">
                     <h3>⚡ Animated</h3>
-                    <p>Smooth, performant animations using React Native Animated API</p>
+                    <p>Smooth 60fps+ animations powered by React Native Reanimated</p>
                 </div>
                 <div class="feature-item">
                     <h3>🎛️ Customizable</h3>
@@ -669,22 +691,51 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
         <section class="section" id="installation">
             <h2 class="section-title">📥 Installation</h2>
             <p class="section-desc">Get started with React Native HeroUI in seconds</p>
+            
+            <h3 style="margin-top: 20px; margin-bottom: 10px;">Step 1: Install the library</h3>
             <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>npm install react-native-heroui
 # or
 yarn add react-native-heroui
 # or
 pnpm add react-native-heroui</code></pre>
+
+            <h3 style="margin-top: 30px; margin-bottom: 10px;">Step 2: Install peer dependencies (for animations)</h3>
+            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code># For Expo projects
+npx expo install react-native-reanimated react-native-gesture-handler
+
+# For bare React Native projects
+npm install react-native-reanimated react-native-gesture-handler
+cd ios && pod install</code></pre>
             
-            <h3 style="margin-top: 30px; margin-bottom: 10px;">Basic Usage</h3>
-            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>import { HeroUIProvider, Button } from 'react-native-heroui';
+            <h3 style="margin-top: 30px; margin-bottom: 10px;">Step 3: Configure Babel</h3>
+            <p class="section-desc" style="margin-bottom: 10px;">Add Reanimated plugin to your <code>babel.config.js</code>:</p>
+            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: ['react-native-reanimated/plugin'], // Must be last!
+};</code></pre>
+
+            <h3 style="margin-top: 30px; margin-bottom: 10px;">Step 4: Basic Usage</h3>
+            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>import { HeroUIProvider, Button, Tabs, Tab } from 'react-native-heroui';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function App() {
   return (
-    &lt;HeroUIProvider&gt;
-      &lt;Button colorScheme="primary"&gt;Click Me&lt;/Button&gt;
-    &lt;/HeroUIProvider&gt;
+    &lt;GestureHandlerRootView style={{ flex: 1 }}&gt;
+      &lt;HeroUIProvider&gt;
+        &lt;Button colorScheme="primary"&gt;Click Me&lt;/Button&gt;
+        
+        &lt;Tabs&gt;
+          &lt;Tab tabKey="1" title="Tab 1"&gt;Content 1&lt;/Tab&gt;
+          &lt;Tab tabKey="2" title="Tab 2"&gt;Content 2&lt;/Tab&gt;
+        &lt;/Tabs&gt;
+      &lt;/HeroUIProvider&gt;
+    &lt;/GestureHandlerRootView&gt;
   );
 }</code></pre>
+
+            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-top: 20px; border-radius: 4px;">
+                <strong>💡 Note:</strong> Some components (Button, Slider, Tabs, Tooltip) use React Native Reanimated for smooth 60fps+ animations. Make sure to follow the setup steps above for the best experience!
+            </div>
         </section>
     </div>
 

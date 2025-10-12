@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs - React Native HeroUI</title>
+    <link rel="stylesheet" href="../_config.yml">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0066FF;
+            border-bottom: 3px solid #0066FF;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .badge {
+            display: inline-block;
+            background: #0066FF;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li:before {
+            content: "✓ ";
+            color: #0066FF;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tabs Component <span class="badge">NEW</span></h1>
+        
+        <p>Tabs organize content into multiple sections with smooth animations. Navigate between different views with an animated cursor that slides between selections.</p>
+
+        <h2>Features</h2>
+        <ul class="feature-list">
+            <li>4 visual variants (solid, underlined, bordered, light)</li>
+            <li>6 color schemes matching your theme</li>
+            <li>3 sizes (sm, md, lg)</li>
+            <li>Animated cursor with spring physics (60fps+)</li>
+            <li>Icon support for tabs</li>
+            <li>Full width tabs option</li>
+            <li>Disabled tabs support</li>
+            <li>Controlled and uncontrolled modes</li>
+            <li>Top/bottom placement</li>
+            <li>Powered by React Native Reanimated</li>
+        </ul>
+
+        <h2>Basic Usage</h2>
+        <pre><code>import { Tabs, Tab } from 'react-native-heroui';
+
+&lt;Tabs variant="solid" color="primary"&gt;
+  &lt;Tab tabKey="profile" title="Profile"&gt;
+    &lt;Text&gt;Profile content&lt;/Text&gt;
+  &lt;/Tab&gt;
+  &lt;Tab tabKey="settings" title="Settings"&gt;
+    &lt;Text&gt;Settings content&lt;/Text&gt;
+  &lt;/Tab&gt;
+  &lt;Tab tabKey="notifications" title="Notifications"&gt;
+    &lt;Text&gt;Notifications content&lt;/Text&gt;
+  &lt;/Tab&gt;
+&lt;/Tabs&gt;</code></pre>
+
+        <h2>Variants</h2>
+        
+        <h3>Solid (Default)</h3>
+        <p>Filled background with animated cursor sliding behind tabs.</p>
+        <pre><code>&lt;Tabs variant="solid" color="primary"&gt;
+  &lt;Tab tabKey="1" title="Tab 1"&gt;Content 1&lt;/Tab&gt;
+  &lt;Tab tabKey="2" title="Tab 2"&gt;Content 2&lt;/Tab&gt;
+&lt;/Tabs&gt;</code></pre>
+
+        <h3>Underlined</h3>
+        <p>Clean minimal design with sliding underline.</p>
+        <pre><code>&lt;Tabs variant="underlined" color="secondary"&gt;
+  &lt;Tab tabKey="1" title="Tab 1"&gt;Content 1&lt;/Tab&gt;
+  &lt;Tab tabKey="2" title="Tab 2"&gt;Content 2&lt;/Tab&gt;
+&lt;/Tabs&gt;</code></pre>
+
+        <h3>Bordered</h3>
+        <p>Outlined style with border color change on selection.</p>
+        <pre><code>&lt;Tabs variant="bordered" color="success"&gt;
+  &lt;Tab tabKey="1" title="Tab 1"&gt;Content 1&lt;/Tab&gt;
+  &lt;Tab tabKey="2" title="Tab 2"&gt;Content 2&lt;/Tab&gt;
+&lt;/Tabs&gt;</code></pre>
+
+        <h3>Light</h3>
+        <p>Subtle background tint on selection.</p>
+        <pre><code>&lt;Tabs variant="light" color="warning"&gt;
+  &lt;Tab tabKey="1" title="Tab 1"&gt;Content 1&lt;/Tab&gt;
+  &lt;Tab tabKey="2" title="Tab 2"&gt;Content 2&lt;/Tab&gt;
+&lt;/Tabs&gt;</code></pre>
+
+        <h2>With Icons</h2>
+        <pre><code>&lt;Tabs&gt;
+  &lt;Tab tabKey="photos" title="Photos" icon={&lt;Text&gt;📷&lt;/Text&gt;}&gt;
+    &lt;Text&gt;Photo gallery&lt;/Text&gt;
+  &lt;/Tab&gt;
+  &lt;Tab tabKey="videos" title="Videos" icon={&lt;Text&gt;🎬&lt;/Text&gt;}&gt;
+    &lt;Text&gt;Video library&lt;/Text&gt;
+  &lt;/Tab&gt;
+&lt;/Tabs&gt;</code></pre>
+
+        <h2>Controlled Tabs</h2>
+        <pre><code>function MyTabs() {
+  const [selected, setSelected] = useState('profile');
+
+  return (
+    &lt;Tabs
+      selectedKey={selected}
+      onSelectionChange={setSelected}
+    &gt;
+      &lt;Tab tabKey="profile" title="Profile"&gt;...&lt;/Tab&gt;
+      &lt;Tab tabKey="settings" title="Settings"&gt;...&lt;/Tab&gt;
+    &lt;/Tabs&gt;
+  );
+}</code></pre>
+
+        <h2>Animation Details</h2>
+        <p>The Tabs component features smooth animations powered by React Native Reanimated:</p>
+        <ul>
+            <li><strong>Animated Cursor:</strong> Smoothly slides between tabs with spring physics</li>
+            <li><strong>60fps+ Performance:</strong> Runs on UI thread</li>
+            <li><strong>Spring Configuration:</strong> damping: 20, stiffness: 200</li>
+            <li><strong>Natural Feel:</strong> Matches native platform animations</li>
+        </ul>
+
+        <h2>Props Reference</h2>
+        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f4f4f4;">
+                    <th>Prop</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>variant</td>
+                    <td>TabsVariant</td>
+                    <td>"solid"</td>
+                    <td>Visual variant</td>
+                </tr>
+                <tr>
+                    <td>color</td>
+                    <td>TabsColor</td>
+                    <td>"primary"</td>
+                    <td>Color theme</td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>TabsSize</td>
+                    <td>"md"</td>
+                    <td>Size variant</td>
+                </tr>
+                <tr>
+                    <td>fullWidth</td>
+                    <td>boolean</td>
+                    <td>false</td>
+                    <td>Full width tabs</td>
+                </tr>
+                <tr>
+                    <td>placement</td>
+                    <td>TabsPlacement</td>
+                    <td>"top"</td>
+                    <td>Position of tabs</td>
+                </tr>
+                <tr>
+                    <td>selectedKey</td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>Controlled state</td>
+                </tr>
+                <tr>
+                    <td>onSelectionChange</td>
+                    <td>(key: string) => void</td>
+                    <td>-</td>
+                    <td>Change handler</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Accessibility</h2>
+        <ul>
+            <li>Proper tab roles and ARIA attributes</li>
+            <li>Screen reader friendly</li>
+            <li>Keyboard navigation support</li>
+            <li>Focus management</li>
+        </ul>
+
+        <h2>Links</h2>
+        <ul>
+            <li><a href="tabs.md">Full Markdown Documentation</a></li>
+            <li><a href="../index.html">Back to All Components</a></li>
+            <li><a href="https://www.heroui.com/docs/components/tabs">HeroUI Tabs Reference</a></li>
+        </ul>
+    </div>
+</body>
+</html>
+
