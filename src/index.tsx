@@ -162,6 +162,18 @@ export {
   type TooltipPlacement,
   type TooltipActionType,
 } from './components/Tooltip/Tooltip';
+export {
+  Tabs,
+  Tab,
+  type TabsProps,
+  type TabProps,
+  type TabItem,
+  type TabsVariant,
+  type TabsColor,
+  type TabsSize,
+  type TabsRadius,
+  type TabsPlacement,
+} from './components/Tabs/Tabs';
 
 // Providers
 export {

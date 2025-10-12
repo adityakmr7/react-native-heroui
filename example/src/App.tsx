@@ -37,6 +37,8 @@ import {
   AccordionItem,
   Alert,
   Tooltip,
+  Tabs,
+  Tab,
   useTheme,
 } from 'react-native-heroui';
 
@@ -1328,6 +1330,204 @@ function ComponentShowcase() {
                 variant="bordered"
                 isClosable
               />
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* Tabs Component */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Tabs - Navigation
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Tabs defaultSelectedKey="profile" color="primary" variant="solid">
+              <Tab tabKey="profile" title="Profile">
+                <View style={{ padding: 16 }}>
+                  <Text
+                    style={{
+                      color: theme.colors.foreground,
+                      fontSize: 16,
+                      fontWeight: '600',
+                    }}
+                  >
+                    Profile Settings
+                  </Text>
+                  <Spacer y={2} />
+                  <Text style={{ color: theme.colors['default-600'] }}>
+                    Manage your profile information and preferences here.
+                  </Text>
+                </View>
+              </Tab>
+              <Tab tabKey="settings" title="Settings">
+                <View style={{ padding: 16 }}>
+                  <Text
+                    style={{
+                      color: theme.colors.foreground,
+                      fontSize: 16,
+                      fontWeight: '600',
+                    }}
+                  >
+                    Application Settings
+                  </Text>
+                  <Spacer y={2} />
+                  <Text style={{ color: theme.colors['default-600'] }}>
+                    Configure your application preferences and options.
+                  </Text>
+                </View>
+              </Tab>
+              <Tab tabKey="notifications" title="Notifications">
+                <View style={{ padding: 16 }}>
+                  <Text
+                    style={{
+                      color: theme.colors.foreground,
+                      fontSize: 16,
+                      fontWeight: '600',
+                    }}
+                  >
+                    Notification Preferences
+                  </Text>
+                  <Spacer y={2} />
+                  <Text style={{ color: theme.colors['default-600'] }}>
+                    Control what notifications you receive and how.
+                  </Text>
+                </View>
+              </Tab>
+            </Tabs>
+          </CardBody>
+        </Card>
+
+        {/* Tabs Variants */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Tabs - Variants
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 24 }}>
+            <View>
+              <Text
+                style={{ color: theme.colors['default-600'], marginBottom: 8 }}
+              >
+                Underlined:
+              </Text>
+              <Tabs variant="underlined" color="secondary">
+                <Tab tabKey="photos" title="Photos">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Your photo gallery
+                  </Text>
+                </Tab>
+                <Tab tabKey="videos" title="Videos">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Your video collection
+                  </Text>
+                </Tab>
+                <Tab tabKey="music" title="Music">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Your music library
+                  </Text>
+                </Tab>
+              </Tabs>
+            </View>
+
+            <View>
+              <Text
+                style={{ color: theme.colors['default-600'], marginBottom: 8 }}
+              >
+                Bordered:
+              </Text>
+              <Tabs variant="bordered" color="success">
+                <Tab tabKey="all" title="All">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    All items
+                  </Text>
+                </Tab>
+                <Tab tabKey="active" title="Active">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Active items only
+                  </Text>
+                </Tab>
+                <Tab tabKey="archived" title="Archived">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Archived items
+                  </Text>
+                </Tab>
+              </Tabs>
+            </View>
+
+            <View>
+              <Text
+                style={{ color: theme.colors['default-600'], marginBottom: 8 }}
+              >
+                Light:
+              </Text>
+              <Tabs variant="light" color="warning">
+                <Tab tabKey="inbox" title="Inbox">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Your inbox messages
+                  </Text>
+                </Tab>
+                <Tab tabKey="sent" title="Sent">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Sent messages
+                  </Text>
+                </Tab>
+                <Tab tabKey="drafts" title="Drafts">
+                  <Text
+                    style={{
+                      color: theme.colors['default-600'],
+                      marginTop: 12,
+                    }}
+                  >
+                    Draft messages
+                  </Text>
+                </Tab>
+              </Tabs>
             </View>
           </CardBody>
         </Card>

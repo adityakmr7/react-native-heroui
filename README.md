@@ -7,7 +7,7 @@ A beautiful, modern, and fully-featured React Native UI component library inspir
 
 ## ✨ Features
 
-- 🎯 **24+ Production-Ready Components** - Button, Input, InputOtp, Textarea, Modal, Card, Avatar, Badge, Chip, Switch, Spinner, Skeleton, Radio, Slider, Select, Progress, Image, Spacer, Accordion, Alert, Toast, Tooltip, and more
+- 🎯 **25+ Production-Ready Components** - Button, Input, InputOtp, Textarea, Modal, Card, Avatar, Badge, Chip, Switch, Spinner, Skeleton, Radio, Slider, Select, Progress, Image, Spacer, Accordion, Alert, Toast, Tooltip, Tabs, and more
 - 🌗 **Dark Mode Support** - Built-in light and dark themes
 - 🎨 **Fully Customizable** - Comprehensive design token system
 - ♿️ **Accessibility First** - ARIA support and screen reader friendly
@@ -25,9 +25,50 @@ A beautiful, modern, and fully-featured React Native UI component library inspir
 ## 📦 Installation
 
 ```bash
-npm install react-native-heroui
-# or
-yarn add react-native-heroui
+# Install the library and required peer dependencies
+npm install react-native-heroui react-native-reanimated react-native-gesture-handler
+
+# or with yarn
+yarn add react-native-heroui react-native-reanimated react-native-gesture-handler
+
+# or with Expo
+npx expo install react-native-heroui react-native-reanimated react-native-gesture-handler
+```
+
+### ⚙️ Setup
+
+**1. Update `babel.config.js`:**
+
+```javascript
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
+  plugins: [
+    'react-native-reanimated/plugin', // Must be last!
+  ],
+};
+```
+
+**2. Wrap your app with GestureHandlerRootView:**
+
+```tsx
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { HeroUIProvider } from 'react-native-heroui';
+
+function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUIProvider>
+        <YourApp />
+      </HeroUIProvider>
+    </GestureHandlerRootView>
+  );
+}
+```
+
+**3. Clear cache and start:**
+
+```bash
+npx expo start -c
 ```
 
 ## 🌳 Tree-Shaking & Bundle Size
