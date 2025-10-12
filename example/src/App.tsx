@@ -35,6 +35,7 @@ import {
   Accordion,
   AccordionItem,
   Alert,
+  Tooltip,
   useTheme,
 } from 'react-native-heroui';
 
@@ -1326,6 +1327,72 @@ function ComponentShowcase() {
                 variant="bordered"
                 isClosable
               />
+            </View>
+          </CardBody>
+        </Card>
+
+        {/* Tooltip Examples */}
+        <Card variant="elevated" style={styles.section}>
+          <CardHeader>
+            <Text
+              style={[styles.sectionTitle, { color: theme.colors.foreground }]}
+            >
+              Tooltips
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Text
+              style={[
+                styles.helperText,
+                { color: theme.colors['default-600'], marginBottom: 16 },
+              ]}
+            >
+              Long press (press and hold) buttons to see tooltips
+            </Text>
+            <View style={styles.buttonGrid}>
+              <Tooltip content="Click to save your work" placement="top">
+                <Button size="sm" colorScheme="primary">
+                  Save
+                </Button>
+              </Tooltip>
+              <Tooltip
+                content="Delete this item"
+                placement="top"
+                color="danger"
+                showArrow
+              >
+                <Button size="sm" colorScheme="danger">
+                  Delete
+                </Button>
+              </Tooltip>
+              <Tooltip
+                content="Edit your profile"
+                placement="bottom"
+                color="secondary"
+              >
+                <Button size="sm" colorScheme="secondary">
+                  Edit
+                </Button>
+              </Tooltip>
+              <Tooltip
+                content="Share with friends"
+                placement="right"
+                color="success"
+                showArrow
+              >
+                <Button size="sm" colorScheme="success">
+                  Share
+                </Button>
+              </Tooltip>
+              <Tooltip
+                content="View more information about this feature"
+                placement="top"
+                size="lg"
+              >
+                <Button size="sm" variant="outline">
+                  Info
+                </Button>
+              </Tooltip>
             </View>
           </CardBody>
         </Card>

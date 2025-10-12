@@ -154,6 +154,14 @@ export {
   type ToastPlacement,
   type ToastProviderProps,
 } from './components/Toast/Toast';
+export {
+  Tooltip,
+  type TooltipProps,
+  type TooltipColor,
+  type TooltipSize,
+  type TooltipPlacement,
+  type TooltipActionType,
+} from './components/Tooltip/Tooltip';
 
 // Providers
 export {
