@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   HeroUIProvider,
   ToastProvider,
@@ -1475,11 +1476,13 @@ function ComponentShowcase() {
 
 function App() {
   return (
-    <HeroUIProvider initialTheme="light">
-      <ToastProvider placement="bottom-right" maxVisibleToasts={3}>
-        <ComponentShowcase />
-      </ToastProvider>
-    </HeroUIProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUIProvider initialTheme="light">
+        <ToastProvider placement="bottom-right" maxVisibleToasts={3}>
+          <ComponentShowcase />
+        </ToastProvider>
+      </HeroUIProvider>
+    </GestureHandlerRootView>
   );
 }
 

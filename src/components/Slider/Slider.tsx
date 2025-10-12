@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  PanResponder,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
+  type LayoutChangeEvent,
 } from 'react-native';
+// @ts-ignore - peer dependency
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  runOnJS,
+  withSpring,
+  // @ts-ignore - peer dependency
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type SliderColor =
@@ -93,6 +102,11 @@ export const Slider = React.forwardRef<View, SliderProps>(
     const isControlled = controlledValue !== undefined;
     const currentValue = isControlled ? controlledValue : internalValue;
 
+    // Shared values for smooth animations
+    const thumbPosition = useSharedValue(0);
+    const thumbScale = useSharedValue(1);
+    const savedPosition = useSharedValue(0);
+
     const sizeMap = {
       sm: {
         track: 2,
@@ -115,40 +129,141 @@ export const Slider = React.forwardRef<View, SliderProps>(
 
     const colorValue = getColorValue();
 
-    const valueToPosition = (val: number) => {
-      const percentage = (val - minValue) / (maxValue - minValue);
-      return percentage * containerWidth;
-    };
+    const valueToPosition = useCallback(
+      (val: number) => {
+        const percentage = (val - minValue) / (maxValue - minValue);
+        return percentage * containerWidth;
+      },
+      [minValue, maxValue, containerWidth]
+    );
 
-    const positionToValue = (position: number) => {
-      const percentage = position / containerWidth;
-      const rawValue = percentage * (maxValue - minValue) + minValue;
-      const steppedValue = Math.round(rawValue / step) * step;
-      return Math.max(minValue, Math.min(maxValue, steppedValue));
-    };
+    // Update thumb position when value changes
+    useEffect(() => {
+      if (containerWidth > 0) {
+        const position = valueToPosition(currentValue);
+        thumbPosition.value = withSpring(position, {
+          damping: 20,
+          stiffness: 200,
+        });
+        savedPosition.value = position;
+      }
+    }, [currentValue, containerWidth, valueToPosition]);
 
-    const panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => !isDisabled,
-      onMoveShouldSetPanResponder: () => !isDisabled,
-      onPanResponderGrant: (_, gestureState) => {
-        const newValue = positionToValue(gestureState.x0);
+    // Callback to update value (runs on JS thread)
+    const updateValue = useCallback(
+      (newValue: number) => {
         if (!isControlled) {
           setInternalValue(newValue);
         }
         onChange?.(newValue);
       },
-      onPanResponderMove: (_, gestureState) => {
-        const newValue = positionToValue(
-          gestureState.moveX - gestureState.x0 + valueToPosition(currentValue)
+      [isControlled, onChange]
+    );
+
+    const handleChangeEnd = useCallback(
+      (finalValue: number) => {
+        onChangeEnd?.(finalValue);
+      },
+      [onChangeEnd]
+    );
+
+    // Pan gesture for dragging the thumb
+    const panGesture = Gesture.Pan()
+      .enabled(!isDisabled)
+      .onStart(() => {
+        'worklet';
+        savedPosition.value = thumbPosition.value;
+        // Scale up thumb for visual feedback
+        thumbScale.value = withSpring(1.4, {
+          damping: 15,
+          stiffness: 200,
+        });
+      })
+      .onUpdate((event: any) => {
+        'worklet';
+        const newPosition = Math.max(
+          0,
+          Math.min(containerWidth, savedPosition.value + event.translationX)
         );
-        if (!isControlled) {
-          setInternalValue(newValue);
-        }
-        onChange?.(newValue);
-      },
-      onPanResponderRelease: () => {
-        onChangeEnd?.(currentValue);
-      },
+        thumbPosition.value = newPosition;
+
+        // Calculate value in worklet (avoid JS bridge)
+        const percentage = newPosition / containerWidth;
+        const rawValue = percentage * (maxValue - minValue) + minValue;
+        const steppedValue = Math.round(rawValue / step) * step;
+        const newValue = Math.max(minValue, Math.min(maxValue, steppedValue));
+
+        runOnJS(updateValue)(newValue);
+      })
+      .onEnd(() => {
+        'worklet';
+        // Scale back to normal
+        thumbScale.value = withSpring(1, {
+          damping: 15,
+          stiffness: 200,
+        });
+        savedPosition.value = thumbPosition.value;
+
+        // Calculate final value in worklet
+        const percentage = thumbPosition.value / containerWidth;
+        const rawValue = percentage * (maxValue - minValue) + minValue;
+        const steppedValue = Math.round(rawValue / step) * step;
+        const finalValue = Math.max(minValue, Math.min(maxValue, steppedValue));
+
+        runOnJS(handleChangeEnd)(finalValue);
+      });
+
+    // Tap gesture for jumping to position
+    const tapGesture = Gesture.Tap()
+      .enabled(!isDisabled)
+      .onEnd((event: any) => {
+        'worklet';
+        const newPosition = Math.max(0, Math.min(containerWidth, event.x));
+
+        // Smooth spring animation to new position
+        thumbPosition.value = withSpring(newPosition, {
+          damping: 20,
+          stiffness: 200,
+        });
+        savedPosition.value = newPosition;
+
+        // Briefly scale up for feedback
+        thumbScale.value = withSpring(1.2, {
+          damping: 10,
+          stiffness: 300,
+        });
+        thumbScale.value = withSpring(1, {
+          damping: 15,
+          stiffness: 200,
+        });
+
+        // Calculate value in worklet
+        const percentage = newPosition / containerWidth;
+        const rawValue = percentage * (maxValue - minValue) + minValue;
+        const steppedValue = Math.round(rawValue / step) * step;
+        const newValue = Math.max(minValue, Math.min(maxValue, steppedValue));
+
+        runOnJS(updateValue)(newValue);
+        runOnJS(handleChangeEnd)(newValue);
+      });
+
+    // Combine gestures - Pan takes priority over Tap
+    const composedGesture = Gesture.Race(panGesture, tapGesture);
+
+    // Animated styles
+    const animatedThumbStyle = useAnimatedStyle(() => {
+      return {
+        transform: [
+          { translateX: thumbPosition.value - sizeMap[size].thumb / 2 },
+          { scale: thumbScale.value },
+        ],
+      };
+    });
+
+    const animatedFilledTrackStyle = useAnimatedStyle(() => {
+      return {
+        width: thumbPosition.value,
+      };
     });
 
     const displayValue = formatValue
@@ -199,15 +314,11 @@ export const Slider = React.forwardRef<View, SliderProps>(
         backgroundColor: colorValue,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        elevation: 3,
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 4,
       },
     });
-
-    const thumbPosition =
-      valueToPosition(currentValue) - sizeMap[size].thumb / 2;
-    const filledWidth = valueToPosition(currentValue);
 
     return (
       <View
@@ -227,23 +338,26 @@ export const Slider = React.forwardRef<View, SliderProps>(
             )}
           </View>
         )}
-        <View
-          style={[styles.trackContainer, classNames?.track]}
-          onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
-          {...panResponder.panHandlers}
-        >
-          <View style={styles.track} />
+        <GestureDetector gesture={composedGesture}>
           <View
-            style={[
-              styles.filledTrack,
-              classNames?.filledTrack,
-              { width: filledWidth },
-            ]}
-          />
-          <View
-            style={[styles.thumb, classNames?.thumb, { left: thumbPosition }]}
-          />
-        </View>
+            style={[styles.trackContainer, classNames?.track]}
+            onLayout={(e: LayoutChangeEvent) =>
+              setContainerWidth(e.nativeEvent.layout.width)
+            }
+          >
+            <View style={styles.track} />
+            <Animated.View
+              style={[
+                styles.filledTrack,
+                classNames?.filledTrack,
+                animatedFilledTrackStyle,
+              ]}
+            />
+            <Animated.View
+              style={[styles.thumb, classNames?.thumb, animatedThumbStyle]}
+            />
+          </View>
+        </GestureDetector>
       </View>
     );
   }
