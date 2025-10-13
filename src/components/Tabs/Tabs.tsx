@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
-  ScrollView,
   type ViewStyle,
   type TextStyle,
   type StyleProp,
@@ -121,7 +120,7 @@ export const Tabs: React.FC<TabsProps> = ({
   disabledKeys = [],
   isDisabled = false,
   disableCursorAnimation = false,
-  disableAnimation = false,
+  // disableAnimation = false, // Reserved for future use
   destroyInactiveTabPanel = true,
   onSelectionChange,
   classNames,
@@ -337,7 +336,7 @@ export const Tabs: React.FC<TabsProps> = ({
               style={[styles.cursor, classNames?.cursor, cursorStyle]}
             />
           )}
-          {tabs.map((tab, index) => {
+          {tabs.map((tab) => {
             const isSelected = tab.key === selectedKey;
             const isTabDisabled =
               tab.isDisabled || disabledKeys.includes(tab.key);
