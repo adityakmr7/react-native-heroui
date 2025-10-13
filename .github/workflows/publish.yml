@@ -1,0 +1,92 @@
+name: Publish Package
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      registry:
+        description: "Registry to publish to"
+        required: true
+        type: choice
+        options:
+          - npm
+          - github
+          - both
+
+jobs:
+  publish-npm:
+    if: github.event_name == 'release' || github.event.inputs.registry == 'npm' || github.event.inputs.registry == 'both'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Build package
+        run: yarn prepare
+
+      - name: Setup .npmrc for npm registry
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github:
+    if: github.event_name == 'release' || github.event.inputs.registry == 'github' || github.event.inputs.registry == 'both'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Build package
+        run: yarn prepare
+
+      - name: Setup .npmrc for GitHub Packages
+        run: |
+          echo "@adityakmr7:registry=https://npm.pkg.github.com" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+
+      - name: Update package.json for GitHub Packages
+        run: |
+          # Ensure package name is scoped
+          node -e "
+            const pkg = require('./package.json');
+            if (!pkg.name.startsWith('@')) {
+              pkg.name = '@adityakmr7/' + pkg.name;
+            }
+            pkg.publishConfig = {
+              registry: 'https://npm.pkg.github.com'
+            };
+            require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    needs: [publish-npm, publish-github]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify publish status
+        run: |
+          echo "📦 Package published successfully!"
+          echo "npm: ${{ needs.publish-npm.result }}"
+          echo "GitHub Packages: ${{ needs.publish-github.result }}"
