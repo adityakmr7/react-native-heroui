@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React Native HeroUI - Documentation</title>
-    <meta name="description" content="Beautiful, modern React Native UI component library inspired by HeroUI">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <title>React Native HeroUI - Make beautiful apps regardless of your design experience</title>
+    <meta name="description" content="Beautiful, fast and modern React Native UI library for building accessible and customizable mobile applications.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,188 +15,552 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background-color: #ffffff;
-            color: #24292e;
-            line-height: 1.6;
+        :root {
+            --primary: #0072F5;
+            --secondary: #7828C8;
+            --success: #17C964;
+            --warning: #F5A524;
+            --danger: #F31260;
+            --background: #FFFFFF;
+            --foreground: #11181C;
+            --content1: #FFFFFF;
+            --content2: #F4F4F5;
+            --content3: #E4E4E7;
+            --divider: #E4E4E7;
+            --radius: 12px;
         }
 
-        .dark-mode {
-            background-color: #0d1117;
-            color: #c9d1d9;
+        .dark {
+            --primary: #006FEE;
+            --secondary: #9353D3;
+            --success: #17C964;
+            --warning: #F5A524;
+            --danger: #F31260;
+            --background: #000000;
+            --foreground: #ECEDEE;
+            --content1: #18181B;
+            --content2: #27272A;
+            --content3: #3F3F46;
+            --divider: #27272A;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: 500;
+            font-size: 14px;
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .header h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .header .component-count {
-            font-size: 20px;
-            background: rgba(255,255,255,0.3);
-            padding: 8px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .header p {
-            font-size: 24px;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-
-        .badges {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .badge {
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Navigation */
-        .nav {
-            background-color: #f6f8fa;
-            border-bottom: 1px solid #d0d7de;
-            padding: 15px 20px;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--divider);
+            padding: 16px 0;
+        }
+
+        .dark .header {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
-        .dark-mode .nav {
-            background-color: #161b22;
-            border-bottom-color: #30363d;
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 32px;
+            align-items: center;
         }
 
         .nav-links a {
-            color: #0969da;
+            color: var(--foreground);
             text-decoration: none;
             font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: background-color 0.2s;
-        }
-
-        .dark-mode .nav-links a {
-            color: #58a6ff;
+            transition: color 0.2s;
+            font-size: 14px;
         }
 
         .nav-links a:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--primary);
         }
 
         .theme-toggle {
-            background: none;
-            border: 1px solid #d0d7de;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background: var(--content2);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        .dark-mode .theme-toggle {
-            border-color: #30363d;
-            color: #c9d1d9;
+            font-size: 18px;
+            transition: transform 0.2s;
         }
 
         .theme-toggle:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(1.1);
         }
 
-        /* Container */
-        .container {
-            max-width: 1400px;
+        /* Hero Section */
+        .hero {
+            padding: 120px 24px 80px;
+            text-align: center;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
         }
 
-        /* Section */
-        .section {
-            margin-bottom: 60px;
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--foreground);
+            opacity: 0.7;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 14px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 114, 245, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--content2);
+            color: var(--foreground);
+            padding: 14px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        .install-command {
+            background: var(--content1);
+            border: 1px solid var(--divider);
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            margin-top: 40px;
+            display: inline-block;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 80px 24px;
+            background: var(--content1);
         }
 
         .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            background: var(--content2);
+            border-radius: var(--radius);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
             font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .section-desc {
+        .feature-card p {
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        /* Theming Section */
+        .theming-section {
+            padding: 80px 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .theming-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .theming-text h2 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .theme-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .theme-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--content2);
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .theme-tab.active {
+            border-color: var(--primary);
+            background: var(--content1);
+        }
+
+        .code-preview {
+            background: var(--content2);
+            border-radius: var(--radius);
+            padding: 24px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .preview-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: var(--radius);
+            padding: 32px;
+            color: white;
+        }
+
+        /* Accessibility Section */
+        .accessibility-section {
+            padding: 80px 24px;
+            background: var(--content1);
+        }
+
+        .accessibility-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .accessibility-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .a11y-badge {
+            background: var(--content2);
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Dark Mode Section */
+        .dark-mode-section {
+            padding: 80px 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dark-mode-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        /* Customization Section */
+        .customization-section {
+            padding: 80px 24px;
+            background: var(--content1);
+        }
+
+        .customization-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .custom-button-demo {
+            margin: 40px 0;
+            padding: 60px;
+            background: var(--content2);
+            border-radius: var(--radius);
+        }
+
+        .press-me-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 48px;
+            border-radius: 50px;
+            border: none;
             font-size: 18px;
-            color: #6e7681;
-            margin-bottom: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: visible;
+            transition: transform 0.3s;
         }
 
-        .dark-mode .section-desc {
-            color: #8b949e;
+        .press-me-btn:hover {
+            transform: translateY(-4px);
         }
 
-        /* Component Grid */
-        .component-grid {
+        /* Features Last Section */
+        .features-last-section {
+            padding: 80px 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-last-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .feature-last-card {
+            padding: 24px;
+            background: var(--content2);
+            border-radius: var(--radius);
+        }
+
+        .feature-last-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-last-card p {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Support Section */
+        .support-section {
+            padding: 80px 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .support-section h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .support-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+
+        .support-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .support-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .support-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 24px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        /* Community Section */
+        .community-section {
+            padding: 80px 24px;
+            background: var(--content1);
+        }
+
+        .community-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .community-card {
+            padding: 32px;
+            background: var(--content2);
+            border-radius: var(--radius);
+            text-align: left;
+            transition: transform 0.2s;
+        }
+
+        .community-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .community-card h4 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            border-top: 1px solid var(--divider);
+            opacity: 0.7;
+        }
+
+        /* Component Cards Section */
+        .components-section {
+            padding: 80px 24px;
+            background: var(--background);
+        }
+
+        .components-grid {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
         .component-card {
-            background: white;
-            border: 1px solid #d0d7de;
-            border-radius: 12px;
+            background: var(--content1);
+            border: 1px solid var(--divider);
+            border-radius: var(--radius);
             padding: 24px;
-            transition: all 0.3s;
-            cursor: pointer;
             text-decoration: none;
             color: inherit;
+            transition: all 0.3s;
             display: block;
-        }
-
-        .dark-mode .component-card {
-            background: #161b22;
-            border-color: #30363d;
         }
 
         .component-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
         }
 
         .component-icon {
@@ -204,23 +570,14 @@
 
         .component-name {
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 8px;
-            color: #24292e;
-        }
-
-        .dark-mode .component-name {
-            color: #c9d1d9;
         }
 
         .component-desc {
+            opacity: 0.7;
             font-size: 14px;
-            color: #6e7681;
             line-height: 1.5;
-        }
-
-        .dark-mode .component-desc {
-            color: #8b949e;
         }
 
         .component-tags {
@@ -233,159 +590,280 @@
         .tag {
             font-size: 11px;
             padding: 4px 8px;
-            background: #f6f8fa;
-            border-radius: 12px;
-            color: #6e7681;
-        }
-
-        .dark-mode .tag {
-            background: #21262d;
-            color: #8b949e;
-        }
-
-        /* Quick Start */
-        .quick-start {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
-            margin: 40px 0;
-        }
-
-        .quick-start h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .quick-start pre {
-            background: rgba(0,0,0,0.2);
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 14px;
-        }
-
-        .quick-start code {
-            color: #fff;
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-
-        /* Features */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .feature-item {
-            padding: 20px;
-            background: #f6f8fa;
-            border-radius: 8px;
-        }
-
-        .dark-mode .feature-item {
-            background: #161b22;
-        }
-
-        .feature-item h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
-        .feature-item p {
-            font-size: 14px;
-            color: #6e7681;
-        }
-
-        .dark-mode .feature-item p {
-            color: #8b949e;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #6e7681;
-            border-top: 1px solid #d0d7de;
-            margin-top: 60px;
-        }
-
-        .dark-mode .footer {
-            border-top-color: #30363d;
-            color: #8b949e;
+            background: var(--content2);
+            border-radius: 6px;
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .theming-content,
+            .accessibility-content,
+            .dark-mode-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
-            .header h1 {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .section-title {
                 font-size: 36px;
             }
-            .header p {
-                font-size: 18px;
+
+            .nav-links {
+                display: none;
             }
-            .component-grid {
+
+            .features-grid,
+            .components-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🎨 React Native HeroUI</h1>
-        <div class="component-count">✨ 25 Production-Ready Components</div>
-        <p>Beautiful, modern UI component library for React Native</p>
-        <div class="badges">
-            <span class="badge">React Native</span>
-            <span class="badge">TypeScript</span>
-            <span class="badge">Reanimated</span>
-            <span class="badge">60fps Animations</span>
-            <span class="badge">Dark Mode</span>
-            <span class="badge">Accessible</span>
-        </div>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        React Native HeroUI v1.0.0 🔥
     </div>
 
-    <nav class="nav">
-        <div class="nav-links">
-            <a href="#components">Components</a>
-            <a href="#installation">Installation</a>
-            <a href="./tree-shaking.html">🌳 Tree-Shaking</a>
-            <a href="#features">Features</a>
-            <a href="https://github.com/adityakmr7/react-native-heroui">GitHub</a>
-            <a href="https://www.npmjs.com/package/react-native-heroui">NPM</a>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">React Native HeroUI</div>
+            <nav class="nav-links">
+                <a href="#components">Components</a>
+                <a href="https://github.com/adityakmr7/react-native-heroui" target="_blank">GitHub</a>
+                <a href="https://www.npmjs.com/package/react-native-heroui" target="_blank">NPM</a>
+            </nav>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
-    </nav>
+    </header>
 
-    <div class="container">
-        <!-- Quick Start -->
-        <div class="quick-start">
-            <h2>⚡ Quick Start</h2>
-            <pre><code>npm install react-native-heroui
-# or
-yarn add react-native-heroui
-
-# Then import and use
-import { HeroUIProvider, Button } from 'react-native-heroui';
-
-&lt;HeroUIProvider&gt;
-  &lt;Button colorScheme="primary"&gt;Get Started&lt;/Button&gt;
-&lt;/HeroUIProvider&gt;</code></pre>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>
+            Make <span class="gradient-text">beautiful</span><br>
+            <span class="gradient-text">apps</span> regardless of your<br>
+            design experience.
+        </h1>
+        <p>Beautiful, fast and modern React Native UI library for building accessible and customizable mobile applications.</p>
+        <div class="cta-buttons">
+            <a href="#components" class="btn-primary">Get Started</a>
+            <a href="https://github.com/adityakmr7/react-native-heroui" class="btn-secondary">GitHub</a>
         </div>
+        <div class="install-command">
+            $ npm install react-native-heroui
+        </div>
+    </section>
 
-        <!-- Components Section -->
-        <section class="section" id="components">
-            <h2 class="section-title">📦 Components</h2>
-            <p class="section-desc">Beautiful, production-ready components for your React Native apps</p>
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="section-title">Why React Native HeroUI?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Themeable</h3>
+                <p>Comprehensive design token system with light and dark mode support. Customize every aspect of your components.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast</h3>
+                <p>Built with performance in mind. Smooth 60fps+ animations powered by React Native Reanimated.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌗</div>
+                <h3>Light & Dark UI</h3>
+                <p>Automatic dark mode recognition. Seamlessly switch between light and dark themes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Unique DX</h3>
+                <p>Fully-typed with TypeScript to minimize the learning curve and provide the best developer experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theming Section -->
+    <section class="theming-section">
+        <h2 class="section-title">Apply your own<br><span class="gradient-text">theming</span> decisions.</h2>
+        <div class="theming-content">
+            <div class="theming-text">
+                <p style="font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+                    React Native HeroUI provides a powerful theming system that allows you to customize the default themes or create your own.
+                </p>
+                <div class="theme-tabs">
+                    <button class="theme-tab active">HeroUI</button>
+                    <button class="theme-tab">Modern</button>
+                    <button class="theme-tab">Elegant</button>
+                    <button class="theme-tab">Retro</button>
+                </div>
+                <div class="code-preview">
+<pre style="margin: 0;">const customTheme = {
+  colors: {
+    primary: '#0072F5',
+    secondary: '#7828C8',
+    success: '#17C964',
+    warning: '#F5A524',
+    danger: '#F31260',
+  },
+};</pre>
+                </div>
+            </div>
+            <div class="preview-card">
+                <h3 style="font-size: 28px; margin-bottom: 8px;">Nike Adapt BB 2.0</h3>
+                <p style="opacity: 0.9; margin-bottom: 16px;">Consistent, customized fit, game-changing.</p>
+                <p style="font-size: 32px; font-weight: 700; margin-bottom: 24px;">$279.97</p>
+                <button class="btn-primary" style="background: white; color: #f5576c;">Buy now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accessibility Section -->
+    <section class="accessibility-section">
+        <h2 class="section-title"><span class="gradient-text">Accessibility</span><br>out of the box.</h2>
+        <div class="accessibility-content">
+            <div>
+                <p style="font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+                    React Native HeroUI components are built with accessibility as a top priority, ensuring exceptional support for all users.
+                </p>
+                <div class="accessibility-features">
+                    <div class="a11y-badge">
+                        <span>✓</span> Keyboard navigation
+                    </div>
+                    <div class="a11y-badge">
+                        <span>✓</span> Managed focus
+                    </div>
+                    <div class="a11y-badge">
+                        <span>✓</span> Collision aware
+                    </div>
+                    <div class="a11y-badge">
+                        <span>✓</span> Alignment control
+                    </div>
+                    <div class="a11y-badge">
+                        <span>✓</span> Screen reader support
+                    </div>
+                    <div class="a11y-badge">
+                        <span>✓</span> Typehead support
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 120px; opacity: 0.8;">♿</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dark Mode Section -->
+    <section class="dark-mode-section">
+        <h2 class="section-title"><span class="gradient-text">Dark mode</span> is<br>effortless.</h2>
+        <div class="dark-mode-content">
+            <div style="text-align: center;">
+                <div style="font-size: 120px; opacity: 0.8;">🌙</div>
+            </div>
+            <div>
+                <p style="font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+                    React Native HeroUI comes with a fully well-scaled default dark theme that you can apply to your application effortlessly.
+                </p>
+                <div class="code-preview">
+<pre style="margin: 0;">import { HeroUIProvider } from 'react-native-heroui';
+
+&lt;HeroUIProvider theme="dark"&gt;
+  &lt;App /&gt;
+&lt;/HeroUIProvider&gt;</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customization Section -->
+    <section class="customization-section">
+        <div class="customization-content">
+            <h2 class="section-title"><span class="gradient-text">Customization</span> made<br>easy.</h2>
+            <p style="font-size: 18px; opacity: 0.7; max-width: 700px; margin: 0 auto 32px;">
+                React Native HeroUI simplifies component customization while providing powerful styling capabilities.
+            </p>
+            <div class="custom-button-demo">
+                <button class="press-me-btn" onclick="this.style.transform='scale(0.95)'">
+                    Press me
+                </button>
+            </div>
+            <div class="code-preview" style="max-width: 800px; margin: 0 auto; text-align: left;">
+<pre style="margin: 0;">import { Button } from 'react-native-heroui';
+
+&lt;Button
+  variant="gradient"
+  size="lg"
+  style={{
+    borderRadius: 50,
+    paddingHorizontal: 48,
+  }}
+&gt;
+  Press me
+&lt;/Button&gt;</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Last Section -->
+    <section class="features-last-section">
+        <h2 class="section-title">Last <span class="gradient-text">but</span> not <span class="gradient-text">least.</span></h2>
+        <p style="text-align: center; font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+            A fully-featured React Native UI library.
+        </p>
+        <div class="features-last-grid">
+            <div class="feature-last-card">
+                <h4>React Native components</h4>
+                <p>All components are optimized for React Native iOS and Android platforms.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>Accessible components</h4>
+                <p>Components provide keyboard support and sensible focus management.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>Focus interactions</h4>
+                <p>Focus ring will appear only when user navigates with keyboard or screen reader.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>Tree-shakeable</h4>
+                <p>Only import what you need. Each component is ~5-8KB minified + gzipped.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>TypeScript based</h4>
+                <p>Build type safe applications with fully-typed API.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>Multiple variants</h4>
+                <p>Each component includes multiple variants and color schemes.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>60fps animations</h4>
+                <p>Smooth animations powered by React Native Reanimated.</p>
+            </div>
+            <div class="feature-last-card">
+                <h4>Beautifully designed</h4>
+                <p>Unique components not tied to any visual trend or design rule.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="components-section" id="components">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <h2 class="section-title">25+ Production-Ready<br><span class="gradient-text">Components</span></h2>
+            <p style="text-align: center; font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+                Beautiful, production-ready components for your React Native apps
+            </p>
             
-            <div class="component-grid">
+            <div class="components-grid">
                 <a href="./components/accordion.html" class="component-card">
                     <div class="component-icon">🎵</div>
                     <h3 class="component-name">Accordion</h3>
-                    <p class="component-desc">Expandable content panels with multiple variants and customization options</p>
+                    <p class="component-desc">Expandable content panels with multiple variants</p>
                     <div class="component-tags">
                         <span class="tag">4 variants</span>
-                        <span class="tag">Multiple selection</span>
                         <span class="tag">Animated</span>
                     </div>
                 </a>
@@ -393,10 +871,9 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                 <a href="./components/alert.html" class="component-card">
                     <div class="component-icon">⚠️</div>
                     <h3 class="component-name">Alert</h3>
-                    <p class="component-desc">Temporary notifications for feedback, warnings, and status updates</p>
+                    <p class="component-desc">Notifications for feedback and status updates</p>
                     <div class="component-tags">
                         <span class="tag">6 colors</span>
-                        <span class="tag">4 variants</span>
                         <span class="tag">Closable</span>
                     </div>
                 </a>
@@ -404,54 +881,39 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                 <a href="./components/button.html" class="component-card">
                     <div class="component-icon">🔘</div>
                     <h3 class="component-name">Button</h3>
-                    <p class="component-desc">Versatile button component with multiple variants, sizes, and loading states</p>
+                    <p class="component-desc">Versatile button with variants and loading states</p>
                     <div class="component-tags">
                         <span class="tag">4 variants</span>
-                        <span class="tag">Loading state</span>
-                        <span class="tag">Icons</span>
+                        <span class="tag">Loading</span>
                     </div>
                 </a>
 
                 <a href="./components/input.html" class="component-card">
                     <div class="component-icon">✏️</div>
                     <h3 class="component-name">Input</h3>
-                    <p class="component-desc">Text input with label, helper text, validation, and icon support</p>
+                    <p class="component-desc">Text input with validation and icon support</p>
                     <div class="component-tags">
                         <span class="tag">Validation</span>
                         <span class="tag">Icons</span>
-                        <span class="tag">Clear button</span>
-                    </div>
-                </a>
-
-                <a href="./components/inputotp.html" class="component-card">
-                    <div class="component-icon">🔢</div>
-                    <h3 class="component-name">Input OTP</h3>
-                    <p class="component-desc">One-time password input with segments and auto-focus</p>
-                    <div class="component-tags">
-                        <span class="tag">4 variants</span>
-                        <span class="tag">6 colors</span>
-                        <span class="tag">Auto-focus</span>
                     </div>
                 </a>
 
                 <a href="./components/card.html" class="component-card">
                     <div class="component-icon">🗂️</div>
                     <h3 class="component-name">Card</h3>
-                    <p class="component-desc">Container with header, body, and footer sections for organized content</p>
+                    <p class="component-desc">Container with header, body, and footer sections</p>
                     <div class="component-tags">
                         <span class="tag">3 variants</span>
                         <span class="tag">Pressable</span>
-                        <span class="tag">Sections</span>
                     </div>
                 </a>
 
                 <a href="./components/avatar.html" class="component-card">
                     <div class="component-icon">👤</div>
                     <h3 class="component-name">Avatar</h3>
-                    <p class="component-desc">User profile image with fallback initials and various sizes</p>
+                    <p class="component-desc">User profile image with fallback initials</p>
                     <div class="component-tags">
                         <span class="tag">Sizes</span>
-                        <span class="tag">Colors</span>
                         <span class="tag">Bordered</span>
                     </div>
                 </a>
@@ -459,20 +921,18 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                 <a href="./components/badge.html" class="component-card">
                     <div class="component-icon">🏷️</div>
                     <h3 class="component-name">Badge</h3>
-                    <p class="component-desc">Small status indicator for displaying notifications and counts</p>
+                    <p class="component-desc">Status indicator for notifications and counts</p>
                     <div class="component-tags">
                         <span class="tag">Dot variant</span>
                         <span class="tag">Numbers</span>
-                        <span class="tag">Positioning</span>
                     </div>
                 </a>
 
                 <a href="./components/checkbox.html" class="component-card">
                     <div class="component-icon">☑️</div>
                     <h3 class="component-name">Checkbox</h3>
-                    <p class="component-desc">Multi-selection with indeterminate state, line-through, and custom icons</p>
+                    <p class="component-desc">Multi-selection with indeterminate state</p>
                     <div class="component-tags">
-                        <span class="tag">Indeterminate</span>
                         <span class="tag">6 colors</span>
                         <span class="tag">Custom icon</span>
                     </div>
@@ -481,10 +941,9 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                 <a href="./components/chip.html" class="component-card">
                     <div class="component-icon">🎯</div>
                     <h3 class="component-name">Chip</h3>
-                    <p class="component-desc">Compact element for tags, categories, or interactive selections</p>
+                    <p class="component-desc">Compact element for tags and categories</p>
                     <div class="component-tags">
                         <span class="tag">Closeable</span>
-                        <span class="tag">Variants</span>
                         <span class="tag">Colors</span>
                     </div>
                 </a>
@@ -492,268 +951,166 @@ import { HeroUIProvider, Button } from 'react-native-heroui';
                 <a href="./components/divider.html" class="component-card">
                     <div class="component-icon">➖</div>
                     <h3 class="component-name">Divider</h3>
-                    <p class="component-desc">Content separator with horizontal and vertical orientation support</p>
+                    <p class="component-desc">Content separator with orientation support</p>
                     <div class="component-tags">
                         <span class="tag">Horizontal</span>
                         <span class="tag">Vertical</span>
-                        <span class="tag">Simple</span>
                     </div>
                 </a>
 
                 <a href="./components/radio.html" class="component-card">
                     <div class="component-icon">🔘</div>
                     <h3 class="component-name">Radio Group</h3>
-                    <p class="component-desc">Single selection from mutually exclusive options with descriptions</p>
+                    <p class="component-desc">Single selection from mutually exclusive options</p>
                     <div class="component-tags">
                         <span class="tag">6 colors</span>
                         <span class="tag">3 sizes</span>
-                        <span class="tag">Horizontal/Vertical</span>
                     </div>
                 </a>
 
                 <a href="./components/skeleton.html" class="component-card">
                     <div class="component-icon">💀</div>
                     <h3 class="component-name">Skeleton</h3>
-                    <p class="component-desc">Loading placeholder with shimmer animation for better UX</p>
+                    <p class="component-desc">Loading placeholder with shimmer animation</p>
                     <div class="component-tags">
                         <span class="tag">Shimmer</span>
                         <span class="tag">Loading</span>
-                        <span class="tag">Placeholder</span>
-                    </div>
-                </a>
-
-                <a href="./components/image.html" class="component-card">
-                    <div class="component-icon">🖼️</div>
-                    <h3 class="component-name">Image</h3>
-                    <p class="component-desc">Image with loading states, blur effects, and fallback support</p>
-                    <div class="component-tags">
-                        <span class="tag">Loading</span>
-                        <span class="tag">Fallback</span>
-                        <span class="tag">Blur</span>
                     </div>
                 </a>
 
                 <a href="./components/modal.html" class="component-card">
                     <div class="component-icon">🪟</div>
                     <h3 class="component-name">Modal</h3>
-                    <p class="component-desc">Dialog with custom content, multiple sizes, and backdrop options</p>
+                    <p class="component-desc">Dialog with custom content and sizes</p>
                     <div class="component-tags">
                         <span class="tag">10 sizes</span>
-                        <span class="tag">3 backdrops</span>
-                        <span class="tag">Forms</span>
-                    </div>
-                </a>
-
-                <a href="./components/textarea.html" class="component-card">
-                    <div class="component-icon">📝</div>
-                    <h3 class="component-name">Textarea</h3>
-                    <p class="component-desc">Multi-line text input with variants and validation</p>
-                    <div class="component-tags">
-                        <span class="tag">4 variants</span>
-                        <span class="tag">6 colors</span>
-                        <span class="tag">Validation</span>
-                    </div>
-                </a>
-
-                <a href="./components/slider.html" class="component-card">
-                    <div class="component-icon">🎚️</div>
-                    <h3 class="component-name">Slider</h3>
-                    <p class="component-desc">Interactive range slider with step control and value labels</p>
-                    <div class="component-tags">
-                        <span class="tag">6 colors</span>
-                        <span class="tag">3 sizes</span>
-                        <span class="tag">Interactive</span>
-                    </div>
-                </a>
-
-                <a href="./components/select.html" class="component-card">
-                    <div class="component-icon">📋</div>
-                    <h3 class="component-name">Select</h3>
-                    <p class="component-desc">Dropdown select with modal picker and item descriptions</p>
-                    <div class="component-tags">
-                        <span class="tag">4 variants</span>
-                        <span class="tag">Modal</span>
-                        <span class="tag">Validation</span>
-                    </div>
-                </a>
-
-                <a href="./components/progress.html" class="component-card">
-                    <div class="component-icon">📊</div>
-                    <h3 class="component-name">Progress</h3>
-                    <p class="component-desc">Linear progress bar with determinate and indeterminate modes</p>
-                    <div class="component-tags">
-                        <span class="tag">6 colors</span>
-                        <span class="tag">3 sizes</span>
-                        <span class="tag">Animated</span>
+                        <span class="tag">Backdrop</span>
                     </div>
                 </a>
 
                 <a href="./components/switch.html" class="component-card">
                     <div class="component-icon">🎚️</div>
                     <h3 class="component-name">Switch</h3>
-                    <p class="component-desc">Toggle switch for on/off states with smooth animations</p>
+                    <p class="component-desc">Toggle switch with smooth animations</p>
                     <div class="component-tags">
                         <span class="tag">Animated</span>
                         <span class="tag">Colors</span>
-                        <span class="tag">Sizes</span>
-                    </div>
-                </a>
-
-                <a href="./components/spacer.html" class="component-card">
-                    <div class="component-icon">↔️</div>
-                    <h3 class="component-name">Spacer</h3>
-                    <p class="component-desc">Simple layout spacing helper with horizontal and vertical control</p>
-                    <div class="component-tags">
-                        <span class="tag">X/Y spacing</span>
-                        <span class="tag">Layout</span>
-                        <span class="tag">Simple</span>
                     </div>
                 </a>
 
                 <a href="./components/spinner.html" class="component-card">
                     <div class="component-icon">⏳</div>
                     <h3 class="component-name">Spinner</h3>
-                    <p class="component-desc">Loading indicator with multiple colors, sizes, and optional labels</p>
+                    <p class="component-desc">Loading indicator with colors and sizes</p>
                     <div class="component-tags">
                         <span class="tag">7 colors</span>
-                        <span class="tag">3 sizes</span>
-                        <span class="tag">With label</span>
+                        <span class="tag">Labels</span>
                     </div>
                 </a>
 
                 <a href="./components/toast.html" class="component-card">
                     <div class="component-icon">🔔</div>
                     <h3 class="component-name">Toast</h3>
-                    <p class="component-desc">Temporary notifications with global API, auto-dismiss, and placements</p>
+                    <p class="component-desc">Temporary notifications with global API</p>
                     <div class="component-tags">
-                        <span class="tag">Global API</span>
                         <span class="tag">Auto-dismiss</span>
-                        <span class="tag">Progress bar</span>
+                        <span class="tag">Progress</span>
                     </div>
                 </a>
 
-                <a href="./components/tooltip.html" class="component-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                <a href="./components/tooltip.html" class="component-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none;">
                     <div class="component-icon">💬</div>
                     <h3 class="component-name">Tooltip ✨ NEW</h3>
-                    <p class="component-desc" style="color: rgba(255,255,255,0.95);">Informative tooltips with press/long-press activation and smooth animations</p>
+                    <p class="component-desc" style="color: rgba(255,255,255,0.95);">Informative tooltips with press activation</p>
                     <div class="component-tags">
-                        <span class="tag" style="background: rgba(255,255,255,0.3);">12 placements</span>
-                        <span class="tag" style="background: rgba(255,255,255,0.3);">6 colors</span>
-                        <span class="tag" style="background: rgba(255,255,255,0.3);">60fps+</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3); color: white;">12 placements</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3); color: white;">60fps+</span>
                     </div>
                 </a>
 
-                <a href="./components/tabs.html" class="component-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <a href="./components/tabs.html" class="component-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
                     <div class="component-icon">📑</div>
                     <h3 class="component-name">Tabs ✨ NEW</h3>
-                    <p class="component-desc" style="color: rgba(255,255,255,0.95);">Tabbed navigation with animated cursor sliding between selections</p>
+                    <p class="component-desc" style="color: rgba(255,255,255,0.95);">Tabbed navigation with animated cursor</p>
                     <div class="component-tags">
-                        <span class="tag" style="background: rgba(255,255,255,0.3);">4 variants</span>
-                        <span class="tag" style="background: rgba(255,255,255,0.3);">Spring physics</span>
-                        <span class="tag" style="background: rgba(255,255,255,0.3);">Icons</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3); color: white;">4 variants</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.3); color: white;">Spring physics</span>
                     </div>
                 </a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Features Section -->
-        <section class="section" id="features">
-            <h2 class="section-title">✨ Features</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>🎨 Themeable</h3>
-                    <p>Comprehensive design token system with light and dark mode support</p>
+    <!-- Support Section -->
+    <section class="support-section">
+        <h2>Support React Native HeroUI</h2>
+        <p>Using React Native HeroUI in a profit-making product, as a freelancer, or for fun projects?<br>Your contributions will help make React Native HeroUI better.</p>
+        <div class="support-buttons">
+            <a href="https://github.com/sponsors/adityakmr7" class="support-btn">GitHub Sponsors</a>
+            <a href="https://github.com/adityakmr7/react-native-heroui" class="support-btn">Star on GitHub</a>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>
+            Let's make<br>
+            <span class="gradient-text">Mobile Apps</span><br>
+            Prettier
+        </h2>
+        <p style="font-size: 18px; opacity: 0.7; max-width: 600px; margin: 0 auto 32px;">
+            Experience it firsthand and show us your creations!
+        </p>
+        <div class="cta-buttons">
+            <a href="#components" class="btn-primary">Get Started</a>
+            <a href="https://github.com/adityakmr7/react-native-heroui" class="btn-secondary">GitHub</a>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community-section">
+        <div class="community-content">
+            <h2 class="section-title">Community</h2>
+            <p style="font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+                Get involved in our community. Everyone is welcome!
+            </p>
+            <div class="community-grid">
+                <div class="community-card">
+                    <h4>GitHub</h4>
+                    <p>To report bugs, request features and contribute to the project.</p>
+                    <a href="https://github.com/adityakmr7/react-native-heroui" style="color: var(--primary); text-decoration: none; font-weight: 600;">Visit GitHub →</a>
                 </div>
-                <div class="feature-item">
-                    <h3>♿ Accessible</h3>
-                    <p>ARIA support and screen reader friendly out of the box</p>
+                <div class="community-card">
+                    <h4>NPM</h4>
+                    <p>Install the package and start building beautiful apps.</p>
+                    <a href="https://www.npmjs.com/package/react-native-heroui" style="color: var(--primary); text-decoration: none; font-weight: 600;">View on NPM →</a>
                 </div>
-                <div class="feature-item">
-                    <h3>📱 Native</h3>
-                    <p>Works perfectly on iOS and Android with platform-specific optimizations</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🔧 TypeScript</h3>
-                    <p>Full type safety with comprehensive TypeScript definitions</p>
-                </div>
-                <div class="feature-item">
-                    <h3>⚡ Animated</h3>
-                    <p>Smooth 60fps+ animations powered by React Native Reanimated</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🎛️ Customizable</h3>
-                    <p>Flexible style props system and variant-based customization</p>
+                <div class="community-card">
+                    <h4>Documentation</h4>
+                    <p>Learn how to use all components with detailed examples.</p>
+                    <a href="#components" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Docs →</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Installation Section -->
-        <section class="section" id="installation">
-            <h2 class="section-title">📥 Installation</h2>
-            <p class="section-desc">Get started with React Native HeroUI in seconds</p>
-            
-            <h3 style="margin-top: 20px; margin-bottom: 10px;">Step 1: Install the library</h3>
-            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>npm install react-native-heroui
-# or
-yarn add react-native-heroui
-# or
-pnpm add react-native-heroui</code></pre>
-
-            <h3 style="margin-top: 30px; margin-bottom: 10px;">Step 2: Install peer dependencies (for animations)</h3>
-            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code># For Expo projects
-npx expo install react-native-reanimated react-native-gesture-handler
-
-# For bare React Native projects
-npm install react-native-reanimated react-native-gesture-handler
-cd ios && pod install</code></pre>
-            
-            <h3 style="margin-top: 30px; margin-bottom: 10px;">Step 3: Configure Babel</h3>
-            <p class="section-desc" style="margin-bottom: 10px;">Add Reanimated plugin to your <code>babel.config.js</code>:</p>
-            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
-  plugins: ['react-native-reanimated/plugin'], // Must be last!
-};</code></pre>
-
-            <h3 style="margin-top: 30px; margin-bottom: 10px;">Step 4: Basic Usage</h3>
-            <pre style="background: #f6f8fa; padding: 20px; border-radius: 8px; overflow-x: auto;"><code>import { HeroUIProvider, Button, Tabs, Tab } from 'react-native-heroui';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-function App() {
-  return (
-    &lt;GestureHandlerRootView style={{ flex: 1 }}&gt;
-      &lt;HeroUIProvider&gt;
-        &lt;Button colorScheme="primary"&gt;Click Me&lt;/Button&gt;
-        
-        &lt;Tabs&gt;
-          &lt;Tab tabKey="1" title="Tab 1"&gt;Content 1&lt;/Tab&gt;
-          &lt;Tab tabKey="2" title="Tab 2"&gt;Content 2&lt;/Tab&gt;
-        &lt;/Tabs&gt;
-      &lt;/HeroUIProvider&gt;
-    &lt;/GestureHandlerRootView&gt;
-  );
-}</code></pre>
-
-            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-top: 20px; border-radius: 4px;">
-                <strong>💡 Note:</strong> Some components (Button, Slider, Tabs, Tooltip) use React Native Reanimated for smooth 60fps+ animations. Make sure to follow the setup steps above for the best experience!
-            </div>
-        </section>
-    </div>
-
+    <!-- Footer -->
     <footer class="footer">
-        <p>Built with ❤️ for React Native • <a href="https://github.com/adityakmr7/react-native-heroui" style="color: #667eea;">View on GitHub</a></p>
-        <p style="margin-top: 10px; font-size: 14px;">© 2025 React Native HeroUI. MIT License.</p>
+        <p>© 2025 React Native HeroUI. All rights reserved.</p>
+        <p style="margin-top: 8px;">Built with ❤️ for React Native • MIT License</p>
     </footer>
 
     <script>
         // Theme toggle
         function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
         }
 
         // Load saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark');
         }
 
         // Smooth scrolling
@@ -762,11 +1119,17 @@ function App() {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        // Reset button transform
+        document.querySelector('.press-me-btn')?.addEventListener('mouseup', function() {
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
         });
     </script>
 </body>
 </html>
-
