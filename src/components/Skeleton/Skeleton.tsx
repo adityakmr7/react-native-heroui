@@ -1,12 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
-  Animated,
   StyleSheet,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  withSequence,
+  interpolate,
+  Extrapolation,
+  Easing,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export interface SkeletonProps extends Omit<ViewProps, 'style'> {
@@ -38,33 +47,33 @@ export const Skeleton = React.forwardRef<View, SkeletonProps>(
     ref
   ) => {
     const { theme } = useTheme();
-    const shimmerAnim = useRef(new Animated.Value(0)).current;
+    const shimmer = useSharedValue(0);
 
     useEffect(() => {
       if (!isLoaded && !disableAnimation) {
-        // Create shimmer animation
-        Animated.loop(
-          Animated.sequence([
-            Animated.timing(shimmerAnim, {
-              toValue: 1,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-            Animated.timing(shimmerAnim, {
-              toValue: 0,
-              duration: 0,
-              useNativeDriver: true,
-            }),
-          ])
-        ).start();
+        shimmer.value = withRepeat(
+          withSequence(
+            withTiming(1, { duration: 1500, easing: Easing.linear }),
+            withTiming(0, { duration: 0 })
+          ),
+          -1,
+          false
+        );
       } else {
-        shimmerAnim.setValue(0);
+        shimmer.value = 0;
       }
-    }, [isLoaded, disableAnimation, shimmerAnim]);
+    }, [isLoaded, disableAnimation, shimmer]);
 
-    const shimmerTranslate = shimmerAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-300, 300],
+    const shimmerAnimatedStyle = useAnimatedStyle(() => {
+      const translateX = interpolate(
+        shimmer.value,
+        [0, 1],
+        [-300, 300],
+        Extrapolation.CLAMP
+      );
+      return {
+        transform: [{ translateX }, { skewX: '-20deg' }],
+      };
     });
 
     const styles = StyleSheet.create({
@@ -86,7 +95,6 @@ export const Skeleton = React.forwardRef<View, SkeletonProps>(
         width: '100%',
         height: '100%',
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        transform: [{ translateX: shimmerTranslate }, { skewX: '-20deg' }],
       },
       content: {
         opacity: isLoaded ? 1 : 0,
@@ -122,7 +130,7 @@ export const Skeleton = React.forwardRef<View, SkeletonProps>(
         >
           {!disableAnimation && (
             <View style={styles.shimmerContainer}>
-              <Animated.View style={styles.shimmer} />
+              <Animated.View style={[styles.shimmer, shimmerAnimatedStyle]} />
             </View>
           )}
         </View>
@@ -145,7 +153,7 @@ export const Skeleton = React.forwardRef<View, SkeletonProps>(
         {/* Shimmer overlay */}
         {!disableAnimation && (
           <View style={styles.shimmerContainer}>
-            <Animated.View style={styles.shimmer} />
+            <Animated.View style={[styles.shimmer, shimmerAnimatedStyle]} />
           </View>
         )}
       </View>
