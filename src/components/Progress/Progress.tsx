@@ -1,14 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
-  Animated,
   StyleSheet,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withRepeat,
+  withSequence,
+  interpolate,
+  Extrapolation,
+  Easing,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type ProgressColor =
@@ -77,8 +86,8 @@ export const Progress = React.forwardRef<View, ProgressProps>(
     ref
   ) => {
     const { theme } = useTheme();
-    const animatedValue = useRef(new Animated.Value(0)).current;
-    const indeterminateAnim = useRef(new Animated.Value(0)).current;
+    const progress = useSharedValue(0);
+    const indeterminateProgress = useSharedValue(0);
 
     const percentage = Math.min(
       100,
@@ -87,34 +96,20 @@ export const Progress = React.forwardRef<View, ProgressProps>(
 
     useEffect(() => {
       if (isIndeterminate) {
-        Animated.loop(
-          Animated.sequence([
-            Animated.timing(indeterminateAnim, {
-              toValue: 1,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-            Animated.timing(indeterminateAnim, {
-              toValue: 0,
-              duration: 1500,
-              useNativeDriver: true,
-            }),
-          ])
-        ).start();
-      } else if (!disableAnimation) {
-        Animated.timing(animatedValue, {
-          toValue: percentage,
-          duration: 300,
-          useNativeDriver: false,
-        }).start();
+        indeterminateProgress.value = withRepeat(
+          withSequence(
+            withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+            withTiming(0, { duration: 1500, easing: Easing.inOut(Easing.ease) })
+          ),
+          -1,
+          false
+        );
+      } else if (disableAnimation) {
+        progress.value = percentage;
+      } else {
+        progress.value = withTiming(percentage, { duration: 300 });
       }
-    }, [
-      percentage,
-      isIndeterminate,
-      disableAnimation,
-      animatedValue,
-      indeterminateAnim,
-    ]);
+    }, [percentage, isIndeterminate, disableAnimation, progress, indeterminateProgress]);
 
     const sizeMap = {
       sm: 2,
@@ -133,16 +128,20 @@ export const Progress = React.forwardRef<View, ProgressProps>(
       ? formatValue(value)
       : `${Math.round(percentage)}%`;
 
-    const indicatorWidth = disableAnimation
-      ? `${percentage}%`
-      : animatedValue.interpolate({
-          inputRange: [0, 100],
-          outputRange: ['0%', '100%'],
-        });
+    const indicatorAnimatedStyle = useAnimatedStyle(() => ({
+      width: `${progress.value}%`,
+    }));
 
-    const indeterminateTranslate = indeterminateAnim.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [-100, 0, 100],
+    const indeterminateAnimatedStyle = useAnimatedStyle(() => {
+      const translateX = interpolate(
+        indeterminateProgress.value,
+        [0, 0.5, 1],
+        [-100, 0, 100],
+        Extrapolation.CLAMP
+      );
+      return {
+        transform: [{ translateX: `${translateX}%` }],
+      };
     });
 
     const styles = StyleSheet.create({
@@ -213,16 +212,7 @@ export const Progress = React.forwardRef<View, ProgressProps>(
             <Animated.View
               style={[
                 styles.indeterminate,
-                {
-                  transform: [
-                    {
-                      translateX: indeterminateTranslate.interpolate({
-                        inputRange: [-100, 100],
-                        outputRange: ['-100%', '100%'],
-                      }),
-                    },
-                  ],
-                },
+                indeterminateAnimatedStyle,
               ]}
             />
           ) : (
@@ -230,7 +220,7 @@ export const Progress = React.forwardRef<View, ProgressProps>(
               style={[
                 styles.indicator,
                 classNames?.indicator,
-                { width: indicatorWidth as any },
+                indicatorAnimatedStyle,
               ]}
             />
           )}
