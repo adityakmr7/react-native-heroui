@@ -20,15 +20,14 @@ import {
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  useAnimatedGestureHandler,
   withSpring,
   withTiming,
   runOnJS,
   // @ts-ignore - peer dependency
 } from 'react-native-reanimated';
 import {
-  PanGestureHandler,
-  type PanGestureHandlerGestureEvent,
+  Gesture,
+  GestureDetector,
   // @ts-ignore - peer dependency
 } from 'react-native-gesture-handler';
 import { useTheme } from '../../hooks/useTheme';
@@ -223,15 +222,16 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
   );
 
   // Pan gesture handler
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { y: number }
-  >({
-    onStart: (_event: any, ctx: { y: number }) => {
-      ctx.y = translateY.value;
-    },
-    onActive: (event: any, ctx: { y: number }) => {
-      const newY = ctx.y + event.translationY;
+  const startY = useSharedValue(0);
+  
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      'worklet';
+      startY.value = translateY.value;
+    })
+    .onUpdate((event) => {
+      'worklet';
+      const newY = startY.value + event.translationY;
       const minY = SCREEN_HEIGHT - maxSnapPoint;
 
       // Allow some overscroll at top
@@ -240,8 +240,9 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
       } else {
         translateY.value = Math.max(minY - 50, newY);
       }
-    },
-    onEnd: (event: any) => {
+    })
+    .onEnd((event) => {
+      'worklet';
       const velocityY = event.velocityY;
       const currentY = translateY.value;
 
@@ -265,8 +266,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
       if (nearestIndex !== currentSnapIndex) {
         runOnJS(handleSnapChange)(nearestIndex);
       }
-    },
-  });
+    });
 
   // Animated styles
   const sheetAnimatedStyle = useAnimatedStyle(() => ({
@@ -354,10 +354,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           )}
 
           {/* Bottom Sheet */}
-          <PanGestureHandler
-            onGestureEvent={disablePanGesture ? undefined : gestureHandler}
-            enabled={!disablePanGesture}
-          >
+          <GestureDetector gesture={disablePanGesture ? Gesture.Pan().enabled(false) : panGesture}>
             <Animated.View
               style={[
                 styles.container,
@@ -379,7 +376,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
                 {children}
               </View>
             </Animated.View>
-          </PanGestureHandler>
+          </GestureDetector>
         </View>
       </BottomSheetContext.Provider>
     </RNModal>

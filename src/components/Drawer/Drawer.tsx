@@ -19,15 +19,14 @@ import {
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  useAnimatedGestureHandler,
   withSpring,
   withTiming,
   runOnJS,
   // @ts-ignore - peer dependency
 } from 'react-native-reanimated';
 import {
-  PanGestureHandler,
-  type PanGestureHandlerGestureEvent,
+  Gesture,
+  GestureDetector,
   // @ts-ignore - peer dependency
 } from 'react-native-gesture-handler';
 import { useTheme } from '../../hooks/useTheme';
@@ -226,26 +225,28 @@ export const Drawer: React.FC<DrawerProps> = ({
   ]);
 
   // Pan gesture handler
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { x: number; y: number }
-  >({
-    onStart: (_event: any, ctx: { x: number; y: number }) => {
-      ctx.x = translateX.value;
-      ctx.y = translateY.value;
-    },
-    onActive: (event: any, ctx: { x: number; y: number }) => {
+  const startX = useSharedValue(0);
+  const startY = useSharedValue(0);
+  
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      'worklet';
+      startX.value = translateX.value;
+      startY.value = translateY.value;
+    })
+    .onUpdate((event) => {
+      'worklet';
       if (placement === 'left') {
-        const newX = ctx.x + event.translationX;
+        const newX = startX.value + event.translationX;
         translateX.value = Math.min(0, newX); // Don't go beyond 0
       } else if (placement === 'right') {
-        const newX = ctx.x + event.translationX;
+        const newX = startX.value + event.translationX;
         translateX.value = Math.max(0, newX); // Don't go beyond 0
       } else if (placement === 'top') {
-        const newY = ctx.y + event.translationY;
+        const newY = startY.value + event.translationY;
         translateY.value = Math.min(0, newY);
       } else if (placement === 'bottom') {
-        const newY = ctx.y + event.translationY;
+        const newY = startY.value + event.translationY;
         translateY.value = Math.max(0, newY);
       }
 
@@ -255,8 +256,9 @@ export const Drawer: React.FC<DrawerProps> = ({
           ? Math.abs(translateX.value / drawerSize)
           : Math.abs(translateY.value / drawerSize);
       backdropOpacity.value = 1 - Math.min(1, progress);
-    },
-    onEnd: (event: any) => {
+    })
+    .onEnd((event) => {
+      'worklet';
       const velocity =
         placement === 'left' || placement === 'right'
           ? event.velocityX
@@ -287,8 +289,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         translateY.value = withSpring(0, springConfig);
         backdropOpacity.value = withTiming(1, { duration: 200 });
       }
-    },
-  });
+    });
 
   // Animated styles
   const drawerAnimatedStyle = useAnimatedStyle(() => ({
@@ -404,10 +405,7 @@ export const Drawer: React.FC<DrawerProps> = ({
           )}
 
           {/* Drawer */}
-          <PanGestureHandler
-            onGestureEvent={disablePanGesture ? undefined : gestureHandler}
-            enabled={!disablePanGesture}
-          >
+          <GestureDetector gesture={disablePanGesture ? Gesture.Pan().enabled(false) : panGesture}>
             <Animated.View
               style={[
                 getDrawerPositionStyle(),
@@ -421,7 +419,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                 {children}
               </View>
             </Animated.View>
-          </PanGestureHandler>
+          </GestureDetector>
         </View>
       </DrawerContext.Provider>
     </RNModal>
