@@ -368,7 +368,11 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
           return (
             <>
               <Animated.View
-                style={[styles.circle, classNames?.circle1, circle1AnimatedStyle]}
+                style={[
+                  styles.circle,
+                  classNames?.circle1,
+                  circle1AnimatedStyle,
+                ]}
               />
               {variant === 'gradient' && (
                 <Animated.View
@@ -444,7 +448,11 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
         default:
           return (
             <Animated.View
-              style={[styles.circle, classNames?.circle1, rotationAnimatedStyle]}
+              style={[
+                styles.circle,
+                classNames?.circle1,
+                rotationAnimatedStyle,
+              ]}
             />
           );
       }

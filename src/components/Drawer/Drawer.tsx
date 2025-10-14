@@ -227,7 +227,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   // Pan gesture handler
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
-  
+
   const panGesture = Gesture.Pan()
     .onStart(() => {
       'worklet';
@@ -405,7 +405,11 @@ export const Drawer: React.FC<DrawerProps> = ({
           )}
 
           {/* Drawer */}
-          <GestureDetector gesture={disablePanGesture ? Gesture.Pan().enabled(false) : panGesture}>
+          <GestureDetector
+            gesture={
+              disablePanGesture ? Gesture.Pan().enabled(false) : panGesture
+            }
+          >
             <Animated.View
               style={[
                 getDrawerPositionStyle(),

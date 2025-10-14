@@ -223,7 +223,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
 
   // Pan gesture handler
   const startY = useSharedValue(0);
-  
+
   const panGesture = Gesture.Pan()
     .onStart(() => {
       'worklet';
@@ -354,7 +354,11 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           )}
 
           {/* Bottom Sheet */}
-          <GestureDetector gesture={disablePanGesture ? Gesture.Pan().enabled(false) : panGesture}>
+          <GestureDetector
+            gesture={
+              disablePanGesture ? Gesture.Pan().enabled(false) : panGesture
+            }
+          >
             <Animated.View
               style={[
                 styles.container,
