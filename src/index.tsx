@@ -174,6 +174,31 @@ export {
   type TabsRadius,
   type TabsPlacement,
 } from './components/Tabs/Tabs';
+export {
+  BottomSheet,
+  BottomSheetHeader,
+  BottomSheetBody,
+  BottomSheetFooter,
+  type BottomSheetProps,
+  type BottomSheetHeaderProps,
+  type BottomSheetBodyProps,
+  type BottomSheetFooterProps,
+  type BottomSheetSnapPoint,
+  type BottomSheetBackdrop,
+} from './components/BottomSheet/BottomSheet';
+export {
+  Drawer,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  type DrawerProps,
+  type DrawerHeaderProps,
+  type DrawerBodyProps,
+  type DrawerFooterProps,
+  type DrawerPlacement,
+  type DrawerBackdrop,
+  type DrawerSize,
+} from './components/Drawer/Drawer';
 
 // Providers
 export {

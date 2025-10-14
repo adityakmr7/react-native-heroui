@@ -1,6 +1,6 @@
 # React Native HeroUI Documentation
 
-Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **25 production-ready components** in the library.
+Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **27 production-ready components** in the library.
 
 ## 📦 Components
 
@@ -16,14 +16,16 @@ Welcome to the React Native HeroUI documentation! This site provides comprehensi
 - [Slider](./components/slider.html) - Range slider with Gesture Handler ⚡
 - [Select](./components/select.html) - Dropdown select
 
-### Layout (6)
+### Layout & Navigation (8)
 
 - [Card](./components/card.html) - Container component
 - [Divider](./components/divider.html) - Content separator
 - [Spacer](./components/spacer.html) - Layout spacing helper
 - [Modal](./components/modal.html) - Dialog with custom content
 - [Accordion](./components/accordion.html) - Expandable content panels
-- [Tabs](./components/tabs.html) - Tabbed navigation with animated cursor ⚡ **NEW**
+- [Tabs](./components/tabs.html) - Tabbed navigation with animated cursor ⚡
+- [BottomSheet](./components/bottomsheet.html) - Gesture-driven bottom panel ⚡ **NEW**
+- [Drawer](./components/drawer.html) - Side navigation with 4 placements ⚡ **NEW**
 
 ### Feedback (5)
 
