@@ -315,6 +315,8 @@ function FilterDrawer() {
 
 ## Custom Styling
 
+{% raw %}
+
 ```tsx
 <Drawer
   isOpen={isOpen}
@@ -334,6 +336,8 @@ function FilterDrawer() {
   {/* Content */}
 </Drawer>
 ```
+
+{% endraw %}
 
 ## Props Reference
 

@@ -333,6 +333,8 @@ function ShareSheet() {
 
 ## Custom Styling
 
+{% raw %}
+
 ```tsx
 <BottomSheet
   isOpen={isOpen}
@@ -359,6 +361,8 @@ function ShareSheet() {
   {/* Content */}
 </BottomSheet>
 ```
+
+{% endraw %}
 
 ## Props Reference
 
