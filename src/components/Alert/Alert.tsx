@@ -4,12 +4,17 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  Animated,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type AlertColor =
@@ -115,24 +120,40 @@ export const Alert = React.forwardRef<View, AlertProps>(
   ) => {
     const { theme } = useTheme();
     const [internalVisible, setInternalVisible] = useState(true);
-    const fadeAnim = React.useRef(new Animated.Value(1)).current;
+    const opacity = useSharedValue(0);
+    const translateY = useSharedValue(-20);
 
     const isControlled = controlledVisible !== undefined;
     const isVisible = isControlled ? controlledVisible : internalVisible;
 
-    const handleClose = () => {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start(() => {
-        if (!isControlled) {
-          setInternalVisible(false);
-        }
-        onVisibleChange?.(false);
-        onClose?.();
-      });
+    // Entrance animation
+    React.useEffect(() => {
+      opacity.value = withTiming(1, { duration: 300 });
+      translateY.value = withTiming(0, { duration: 300 });
+    }, [opacity, translateY]);
+
+    const handleCloseComplete = () => {
+      if (!isControlled) {
+        setInternalVisible(false);
+      }
+      onVisibleChange?.(false);
+      onClose?.();
     };
+
+    const handleClose = () => {
+      opacity.value = withTiming(0, { duration: 200 }, (finished) => {
+        'worklet';
+        if (finished) {
+          runOnJS(handleCloseComplete)();
+        }
+      });
+      translateY.value = withTiming(-10, { duration: 200 });
+    };
+
+    const animatedStyle = useAnimatedStyle(() => ({
+      opacity: opacity.value,
+      transform: [{ translateY: translateY.value }],
+    }));
 
     if (!isVisible) {
       return null;
@@ -295,12 +316,7 @@ export const Alert = React.forwardRef<View, AlertProps>(
     return (
       <Animated.View
         ref={ref}
-        style={[
-          styles.container,
-          classNames?.base,
-          style,
-          { opacity: fadeAnim },
-        ]}
+        style={[styles.container, classNames?.base, style, animatedStyle]}
         accessibilityRole="alert"
         {...viewProps}
       >

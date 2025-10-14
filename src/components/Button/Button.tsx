@@ -3,12 +3,16 @@ import {
   Pressable,
   Text,
   StyleSheet,
-  Animated,
   type PressableProps,
   type StyleProp,
   type ViewStyle,
   ActivityIndicator,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 import { type ButtonVariants, getButtonStyles } from '../../variants/button';
 
@@ -55,7 +59,7 @@ export const Button = React.forwardRef<any, ButtonProps>(
     ref
   ) => {
     const { theme } = useTheme();
-    const scaleAnim = React.useRef(new Animated.Value(1)).current;
+    const scale = useSharedValue(1);
 
     const buttonStyles = getButtonStyles(theme, variant, size, colorScheme);
 
@@ -79,24 +83,26 @@ export const Button = React.forwardRef<any, ButtonProps>(
       },
     });
 
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: scale.value }],
+    }));
+
     const handlePressIn = () => {
-      Animated.spring(scaleAnim, {
-        toValue: 0.95,
-        useNativeDriver: true,
-      }).start();
+      scale.value = withSpring(0.95, {
+        damping: 10,
+        stiffness: 100,
+      });
     };
 
     const handlePressOut = () => {
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        friction: 3,
-        tension: 40,
-        useNativeDriver: true,
-      }).start();
+      scale.value = withSpring(1, {
+        damping: 3,
+        stiffness: 40,
+      });
     };
 
     return (
-      <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+      <Animated.View style={animatedStyle}>
         <Pressable
           ref={ref}
           style={[styles.button, style]}

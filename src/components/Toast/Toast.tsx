@@ -3,20 +3,27 @@ import React, {
   useContext,
   useState,
   useEffect,
-  useRef,
   useCallback,
 } from 'react';
 import {
   View,
   Text,
   Pressable,
-  Animated,
   StyleSheet,
   Dimensions,
   type ViewStyle,
   type StyleProp,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  runOnJS,
+  interpolate,
+  Extrapolation,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type ToastColor =
@@ -228,9 +235,9 @@ interface ToastItemProps {
 const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
   const { theme } = useTheme();
   const context = useToastContext();
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(50)).current;
-  const progressAnim = useRef(new Animated.Value(0)).current;
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(50);
+  const progress = useSharedValue(0);
 
   const {
     id,
@@ -252,32 +259,21 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
 
   useEffect(() => {
     // Enter animation
-    if (!disableAnimation) {
-      Animated.parallel([
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-        Animated.spring(slideAnim, {
-          toValue: 0,
-          friction: 8,
-          useNativeDriver: true,
-        }),
-      ]).start();
+    if (disableAnimation) {
+      opacity.value = 1;
+      translateY.value = 0;
     } else {
-      fadeAnim.setValue(1);
-      slideAnim.setValue(0);
+      opacity.value = withTiming(1, { duration: 300 });
+      translateY.value = withSpring(0, {
+        damping: 10,
+        stiffness: 100,
+      });
     }
 
     // Auto-dismiss
     if (timeout > 0) {
       if (shouldShowTimeoutProgress) {
-        Animated.timing(progressAnim, {
-          toValue: 1,
-          duration: timeout,
-          useNativeDriver: false,
-        }).start();
+        progress.value = withTiming(1, { duration: timeout });
       }
 
       const timer = setTimeout(() => {
@@ -289,28 +285,31 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
 
     return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    opacity,
+    translateY,
+    progress,
+    disableAnimation,
+    timeout,
+    shouldShowTimeoutProgress,
+  ]);
+
+  const handleCloseComplete = () => {
+    context.removeToast(id);
+    onClose?.();
+  };
 
   const handleClose = () => {
-    if (!disableAnimation) {
-      Animated.parallel([
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: true,
-        }),
-        Animated.timing(slideAnim, {
-          toValue: 50,
-          duration: 200,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        context.removeToast(id);
-        onClose?.();
-      });
+    if (disableAnimation) {
+      handleCloseComplete();
     } else {
-      context.removeToast(id);
-      onClose?.();
+      opacity.value = withTiming(0, { duration: 200 }, (finished) => {
+        'worklet';
+        if (finished) {
+          runOnJS(handleCloseComplete)();
+        }
+      });
+      translateY.value = withTiming(50, { duration: 200 });
     }
   };
 
@@ -468,23 +467,28 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
     },
   });
 
-  const progressWidth = progressAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  const progressAnimatedStyle = useAnimatedStyle(() => {
+    const width = interpolate(
+      progress.value,
+      [0, 1],
+      [0, 100],
+      Extrapolation.CLAMP
+    );
+    return {
+      width: `${width}%`,
+    };
   });
 
   const defaultIconComponent = icon || getDefaultIcon();
 
   return (
     <Animated.View
-      style={[
-        styles.container,
-        classNames?.base,
-        {
-          opacity: fadeAnim,
-          transform: [{ translateY: slideAnim }],
-        },
-      ]}
+      style={[styles.container, classNames?.base, animatedStyle]}
       accessibilityRole="alert"
     >
       {!hideIcon && (
@@ -531,7 +535,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
             style={[
               styles.progressIndicator,
               classNames?.progressIndicator,
-              { width: progressWidth },
+              progressAnimatedStyle,
             ]}
           />
         </View>

@@ -1,27 +1,22 @@
-import React, { createContext, useContext, useState, useRef } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import {
   View,
   Text,
   Pressable,
-  Animated,
   StyleSheet,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
-  LayoutAnimation,
-  Platform,
-  UIManager,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  Easing,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
-
-// Enable LayoutAnimation for Android
-if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 export type AccordionVariant = 'light' | 'shadow' | 'bordered' | 'splitted';
 export type SelectionMode = 'single' | 'multiple' | 'none';
@@ -112,16 +107,6 @@ export const Accordion = React.forwardRef<View, AccordionProps>(
       : internalExpandedKeys;
 
     const toggleItem = (key: string) => {
-      if (!disableAnimation) {
-        LayoutAnimation.configureNext(
-          LayoutAnimation.create(
-            200,
-            LayoutAnimation.Types.easeInEaseOut,
-            LayoutAnimation.Properties.opacity
-          )
-        );
-      }
-
       const newExpandedKeys = new Set(expandedKeys);
 
       if (selectionMode === 'single') {
@@ -233,23 +218,56 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
   ) => {
     const { theme } = useTheme();
     const context = useAccordionContext();
-    const rotateAnim = useRef(new Animated.Value(0)).current;
+    const rotation = useSharedValue(0);
+    const contentHeight = useSharedValue(0);
+    const contentOpacity = useSharedValue(0);
 
     const isExpanded = context.expandedKeys.has(itemKey);
     const isDisabled = itemDisabled || context.disabledKeys.includes(itemKey);
 
     React.useEffect(() => {
-      Animated.timing(rotateAnim, {
-        toValue: isExpanded ? 1 : 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    }, [isExpanded, rotateAnim]);
+      if (context.disableAnimation) {
+        rotation.value = isExpanded ? 1 : 0;
+        contentHeight.value = isExpanded ? 1 : 0;
+        contentOpacity.value = isExpanded ? 1 : 0;
+      } else {
+        rotation.value = withSpring(isExpanded ? 1 : 0, {
+          damping: 15,
+          stiffness: 150,
+        });
+        contentHeight.value = withTiming(isExpanded ? 1 : 0, {
+          duration: 250,
+          easing: Easing.bezier(0.4, 0.0, 0.2, 1),
+        });
+        contentOpacity.value = withTiming(isExpanded ? 1 : 0, {
+          duration: 200,
+          easing: Easing.bezier(0.4, 0.0, 0.2, 1),
+        });
+      }
+    }, [
+      isExpanded,
+      context.disableAnimation,
+      rotation,
+      contentHeight,
+      contentOpacity,
+    ]);
 
-    const rotate = rotateAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '180deg'],
-    });
+    const indicatorAnimatedStyle = useAnimatedStyle(() => ({
+      transform: [
+        {
+          rotate: `${rotation.value * 180}deg`,
+        },
+      ],
+    }));
+
+    const contentAnimatedStyle = useAnimatedStyle(() => ({
+      opacity: contentOpacity.value,
+      transform: [
+        {
+          scaleY: contentHeight.value,
+        },
+      ],
+    }));
 
     const handlePress = () => {
       if (!isDisabled) {
@@ -364,7 +382,7 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
             style={[
               styles.indicatorContainer,
               classNames?.indicator,
-              { transform: [{ rotate }] },
+              indicatorAnimatedStyle,
             ]}
           >
             {indicator}
@@ -378,7 +396,7 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
           style={[
             styles.indicatorContainer,
             classNames?.indicator,
-            { transform: [{ rotate }] },
+            indicatorAnimatedStyle,
           ]}
         >
           <Text style={styles.defaultIndicator}>▼</Text>
@@ -429,7 +447,11 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
           {renderIndicator()}
         </Pressable>
         {isExpanded && (
-          <View style={[styles.content, classNames?.content]}>{children}</View>
+          <Animated.View
+            style={[styles.content, classNames?.content, contentAnimatedStyle]}
+          >
+            {children}
+          </Animated.View>
         )}
       </View>
     );

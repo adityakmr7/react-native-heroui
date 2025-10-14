@@ -1,12 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Pressable,
-  Animated,
   StyleSheet,
   type ViewStyle,
   type StyleProp,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  interpolate,
+  interpolateColor,
+  Extrapolation,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export interface SwitchProps {
@@ -44,8 +51,7 @@ export const Switch = React.forwardRef<View, SwitchProps>(
     const isControlled = controlledValue !== undefined;
     const value = isControlled ? controlledValue : internalValue;
 
-    const translateX = useRef(new Animated.Value(value ? 1 : 0)).current;
-    const backgroundColor = useRef(new Animated.Value(value ? 1 : 0)).current;
+    const progress = useSharedValue(value ? 1 : 0);
 
     const sizeMap = {
       sm: {
@@ -73,19 +79,11 @@ export const Switch = React.forwardRef<View, SwitchProps>(
       dimensions.width - dimensions.thumbSize - dimensions.padding * 2;
 
     useEffect(() => {
-      Animated.parallel([
-        Animated.spring(translateX, {
-          toValue: value ? 1 : 0,
-          useNativeDriver: true,
-          friction: 8,
-        }),
-        Animated.timing(backgroundColor, {
-          toValue: value ? 1 : 0,
-          duration: 200,
-          useNativeDriver: false,
-        }),
-      ]).start();
-    }, [value, translateX, backgroundColor]);
+      progress.value = withSpring(value ? 1 : 0, {
+        damping: 15,
+        stiffness: 150,
+      });
+    }, [value, progress]);
 
     const handlePress = () => {
       if (isDisabled) return;
@@ -97,10 +95,26 @@ export const Switch = React.forwardRef<View, SwitchProps>(
       onChange?.(newValue);
     };
 
-    const interpolatedColor = backgroundColor.interpolate({
-      inputRange: [0, 1],
-      outputRange: [theme.colors['default-400'], theme.colors[color]],
-    });
+    const containerAnimatedStyle = useAnimatedStyle(() => ({
+      backgroundColor: interpolateColor(
+        progress.value,
+        [0, 1],
+        [theme.colors['default-400'], theme.colors[color]]
+      ),
+    }));
+
+    const thumbAnimatedStyle = useAnimatedStyle(() => ({
+      transform: [
+        {
+          translateX: interpolate(
+            progress.value,
+            [0, 1],
+            [0, maxTranslateX],
+            Extrapolation.CLAMP
+          ),
+        },
+      ],
+    }));
 
     const styles = StyleSheet.create({
       container: {
@@ -132,29 +146,8 @@ export const Switch = React.forwardRef<View, SwitchProps>(
         }}
         style={style}
       >
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              backgroundColor: interpolatedColor,
-            },
-          ]}
-        >
-          <Animated.View
-            style={[
-              styles.thumb,
-              {
-                transform: [
-                  {
-                    translateX: translateX.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, maxTranslateX],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
+        <Animated.View style={[styles.container, containerAnimatedStyle]}>
+          <Animated.View style={[styles.thumb, thumbAnimatedStyle]} />
         </Animated.View>
       </Pressable>
     );

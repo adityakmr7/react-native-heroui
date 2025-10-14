@@ -1,15 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   ActivityIndicator,
   Text,
-  Animated,
   StyleSheet,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  withSequence,
+  withDelay,
+  Easing,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type SpinnerColor =
@@ -71,15 +79,15 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
     ref
   ) => {
     const { theme } = useTheme();
-    const rotateAnim = useRef(new Animated.Value(0)).current;
-    const scaleAnim1 = useRef(new Animated.Value(1)).current;
-    const scaleAnim2 = useRef(new Animated.Value(1)).current;
-    const waveAnims = useRef(
-      [0, 1, 2].map(() => new Animated.Value(0))
-    ).current;
-    const dotAnims = useRef(
-      [0, 1, 2].map(() => new Animated.Value(0.5))
-    ).current;
+    const rotation = useSharedValue(0);
+    const scale1 = useSharedValue(1);
+    const scale2 = useSharedValue(1);
+    const wave1 = useSharedValue(0.5);
+    const wave2 = useSharedValue(0.5);
+    const wave3 = useSharedValue(0.5);
+    const dot1 = useSharedValue(0.5);
+    const dot2 = useSharedValue(0.5);
+    const dot3 = useSharedValue(0.5);
 
     const sizeMap = {
       sm: {
@@ -107,96 +115,119 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
 
     useEffect(() => {
       // Rotation animation for default, gradient, simple variants
-      Animated.loop(
-        Animated.timing(rotateAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        })
-      ).start();
+      rotation.value = withRepeat(
+        withTiming(360, { duration: 1000, easing: Easing.linear }),
+        -1,
+        false
+      );
 
       // Pulse animation for gradient variant
       if (variant === 'gradient' || variant === 'default') {
-        Animated.loop(
-          Animated.sequence([
-            Animated.timing(scaleAnim1, {
-              toValue: 1.2,
-              duration: 500,
-              useNativeDriver: true,
-            }),
-            Animated.timing(scaleAnim1, {
-              toValue: 1,
-              duration: 500,
-              useNativeDriver: true,
-            }),
-          ])
-        ).start();
+        scale1.value = withRepeat(
+          withSequence(
+            withTiming(1.2, { duration: 500 }),
+            withTiming(1, { duration: 500 })
+          ),
+          -1,
+          false
+        );
 
-        Animated.loop(
-          Animated.sequence([
-            Animated.delay(250),
-            Animated.timing(scaleAnim2, {
-              toValue: 1.2,
-              duration: 500,
-              useNativeDriver: true,
-            }),
-            Animated.timing(scaleAnim2, {
-              toValue: 1,
-              duration: 500,
-              useNativeDriver: true,
-            }),
-          ])
-        ).start();
+        scale2.value = withDelay(
+          250,
+          withRepeat(
+            withSequence(
+              withTiming(1.2, { duration: 500 }),
+              withTiming(1, { duration: 500 })
+            ),
+            -1,
+            false
+          )
+        );
       }
 
       // Wave animation
       if (variant === 'wave') {
-        const createWaveAnim = (anim: Animated.Value, delay: number) =>
-          Animated.loop(
-            Animated.sequence([
-              Animated.delay(delay),
-              Animated.timing(anim, {
-                toValue: 1.5,
-                duration: 400,
-                useNativeDriver: true,
-              }),
-              Animated.timing(anim, {
-                toValue: 0.5,
-                duration: 400,
-                useNativeDriver: true,
-              }),
-            ])
-          );
+        wave1.value = withRepeat(
+          withSequence(
+            withTiming(1.5, { duration: 400 }),
+            withTiming(0.5, { duration: 400 })
+          ),
+          -1,
+          false
+        );
 
-        waveAnims.forEach((anim, index) => {
-          createWaveAnim(anim, index * 150).start();
-        });
+        wave2.value = withDelay(
+          150,
+          withRepeat(
+            withSequence(
+              withTiming(1.5, { duration: 400 }),
+              withTiming(0.5, { duration: 400 })
+            ),
+            -1,
+            false
+          )
+        );
+
+        wave3.value = withDelay(
+          300,
+          withRepeat(
+            withSequence(
+              withTiming(1.5, { duration: 400 }),
+              withTiming(0.5, { duration: 400 })
+            ),
+            -1,
+            false
+          )
+        );
       }
 
       // Dots animation
       if (variant === 'dots') {
-        const createDotAnim = (anim: Animated.Value, delay: number) =>
-          Animated.loop(
-            Animated.sequence([
-              Animated.delay(delay),
-              Animated.timing(anim, {
-                toValue: 1,
-                duration: 400,
-                useNativeDriver: true,
-              }),
-              Animated.timing(anim, {
-                toValue: 0.5,
-                duration: 400,
-                useNativeDriver: true,
-              }),
-            ])
-          );
+        dot1.value = withRepeat(
+          withSequence(
+            withTiming(1, { duration: 400 }),
+            withTiming(0.5, { duration: 400 })
+          ),
+          -1,
+          false
+        );
 
-        dotAnims.forEach((anim, index) => {
-          createDotAnim(anim, index * 150).start();
-        });
+        dot2.value = withDelay(
+          150,
+          withRepeat(
+            withSequence(
+              withTiming(1, { duration: 400 }),
+              withTiming(0.5, { duration: 400 })
+            ),
+            -1,
+            false
+          )
+        );
+
+        dot3.value = withDelay(
+          300,
+          withRepeat(
+            withSequence(
+              withTiming(1, { duration: 400 }),
+              withTiming(0.5, { duration: 400 })
+            ),
+            -1,
+            false
+          )
+        );
       }
-    }, [variant, rotateAnim, scaleAnim1, scaleAnim2, waveAnims, dotAnims]);
+    }, [
+      variant,
+      rotation,
+      scale1,
+      scale2,
+      wave1,
+      wave2,
+      wave3,
+      dot1,
+      dot2,
+      dot3,
+    ]);
 
     const getColorValue = (colorKey: SpinnerColor): string => {
       if (colorKey === 'current') {
@@ -211,10 +242,41 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
     const spinnerColor = getColorValue(color);
     const textColor = getColorValue(labelColor);
 
-    const rotation = rotateAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '360deg'],
-    });
+    const rotationAnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ rotate: `${rotation.value}deg` }],
+    }));
+
+    const circle1AnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ rotate: `${rotation.value}deg` }, { scale: scale1.value }],
+    }));
+
+    const circle2AnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ rotate: `${rotation.value}deg` }, { scale: scale2.value }],
+    }));
+
+    const wave1AnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ scaleY: wave1.value }],
+    }));
+
+    const wave2AnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ scaleY: wave2.value }],
+    }));
+
+    const wave3AnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ scaleY: wave3.value }],
+    }));
+
+    const dot1AnimatedStyle = useAnimatedStyle(() => ({
+      opacity: dot1.value,
+    }));
+
+    const dot2AnimatedStyle = useAnimatedStyle(() => ({
+      opacity: dot2.value,
+    }));
+
+    const dot3AnimatedStyle = useAnimatedStyle(() => ({
+      opacity: dot3.value,
+    }));
 
     const styles = StyleSheet.create({
       container: {
@@ -309,7 +371,7 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
                 style={[
                   styles.circle,
                   classNames?.circle1,
-                  { transform: [{ rotate: rotation }, { scale: scaleAnim1 }] },
+                  circle1AnimatedStyle,
                 ]}
               />
               {variant === 'gradient' && (
@@ -317,9 +379,7 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
                   style={[
                     styles.circle2,
                     classNames?.circle2,
-                    {
-                      transform: [{ rotate: rotation }, { scale: scaleAnim2 }],
-                    },
+                    circle2AnimatedStyle,
                   ]}
                 />
               )}
@@ -329,24 +389,18 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
         case 'wave':
           return (
             <View style={[styles.waveContainer, classNames?.spinnerBars]}>
-              {waveAnims.map((anim, index) => (
-                <Animated.View
-                  key={index}
-                  style={[styles.waveBar, { transform: [{ scaleY: anim }] }]}
-                />
-              ))}
+              <Animated.View style={[styles.waveBar, wave1AnimatedStyle]} />
+              <Animated.View style={[styles.waveBar, wave2AnimatedStyle]} />
+              <Animated.View style={[styles.waveBar, wave3AnimatedStyle]} />
             </View>
           );
 
         case 'dots':
           return (
             <View style={[styles.dotsContainer, classNames?.dots]}>
-              {dotAnims.map((anim, index) => (
-                <Animated.View
-                  key={index}
-                  style={[styles.dot, { opacity: anim }]}
-                />
-              ))}
+              <Animated.View style={[styles.dot, dot1AnimatedStyle]} />
+              <Animated.View style={[styles.dot, dot2AnimatedStyle]} />
+              <Animated.View style={[styles.dot, dot3AnimatedStyle]} />
             </View>
           );
 
@@ -379,12 +433,14 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
                 );
               })}
               <Animated.View
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  transform: [{ rotate: rotation }],
-                }}
+                style={[
+                  {
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                  },
+                  rotationAnimatedStyle,
+                ]}
               />
             </View>
           );
@@ -395,7 +451,7 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
               style={[
                 styles.circle,
                 classNames?.circle1,
-                { transform: [{ rotate: rotation }] },
+                rotationAnimatedStyle,
               ]}
             />
           );
