@@ -285,7 +285,14 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
 
     return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [opacity, translateY, progress, disableAnimation, timeout, shouldShowTimeoutProgress]);
+  }, [
+    opacity,
+    translateY,
+    progress,
+    disableAnimation,
+    timeout,
+    shouldShowTimeoutProgress,
+  ]);
 
   const handleCloseComplete = () => {
     context.removeToast(id);

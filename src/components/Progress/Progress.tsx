@@ -98,7 +98,10 @@ export const Progress = React.forwardRef<View, ProgressProps>(
       if (isIndeterminate) {
         indeterminateProgress.value = withRepeat(
           withSequence(
-            withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+            withTiming(1, {
+              duration: 1500,
+              easing: Easing.inOut(Easing.ease),
+            }),
             withTiming(0, { duration: 1500, easing: Easing.inOut(Easing.ease) })
           ),
           -1,
@@ -109,7 +112,13 @@ export const Progress = React.forwardRef<View, ProgressProps>(
       } else {
         progress.value = withTiming(percentage, { duration: 300 });
       }
-    }, [percentage, isIndeterminate, disableAnimation, progress, indeterminateProgress]);
+    }, [
+      percentage,
+      isIndeterminate,
+      disableAnimation,
+      progress,
+      indeterminateProgress,
+    ]);
 
     const sizeMap = {
       sm: 2,
@@ -210,10 +219,7 @@ export const Progress = React.forwardRef<View, ProgressProps>(
         <View style={[styles.track, classNames?.track]}>
           {isIndeterminate ? (
             <Animated.View
-              style={[
-                styles.indeterminate,
-                indeterminateAnimatedStyle,
-              ]}
+              style={[styles.indeterminate, indeterminateAnimatedStyle]}
             />
           ) : (
             <Animated.View

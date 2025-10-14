@@ -316,12 +316,7 @@ export const Alert = React.forwardRef<View, AlertProps>(
     return (
       <Animated.View
         ref={ref}
-        style={[
-          styles.container,
-          classNames?.base,
-          style,
-          animatedStyle,
-        ]}
+        style={[styles.container, classNames?.base, style, animatedStyle]}
         accessibilityRole="alert"
         {...viewProps}
       >
