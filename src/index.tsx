@@ -186,6 +186,19 @@ export {
   type BottomSheetSnapPoint,
   type BottomSheetBackdrop,
 } from './components/BottomSheet/BottomSheet';
+export {
+  Drawer,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  type DrawerProps,
+  type DrawerHeaderProps,
+  type DrawerBodyProps,
+  type DrawerFooterProps,
+  type DrawerPlacement,
+  type DrawerBackdrop,
+  type DrawerSize,
+} from './components/Drawer/Drawer';
 
 // Providers
 export {

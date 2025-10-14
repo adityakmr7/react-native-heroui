@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   HeroUIProvider,
@@ -43,6 +43,10 @@ import {
   BottomSheetHeader,
   BottomSheetBody,
   BottomSheetFooter,
+  Drawer,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
   useTheme,
 } from 'react-native-heroui';
 
@@ -78,6 +82,11 @@ function ComponentShowcase() {
   const [sheetName, setSheetName] = React.useState('');
   const [sheetEmail, setSheetEmail] = React.useState('');
   const [selectedFilter, setSelectedFilter] = React.useState('all');
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
+  const [isRightDrawerOpen, setIsRightDrawerOpen] = React.useState(false);
+  const [isTopDrawerOpen, setIsTopDrawerOpen] = React.useState(false);
+  const [drawerNotifications, setDrawerNotifications] = React.useState(true);
+  const [drawerDarkMode, setDrawerDarkMode] = React.useState(false);
 
   React.useEffect(() => {
     // Simulate content loading
@@ -1943,6 +1952,349 @@ function ComponentShowcase() {
             </View>
           </BottomSheetFooter>
         </BottomSheet>
+
+        {/* Drawer Component - NEW */}
+        <Card
+          variant="elevated"
+          style={[
+            styles.section,
+            { backgroundColor: theme.colors.secondary, padding: 20 },
+          ]}
+        >
+          <CardHeader>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: '#ffffff',
+                  fontSize: 24,
+                  fontWeight: '800',
+                },
+              ]}
+            >
+              🗂️ Drawer ✨ NEW
+            </Text>
+            <Text
+              style={{
+                color: 'rgba(255,255,255,0.9)',
+                fontSize: 14,
+                marginTop: 4,
+              }}
+            >
+              Side navigation with gesture-driven animations
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 12 }}>
+            <Button
+              colorScheme="primary"
+              onPress={() => setIsLeftDrawerOpen(true)}
+              fullWidth
+            >
+              Open Left Menu
+            </Button>
+            <Button
+              variant="outline"
+              onPress={() => setIsRightDrawerOpen(true)}
+              fullWidth
+              style={{ borderColor: '#fff' }}
+            >
+              Open Right Settings
+            </Button>
+            <Button
+              variant="ghost"
+              onPress={() => setIsTopDrawerOpen(true)}
+              fullWidth
+            >
+              Open Top Drawer
+            </Button>
+          </CardBody>
+        </Card>
+
+        {/* Drawer - Left Navigation */}
+        <Drawer
+          isOpen={isLeftDrawerOpen}
+          onClose={() => setIsLeftDrawerOpen(false)}
+          placement="left"
+          size="md"
+        >
+          <DrawerHeader showCloseButton>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: theme.colors.foreground,
+              }}
+            >
+              Navigation Menu
+            </Text>
+          </DrawerHeader>
+
+          <DrawerBody>
+            <View style={{ gap: 4 }}>
+              {[
+                { icon: '🏠', label: 'Home', color: 'primary' },
+                { icon: '👤', label: 'Profile', color: 'secondary' },
+                { icon: '⚙️', label: 'Settings', color: 'default' },
+                { icon: '📊', label: 'Analytics', color: 'success' },
+                { icon: '📱', label: 'Devices', color: 'warning' },
+                { icon: '❓', label: 'Help & Support', color: 'default' },
+              ].map((item) => (
+                <Pressable
+                  key={item.label}
+                  onPress={() => {
+                    toast.success(`Navigated to ${item.label}`);
+                    setIsLeftDrawerOpen(false);
+                  }}
+                  style={{
+                    padding: 16,
+                    borderRadius: 8,
+                    backgroundColor: theme.colors.content2,
+                    marginBottom: 8,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: theme.colors.foreground,
+                    }}
+                  >
+                    {item.icon} {item.label}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <View
+              style={{
+                padding: 12,
+                backgroundColor: theme.colors.content2,
+                borderRadius: 8,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: theme.colors['default-500'],
+                  textAlign: 'center',
+                }}
+              >
+                React Native HeroUI v1.0.0
+              </Text>
+            </View>
+          </DrawerFooter>
+        </Drawer>
+
+        {/* Drawer - Right Settings */}
+        <Drawer
+          isOpen={isRightDrawerOpen}
+          onClose={() => setIsRightDrawerOpen(false)}
+          placement="right"
+          size="sm"
+          backdrop="blur"
+        >
+          <DrawerHeader showCloseButton>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: theme.colors.foreground,
+              }}
+            >
+              Quick Settings
+            </Text>
+          </DrawerHeader>
+
+          <DrawerBody scrollable={false}>
+            <View style={{ gap: 20 }}>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginBottom: 12,
+                    color: theme.colors.foreground,
+                  }}
+                >
+                  Preferences
+                </Text>
+
+                <View style={{ gap: 12 }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 12,
+                      backgroundColor: theme.colors.content2,
+                      borderRadius: 8,
+                    }}
+                  >
+                    <Text style={{ color: theme.colors.foreground }}>
+                      Notifications
+                    </Text>
+                    <Switch
+                      value={drawerNotifications}
+                      onChange={setDrawerNotifications}
+                      color="success"
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: 12,
+                      backgroundColor: theme.colors.content2,
+                      borderRadius: 8,
+                    }}
+                  >
+                    <Text style={{ color: theme.colors.foreground }}>
+                      Dark Mode
+                    </Text>
+                    <Switch
+                      value={drawerDarkMode}
+                      onChange={setDrawerDarkMode}
+                      color="primary"
+                    />
+                  </View>
+                </View>
+              </View>
+
+              <Divider />
+
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginBottom: 12,
+                    color: theme.colors.foreground,
+                  }}
+                >
+                  Account
+                </Text>
+                <View style={{ gap: 8 }}>
+                  <Button variant="ghost" size="sm">
+                    Edit Profile
+                  </Button>
+                  <Button variant="ghost" size="sm" colorScheme="danger">
+                    Sign Out
+                  </Button>
+                </View>
+              </View>
+            </View>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button
+              variant="outline"
+              onPress={() => setIsRightDrawerOpen(false)}
+              fullWidth
+            >
+              Done
+            </Button>
+          </DrawerFooter>
+        </Drawer>
+
+        {/* Drawer - Top Notifications */}
+        <Drawer
+          isOpen={isTopDrawerOpen}
+          onClose={() => setIsTopDrawerOpen(false)}
+          placement="top"
+          size={300}
+        >
+          <DrawerHeader showCloseButton>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: theme.colors.foreground,
+              }}
+            >
+              🔔 Notifications
+            </Text>
+          </DrawerHeader>
+
+          <DrawerBody>
+            <View style={{ gap: 12 }}>
+              {[
+                {
+                  title: 'New message',
+                  desc: 'You have a new message from John',
+                  time: '2m ago',
+                  color: 'primary',
+                },
+                {
+                  title: 'Update available',
+                  desc: 'A new version is ready to install',
+                  time: '1h ago',
+                  color: 'success',
+                },
+                {
+                  title: 'Storage full',
+                  desc: 'Your storage is almost full',
+                  time: '3h ago',
+                  color: 'warning',
+                },
+              ].map((notif, index) => (
+                <Pressable
+                  key={index}
+                  onPress={() => {
+                    toast.success(`Opened: ${notif.title}`);
+                    setIsTopDrawerOpen(false);
+                  }}
+                  style={{
+                    padding: 12,
+                    backgroundColor: theme.colors.content2,
+                    borderRadius: 8,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginBottom: 4,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: '600',
+                        color: theme.colors.foreground,
+                      }}
+                    >
+                      {notif.title}
+                    </Text>
+                    <Chip size="sm" color={notif.color as any} variant="flat">
+                      {notif.time}
+                    </Chip>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: theme.colors['default-600'],
+                    }}
+                  >
+                    {notif.desc}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button
+              variant="ghost"
+              onPress={() => setIsTopDrawerOpen(false)}
+              fullWidth
+              size="sm"
+            >
+              Clear All
+            </Button>
+          </DrawerFooter>
+        </Drawer>
 
         {/* Tooltip Examples */}
         <Card variant="elevated" style={styles.section}>

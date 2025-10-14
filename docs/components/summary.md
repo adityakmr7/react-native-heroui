@@ -4,6 +4,10 @@
 
 High-performance gesture-driven bottom sheet with smooth 60fps animations, snap points, and pan gesture support.
 
+## Drawer ✨ NEW
+
+Side navigation component with 4 placement options (left, right, top, bottom), gesture-driven interactions, and smooth 60fps animations.
+
 ## Image
 
 Image component with loading states, fallback support, and blur effects.
