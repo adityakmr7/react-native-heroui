@@ -196,7 +196,7 @@ export const Spinner = React.forwardRef<View, SpinnerProps>(
           createDotAnim(anim, index * 150).start();
         });
       }
-    }, [variant]);
+    }, [variant, rotateAnim, scaleAnim1, scaleAnim2, waveAnims, dotAnims]);
 
     const getColorValue = (colorKey: SpinnerColor): string => {
       if (colorKey === 'current') {

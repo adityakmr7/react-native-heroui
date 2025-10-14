@@ -52,7 +52,7 @@ export const getInputStyles = (
       borderColor: getBorderColor(),
     },
     filled: {
-      backgroundColor: theme.colors['content2'],
+      backgroundColor: theme.colors.content2,
       borderWidth: 0,
       borderBottomWidth: 2,
       borderBottomColor: getBorderColor(),

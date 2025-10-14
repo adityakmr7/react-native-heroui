@@ -216,7 +216,14 @@ export const Tabs: React.FC<TabsProps> = ({
       cursorWidth.value = layout.width;
       cursorOpacity.value = 1;
     }
-  }, [selectedKey, tabLayouts, disableCursorAnimation]);
+  }, [
+    selectedKey,
+    tabLayouts,
+    disableCursorAnimation,
+    cursorX,
+    cursorWidth,
+    cursorOpacity,
+  ]);
 
   const handleTabPress = useCallback(
     (key: string) => {

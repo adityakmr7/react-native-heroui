@@ -88,7 +88,7 @@ export const InputOtp = React.forwardRef<View, InputOtpProps>(
       errorMessage,
       isDisabled = false,
       isReadOnly = false,
-      isRequired = false,
+      // isRequired = false, // Reserved for future use
       isInvalid = false,
       autoFocus = false,
       style,

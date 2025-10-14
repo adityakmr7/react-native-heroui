@@ -73,14 +73,14 @@ export const Textarea = React.forwardRef<TextInput, TextareaProps>(
       description,
       errorMessage,
       variant = 'flat',
-      color = 'default',
+      // color = 'default', // Reserved for future use
       size = 'md',
       minRows = 3,
       maxRows,
       isDisabled = false,
       isRequired = false,
       isInvalid = false,
-      disableResize = false,
+      // disableResize = false, // Reserved for future use
       style,
       containerStyle,
       classNames,

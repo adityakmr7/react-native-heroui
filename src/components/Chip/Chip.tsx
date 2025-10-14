@@ -97,7 +97,7 @@ export const Chip = React.forwardRef<View, ChipProps>(
           };
         case 'dot':
           return {
-            backgroundColor: theme.colors['content2'],
+            backgroundColor: theme.colors.content2,
             borderWidth: 0,
           };
         default:

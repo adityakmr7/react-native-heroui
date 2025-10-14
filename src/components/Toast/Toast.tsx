@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useRef,
+  useCallback,
 } from 'react';
 import {
   View,
@@ -128,12 +129,15 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
 }) => {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const addToast = (options: ToastOptions): string => {
-    const id = `toast-${Date.now()}-${Math.random()}`;
-    const toast: ToastItem = { ...toastProps, ...options, id };
-    setToasts((prev) => [...prev, toast]);
-    return id;
-  };
+  const addToast = useCallback(
+    (options: ToastOptions): string => {
+      const id = `toast-${Date.now()}-${Math.random()}`;
+      const toast: ToastItem = { ...toastProps, ...options, id };
+      setToasts((prev) => [...prev, toast]);
+      return id;
+    },
+    [toastProps]
+  );
 
   const removeToast = (id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
@@ -145,7 +149,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     return () => {
       globalAddToast = null;
     };
-  }, []);
+  }, [addToast]);
 
   const visibleToasts = toasts.slice(-maxVisibleToasts);
 
@@ -284,6 +288,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, disableAnimation }) => {
     }
 
     return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClose = () => {

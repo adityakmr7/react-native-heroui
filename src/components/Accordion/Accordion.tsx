@@ -86,11 +86,11 @@ export const Accordion = React.forwardRef<View, AccordionProps>(
       variant = 'light',
       selectionMode = 'single',
       isCompact = false,
-      isDisabled = false,
-      showDivider = true,
+      // isDisabled = false, // Reserved for future use
+      // showDivider = true, // Reserved for future use
       hideIndicator = false,
       disableAnimation = false,
-      disableIndicatorAnimation = false,
+      // disableIndicatorAnimation = false, // Reserved for future use
       defaultExpandedKeys = [],
       expandedKeys: controlledExpandedKeys,
       disabledKeys = [],

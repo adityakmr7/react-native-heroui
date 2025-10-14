@@ -66,7 +66,7 @@ export const Progress = React.forwardRef<View, ProgressProps>(
       color = 'primary',
       size = 'md',
       isIndeterminate = false,
-      isStriped = false,
+      // isStriped = false, // Reserved for future use
       showValueLabel = false,
       formatValue,
       disableAnimation = false,
@@ -108,7 +108,13 @@ export const Progress = React.forwardRef<View, ProgressProps>(
           useNativeDriver: false,
         }).start();
       }
-    }, [percentage, isIndeterminate, disableAnimation]);
+    }, [
+      percentage,
+      isIndeterminate,
+      disableAnimation,
+      animatedValue,
+      indeterminateAnim,
+    ]);
 
     const sizeMap = {
       sm: 2,

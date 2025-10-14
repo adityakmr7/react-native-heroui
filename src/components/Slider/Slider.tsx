@@ -85,7 +85,7 @@ export const Slider = React.forwardRef<View, SliderProps>(
       size = 'md',
       isDisabled = false,
       showValue = false,
-      showSteps = false,
+      // showSteps = false, // Reserved for future use
       formatValue,
       style,
       classNames,
@@ -147,7 +147,13 @@ export const Slider = React.forwardRef<View, SliderProps>(
         });
         savedPosition.value = position;
       }
-    }, [currentValue, containerWidth, valueToPosition]);
+    }, [
+      currentValue,
+      containerWidth,
+      valueToPosition,
+      thumbPosition,
+      savedPosition,
+    ]);
 
     // Callback to update value (runs on JS thread)
     const updateValue = useCallback(

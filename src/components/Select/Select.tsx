@@ -85,7 +85,7 @@ export const Select = React.forwardRef<View, SelectProps>(
       value: controlledValue,
       defaultValue,
       variant = 'flat',
-      color = 'default',
+      // color = 'default', // Reserved for future use
       size = 'md',
       isDisabled = false,
       isRequired = false,

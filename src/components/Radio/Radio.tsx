@@ -98,7 +98,7 @@ export const RadioGroup = React.forwardRef<View, RadioGroupProps>(
       children,
       value: controlledValue,
       defaultValue = '',
-      name,
+      name: _name, // Reserved for future use
       orientation = 'vertical',
       color = 'primary',
       size = 'md',
@@ -107,7 +107,7 @@ export const RadioGroup = React.forwardRef<View, RadioGroupProps>(
       isReadOnly = false,
       isInvalid = false,
       validationState,
-      disableAnimation = false,
+      // disableAnimation = false, // Reserved for future use
       style,
       classNames,
       onValueChange,

@@ -92,8 +92,8 @@ export const Checkbox = React.forwardRef<View, CheckboxProps>(
     {
       children,
       icon,
-      value,
-      name,
+      value: _value, // Reserved for future use
+      name: _name, // Reserved for future use
       size = 'md',
       color = 'primary',
       radius = 'md',

@@ -236,6 +236,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
     getElementPosition,
     onOpenChange,
     onClose,
+    opacity,
+    scale,
   ]);
 
   // Wrap with action
@@ -274,9 +276,10 @@ export const Tooltip: React.FC<TooltipProps> = ({
   useEffect(() => {
     // Get initial position
     const timeout = setTimeout(getElementPosition, 500);
+    const closeTimeout = closeTimeoutRef.current;
     return () => {
       clearTimeout(timeout);
-      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+      if (closeTimeout) clearTimeout(closeTimeout);
     };
   }, [getElementPosition]);
 
