@@ -39,6 +39,10 @@ import {
   Tooltip,
   Tabs,
   Tab,
+  BottomSheet,
+  BottomSheetHeader,
+  BottomSheetBody,
+  BottomSheetFooter,
   useTheme,
 } from 'react-native-heroui';
 
@@ -67,6 +71,13 @@ function ComponentShowcase() {
   const [isFormModalOpen, setIsFormModalOpen] = React.useState(false);
   const [modalEmail, setModalEmail] = React.useState('');
   const [modalPassword, setModalPassword] = React.useState('');
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = React.useState(false);
+  const [isFormSheetOpen, setIsFormSheetOpen] = React.useState(false);
+  const [isShareSheetOpen, setIsShareSheetOpen] = React.useState(false);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = React.useState(false);
+  const [sheetName, setSheetName] = React.useState('');
+  const [sheetEmail, setSheetEmail] = React.useState('');
+  const [selectedFilter, setSelectedFilter] = React.useState('all');
 
   React.useEffect(() => {
     // Simulate content loading
@@ -1531,6 +1542,415 @@ function ComponentShowcase() {
             </View>
           </CardBody>
         </Card>
+
+        {/* BottomSheet Component - NEW */}
+        <Card
+          variant="elevated"
+          style={[
+            styles.section,
+            { backgroundColor: theme.colors.content1, padding: 20 },
+          ]}
+        >
+          <CardHeader>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: theme.colors.accent,
+                  fontSize: 24,
+                  fontWeight: '800',
+                },
+              ]}
+            >
+              📱 BottomSheet ✨ NEW
+            </Text>
+            <Text
+              style={{
+                color: 'rgba(255,255,255,0.9)',
+                fontSize: 14,
+                marginTop: 4,
+              }}
+            >
+              Gesture-driven bottom sheet with smooth 60fps animations
+            </Text>
+          </CardHeader>
+          <CardBody style={{ gap: 12 }}>
+            <Button
+              colorScheme="secondary"
+              onPress={() => setIsBottomSheetOpen(true)}
+              fullWidth
+            >
+              Open Basic Sheet
+            </Button>
+            <Button
+              variant="outline"
+              onPress={() => setIsFormSheetOpen(true)}
+              fullWidth
+              style={{ borderColor: '#fff' }}
+            >
+              Open Form Sheet
+            </Button>
+            <Button
+              variant="ghost"
+              onPress={() => setIsShareSheetOpen(true)}
+              fullWidth
+            >
+              Open Share Sheet
+            </Button>
+            <Button
+              variant="ghost"
+              onPress={() => setIsFilterSheetOpen(true)}
+              fullWidth
+            >
+              Open Filter Sheet
+            </Button>
+          </CardBody>
+        </Card>
+
+        {/* BottomSheet - Basic Example */}
+        <BottomSheet
+          isOpen={isBottomSheetOpen}
+          onClose={() => setIsBottomSheetOpen(false)}
+          snapPoints={['40%', '80%']}
+          showDragHandle
+          onSnapChange={(index) => {
+            console.log('Snapped to index:', index);
+          }}
+        >
+          <BottomSheetHeader showCloseButton>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: theme.colors.foreground,
+              }}
+            >
+              Welcome to BottomSheet
+            </Text>
+          </BottomSheetHeader>
+
+          <BottomSheetBody>
+            <View style={{ gap: 16 }}>
+              <Text style={{ color: theme.colors.foreground, fontSize: 16 }}>
+                This is a gesture-driven bottom sheet component with smooth
+                animations powered by Reanimated!
+              </Text>
+
+              <Alert color="primary" variant="flat">
+                <Text style={{ color: theme.colors.primary }}>
+                  💡 Drag the handle or swipe down to change snap points
+                </Text>
+              </Alert>
+
+              <View
+                style={{
+                  padding: 16,
+                  backgroundColor: theme.colors.content2,
+                  borderRadius: 12,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: '600',
+                    marginBottom: 8,
+                    color: theme.colors.foreground,
+                  }}
+                >
+                  Features:
+                </Text>
+                <Text style={{ color: theme.colors['default-600'] }}>
+                  ✓ Smooth 60fps animations{'\n'}✓ Multiple snap points{'\n'}✓
+                  Pan gesture support{'\n'}✓ Backdrop variants{'\n'}✓ Theme
+                  integration
+                </Text>
+              </View>
+
+              <Divider />
+
+              <View style={{ gap: 8 }}>
+                <Text
+                  style={{
+                    fontWeight: '600',
+                    color: theme.colors.foreground,
+                  }}
+                >
+                  Try the features:
+                </Text>
+                <Button
+                  size="sm"
+                  colorScheme="primary"
+                  onPress={() =>
+                    toast.success('You can add any content here!', {
+                      position: 'top',
+                    })
+                  }
+                >
+                  Trigger Toast
+                </Button>
+              </View>
+            </View>
+          </BottomSheetBody>
+
+          <BottomSheetFooter>
+            <View style={{ gap: 8 }}>
+              <Button
+                colorScheme="primary"
+                onPress={() => setIsBottomSheetOpen(false)}
+                fullWidth
+              >
+                Got it!
+              </Button>
+              <Button
+                variant="ghost"
+                onPress={() => setIsBottomSheetOpen(false)}
+                fullWidth
+              >
+                Close
+              </Button>
+            </View>
+          </BottomSheetFooter>
+        </BottomSheet>
+
+        {/* BottomSheet - Form Example */}
+        <BottomSheet
+          isOpen={isFormSheetOpen}
+          onClose={() => setIsFormSheetOpen(false)}
+          snapPoints={['70%']}
+          closeOnBackdropPress={false}
+          backdrop="blur"
+        >
+          <BottomSheetHeader showCloseButton>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: theme.colors.foreground,
+              }}
+            >
+              User Information
+            </Text>
+          </BottomSheetHeader>
+
+          <BottomSheetBody scrollable={false}>
+            <View style={{ gap: 16 }}>
+              <Input
+                label="Name"
+                placeholder="Enter your name"
+                value={sheetName}
+                onChangeText={setSheetName}
+                variant="bordered"
+              />
+              <Input
+                label="Email"
+                placeholder="Enter your email"
+                value={sheetEmail}
+                onChangeText={setSheetEmail}
+                variant="bordered"
+              />
+              <Textarea
+                label="Bio"
+                placeholder="Tell us about yourself"
+                variant="bordered"
+                minRows={3}
+              />
+            </View>
+          </BottomSheetBody>
+
+          <BottomSheetFooter>
+            <View style={{ gap: 8 }}>
+              <Button
+                colorScheme="primary"
+                onPress={() => {
+                  toast.success('Form submitted!', { position: 'top' });
+                  setIsFormSheetOpen(false);
+                  setSheetName('');
+                  setSheetEmail('');
+                }}
+                fullWidth
+              >
+                Submit
+              </Button>
+              <Button
+                variant="outline"
+                onPress={() => setIsFormSheetOpen(false)}
+                fullWidth
+              >
+                Cancel
+              </Button>
+            </View>
+          </BottomSheetFooter>
+        </BottomSheet>
+
+        {/* BottomSheet - Share Sheet Example */}
+        <BottomSheet
+          isOpen={isShareSheetOpen}
+          onClose={() => setIsShareSheetOpen(false)}
+          snapPoints={[320]}
+          showDragHandle
+        >
+          <BottomSheetHeader>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '600',
+                textAlign: 'center',
+                color: theme.colors.foreground,
+              }}
+            >
+              Share via
+            </Text>
+          </BottomSheetHeader>
+
+          <BottomSheetBody scrollable={false}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
+              {[
+                { icon: '📱', label: 'SMS', color: 'success' },
+                { icon: '📧', label: 'Email', color: 'primary' },
+                { icon: '🔗', label: 'Copy Link', color: 'secondary' },
+                { icon: '💾', label: 'Save', color: 'warning' },
+              ].map((option) => (
+                <View
+                  key={option.label}
+                  style={{
+                    width: '22%',
+                    alignItems: 'center',
+                    padding: 12,
+                  }}
+                >
+                  <Button
+                    size="lg"
+                    variant="flat"
+                    colorScheme={option.color as any}
+                    onPress={() => {
+                      toast.success(`Shared via ${option.label}!`, {
+                        position: 'top',
+                      });
+                      setIsShareSheetOpen(false);
+                    }}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 30,
+                      padding: 0,
+                    }}
+                  >
+                    <Text style={{ fontSize: 24 }}>{option.icon}</Text>
+                  </Button>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      marginTop: 6,
+                      textAlign: 'center',
+                      color: theme.colors['default-600'],
+                    }}
+                  >
+                    {option.label}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </BottomSheetBody>
+        </BottomSheet>
+
+        {/* BottomSheet - Filter Sheet Example */}
+        <BottomSheet
+          isOpen={isFilterSheetOpen}
+          onClose={() => setIsFilterSheetOpen(false)}
+          snapPoints={['50%']}
+          backdrop="opaque"
+        >
+          <BottomSheetHeader showCloseButton>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: theme.colors.foreground,
+              }}
+            >
+              Filter & Sort
+            </Text>
+          </BottomSheetHeader>
+
+          <BottomSheetBody>
+            <View style={{ gap: 20 }}>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginBottom: 12,
+                    color: theme.colors.foreground,
+                  }}
+                >
+                  Show
+                </Text>
+                <RadioGroup
+                  value={selectedFilter}
+                  onValueChange={setSelectedFilter}
+                  color="primary"
+                >
+                  <Radio value="all">All Items</Radio>
+                  <Radio value="active">Active Only</Radio>
+                  <Radio value="completed">Completed Only</Radio>
+                  <Radio value="starred">Starred</Radio>
+                </RadioGroup>
+              </View>
+
+              <Divider />
+
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    marginBottom: 12,
+                    color: theme.colors.foreground,
+                  }}
+                >
+                  Sort By
+                </Text>
+                <View style={{ gap: 8 }}>
+                  <Chip variant="flat" color="primary">
+                    Date
+                  </Chip>
+                  <Chip variant="flat" color="secondary">
+                    Name
+                  </Chip>
+                  <Chip variant="flat" color="success">
+                    Priority
+                  </Chip>
+                </View>
+              </View>
+            </View>
+          </BottomSheetBody>
+
+          <BottomSheetFooter>
+            <View style={{ gap: 8 }}>
+              <Button
+                colorScheme="primary"
+                onPress={() => {
+                  toast.success(`Filter applied: ${selectedFilter}`, {
+                    position: 'top',
+                  });
+                  setIsFilterSheetOpen(false);
+                }}
+                fullWidth
+              >
+                Apply Filters
+              </Button>
+              <Button
+                variant="ghost"
+                onPress={() => {
+                  setSelectedFilter('all');
+                  setIsFilterSheetOpen(false);
+                }}
+                fullWidth
+              >
+                Reset
+              </Button>
+            </View>
+          </BottomSheetFooter>
+        </BottomSheet>
 
         {/* Tooltip Examples */}
         <Card variant="elevated" style={styles.section}>

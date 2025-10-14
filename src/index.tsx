@@ -174,6 +174,18 @@ export {
   type TabsRadius,
   type TabsPlacement,
 } from './components/Tabs/Tabs';
+export {
+  BottomSheet,
+  BottomSheetHeader,
+  BottomSheetBody,
+  BottomSheetFooter,
+  type BottomSheetProps,
+  type BottomSheetHeaderProps,
+  type BottomSheetBodyProps,
+  type BottomSheetFooterProps,
+  type BottomSheetSnapPoint,
+  type BottomSheetBackdrop,
+} from './components/BottomSheet/BottomSheet';
 
 // Providers
 export {
