@@ -1679,11 +1679,7 @@ function ComponentShowcase() {
                 <Button
                   size="sm"
                   colorScheme="primary"
-                  onPress={() =>
-                    toast.success('You can add any content here!', {
-                      position: 'top',
-                    })
-                  }
+                  onPress={() => toast.success('You can add any content here!')}
                 >
                   Trigger Toast
                 </Button>
@@ -1761,7 +1757,7 @@ function ComponentShowcase() {
               <Button
                 colorScheme="primary"
                 onPress={() => {
-                  toast.success('Form submitted!', { position: 'top' });
+                  toast.success('Form submitted!');
                   setIsFormSheetOpen(false);
                   setSheetName('');
                   setSheetEmail('');
@@ -1819,12 +1815,10 @@ function ComponentShowcase() {
                 >
                   <Button
                     size="lg"
-                    variant="flat"
+                    variant="outline"
                     colorScheme={option.color as any}
                     onPress={() => {
-                      toast.success(`Shared via ${option.label}!`, {
-                        position: 'top',
-                      });
+                      toast.success(`Shared via ${option.label}!`);
                       setIsShareSheetOpen(false);
                     }}
                     style={{
@@ -1929,9 +1923,7 @@ function ComponentShowcase() {
               <Button
                 colorScheme="primary"
                 onPress={() => {
-                  toast.success(`Filter applied: ${selectedFilter}`, {
-                    position: 'top',
-                  });
+                  toast.success(`Filter applied: ${selectedFilter}`);
                   setIsFilterSheetOpen(false);
                 }}
                 fullWidth
@@ -2062,9 +2054,10 @@ function ComponentShowcase() {
                 variant="outline"
                 colorScheme="primary"
                 onPress={() =>
-                  toast.success({
+                  toast.show({
                     title: 'With Title',
                     description: 'This toast has both title and description',
+                    color: 'success',
                   })
                 }
               >
