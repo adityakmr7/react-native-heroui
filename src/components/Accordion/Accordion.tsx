@@ -244,7 +244,13 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
           easing: Easing.bezier(0.4, 0.0, 0.2, 1),
         });
       }
-    }, [isExpanded, context.disableAnimation, rotation, contentHeight, contentOpacity]);
+    }, [
+      isExpanded,
+      context.disableAnimation,
+      rotation,
+      contentHeight,
+      contentOpacity,
+    ]);
 
     const indicatorAnimatedStyle = useAnimatedStyle(() => ({
       transform: [
