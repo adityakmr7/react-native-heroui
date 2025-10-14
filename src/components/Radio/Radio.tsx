@@ -3,13 +3,19 @@ import {
   View,
   Text,
   Pressable,
-  Animated,
   StyleSheet,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withSequence,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type RadioColor =
@@ -249,7 +255,7 @@ export const Radio = React.forwardRef<View, RadioProps>(
   ) => {
     const { theme } = useTheme();
     const context = useRadioGroupContext();
-    const scaleAnim = React.useRef(new Animated.Value(1)).current;
+    const scale = useSharedValue(1);
 
     if (!context) {
       throw new Error('Radio must be used within RadioGroup');
@@ -283,18 +289,10 @@ export const Radio = React.forwardRef<View, RadioProps>(
     const handlePress = () => {
       if (isDisabled || isReadOnly) return;
 
-      Animated.sequence([
-        Animated.timing(scaleAnim, {
-          toValue: 0.85,
-          duration: 100,
-          useNativeDriver: true,
-        }),
-        Animated.spring(scaleAnim, {
-          toValue: 1,
-          friction: 3,
-          useNativeDriver: true,
-        }),
-      ]).start();
+      scale.value = withSequence(
+        withTiming(0.85, { duration: 100 }),
+        withSpring(1, { damping: 3, stiffness: 100 })
+      );
 
       context.onChange(value);
     };
@@ -307,6 +305,10 @@ export const Radio = React.forwardRef<View, RadioProps>(
     };
 
     const colorValue = getColorValue();
+
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: scale.value }],
+    }));
 
     const styles = StyleSheet.create({
       base: {
@@ -363,11 +365,7 @@ export const Radio = React.forwardRef<View, RadioProps>(
         {...viewProps}
       >
         <Animated.View
-          style={[
-            styles.wrapper,
-            classNames?.wrapper,
-            { transform: [{ scale: scaleAnim }] },
-          ]}
+          style={[styles.wrapper, classNames?.wrapper, animatedStyle]}
         >
           <Animated.View style={[styles.control, classNames?.control]} />
         </Animated.View>

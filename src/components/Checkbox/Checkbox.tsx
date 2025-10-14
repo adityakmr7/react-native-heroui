@@ -3,13 +3,19 @@ import {
   View,
   Text,
   Pressable,
-  Animated,
   StyleSheet,
   type ViewProps,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withSequence,
+} from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
 
 export type CheckboxColor =
@@ -117,7 +123,7 @@ export const Checkbox = React.forwardRef<View, CheckboxProps>(
   ) => {
     const { theme } = useTheme();
     const [internalSelected, setInternalSelected] = useState(defaultSelected);
-    const scaleAnim = React.useRef(new Animated.Value(1)).current;
+    const scale = useSharedValue(1);
 
     const isControlled = controlledSelected !== undefined;
     const isSelected = isControlled ? controlledSelected : internalSelected;
@@ -166,18 +172,10 @@ export const Checkbox = React.forwardRef<View, CheckboxProps>(
       if (isDisabled || isReadOnly) return;
 
       if (!disableAnimation) {
-        Animated.sequence([
-          Animated.timing(scaleAnim, {
-            toValue: 0.85,
-            duration: 100,
-            useNativeDriver: true,
-          }),
-          Animated.spring(scaleAnim, {
-            toValue: 1,
-            friction: 3,
-            useNativeDriver: true,
-          }),
-        ]).start();
+        scale.value = withSequence(
+          withTiming(0.85, { duration: 100 }),
+          withSpring(1, { damping: 3, stiffness: 100 })
+        );
       }
 
       const newValue = !isSelected;
@@ -189,6 +187,10 @@ export const Checkbox = React.forwardRef<View, CheckboxProps>(
     };
 
     const colorValue = getColorValue();
+
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: scale.value }],
+    }));
 
     const styles = StyleSheet.create({
       base: {
@@ -274,11 +276,7 @@ export const Checkbox = React.forwardRef<View, CheckboxProps>(
         {...viewProps}
       >
         <Animated.View
-          style={[
-            styles.wrapper,
-            classNames?.wrapper,
-            { transform: [{ scale: scaleAnim }] },
-          ]}
+          style={[styles.wrapper, classNames?.wrapper, animatedStyle]}
         >
           <View style={[styles.iconContainer, classNames?.icon]}>
             {renderIcon()}
