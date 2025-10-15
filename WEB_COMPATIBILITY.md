@@ -346,6 +346,125 @@ module.exports = withTM({
 
 ---
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### Issue: "Cannot read properties of undefined (reading 'ReactCurrentDispatcher')"
+
+**Symptom:**
+```
+Uncaught TypeError: Cannot read properties of undefined (reading 'ReactCurrentDispatcher')
+```
+
+**Cause:**  
+Multiple versions of `react` or `react-dom` are installed, causing React to be instantiated twice.
+
+**Solution:**
+
+1. Check for duplicate React versions:
+```bash
+npm ls react react-dom
+```
+
+2. Ensure `react` and `react-dom` are at the **same version** and only in `dependencies` (not in `devDependencies`):
+
+```json
+{
+  "dependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    // DO NOT include react or react-dom here
+  }
+}
+```
+
+3. Clean and reinstall:
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+4. Clear Expo/Metro cache and restart:
+```bash
+npx expo start --web --clear
+```
+
+#### Issue: Gestures not working on web
+
+**Symptom:**  
+Pan gestures (Slider, BottomSheet, Drawer) don't respond to mouse/touch.
+
+**Solution:**  
+Ensure `react-native-gesture-handler` is properly configured:
+
+1. Wrap your app with `GestureHandlerRootView`:
+```tsx
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+<GestureHandlerRootView style={{ flex: 1 }}>
+  <App />
+</GestureHandlerRootView>
+```
+
+2. Check that you're using `~2.24.0` or later (has web support).
+
+#### Issue: Reanimated animations not working
+
+**Symptom:**  
+Animations don't run or components don't render.
+
+**Solution:**
+
+1. Ensure Reanimated plugin is **last** in `babel.config.js`:
+```js
+module.exports = {
+  presets: ['babel-preset-expo'],
+  plugins: [
+    // ... other plugins
+    'react-native-reanimated/plugin', // Must be last!
+  ],
+};
+```
+
+2. Clear cache:
+```bash
+npx expo start --web --clear
+```
+
+3. Verify version is `~3.17.0` or later.
+
+#### Issue: Module not found errors
+
+**Symptom:**  
+```
+Module not found: Can't resolve 'react-native-heroui'
+```
+
+**Solution:**
+
+For monorepos or local development:
+
+```bash
+# In the library root
+npm run prepare  # Build the library
+
+# In your app
+npm install      # Re-link dependencies
+```
+
+For Next.js, ensure transpilation:
+```js
+// next.config.js
+const withTM = require('next-transpile-modules')([
+  'react-native-heroui',
+]);
+```
+
+---
+
 ## ✅ Conclusion
 
 **React Native HeroUI is fully web-compatible!** 
