@@ -8,13 +8,14 @@ A beautiful, modern, and fully-featured React Native UI component library inspir
 ## ✨ Features
 
 - 🎯 **27+ Production-Ready Components** - Button, Input, InputOtp, Textarea, Modal, BottomSheet, Drawer, Card, Avatar, Badge, Chip, Switch, Spinner, Skeleton, Radio, Slider, Select, Progress, Image, Spacer, Accordion, Alert, Toast, Tooltip, Tabs, and more
+- 🌐 **Web Support** - Works on iOS, Android, **and Web** (via React Native Web) with 100% feature parity
+- ⚡ **Reanimated 3** - All animations run at 60fps on UI thread for silky-smooth performance
+- 🎨 **Gesture Support** - Pan gestures in BottomSheet, Drawer, and Slider work seamlessly on all platforms
 - 🌗 **Dark Mode Support** - Built-in light and dark themes
 - 🎨 **Fully Customizable** - Comprehensive design token system
 - ♿️ **Accessibility First** - ARIA support and screen reader friendly
-- 📱 **React Native** - Works on iOS and Android
 - 🔧 **TypeScript** - Full type safety
 - 🎭 **Variants System** - Multiple variants for each component
-- ⚡️ **Animations** - Smooth, performant animations
 - 🏗️ **Factory Pattern** - Easily create your own styled components
 - 📦 **Style Props** - Chakra UI-like style props system
 - 🌳 **Tree-Shakeable** - Only bundle what you use (~5-8 KB per component)
@@ -70,6 +71,21 @@ function App() {
 ```bash
 npx expo start -c
 ```
+
+### 🌐 Web Setup (React Native Web)
+
+React Native HeroUI works perfectly on web! For Expo projects:
+
+```bash
+# Run on web
+npx expo start --web
+# or
+npm run web
+```
+
+For Next.js or custom webpack setup, see the [Web Compatibility Guide](./WEB_COMPATIBILITY.md) for full configuration details.
+
+**All 27 components work on web with 100% feature parity!** 🎉
 
 ## 🌳 Tree-Shaking & Bundle Size
 

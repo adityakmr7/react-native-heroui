@@ -45,6 +45,8 @@
     "react-native",
     "ios",
     "android",
+    "web",
+    "react-native-web",
     "ui-library",
     "component-library",
     "heroui",
@@ -54,7 +56,14 @@
     "theme",
     "dark-mode",
     "accessibility",
-    "mobile"
+    "mobile",
+    "reanimated",
+    "gestures",
+    "bottomsheet",
+    "drawer",
+    "60fps",
+    "expo",
+    "nextjs"
   ],
   "repository": {
     "type": "git",
