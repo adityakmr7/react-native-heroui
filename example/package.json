@@ -34,7 +34,6 @@
     "@storybook/react-native": "^7.6.20",
     "cross-env": "^7.0.3",
     "metro-react-native-babel-preset": "^0.77.0",
-    "react-dom": "^18.3.1",
     "react-native-builder-bob": "^0.40.12",
     "react-native-monorepo-config": "^0.1.9",
     "react-native-safe-area-context": "^4.11.1",
