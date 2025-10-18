@@ -2,6 +2,26 @@
 
 Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **27 production-ready components** in the library.
 
+## 🎨 Theming
+
+React Native HeroUI provides a comprehensive theming system with:
+
+- **Color Palettes** - 60+ colors for light and dark modes
+- **Design Tokens** - Spacing, typography, border radius, and shadows
+- **Custom Themes** - Create your own themes with full type safety
+- **Dark Mode** - Built-in dark mode support
+
+**[View Full Theming Guide →](./theming.html)** | **[Theming Guide (Markdown) →](./theming.md)**
+
+The theming guide includes:
+
+- Visual color palette with click-to-copy functionality
+- Interactive examples of all theme tokens
+- Step-by-step guide to creating custom themes
+- Best practices for theme implementation
+
+---
+
 ## 📦 Components
 
 ### Form & Input (9)

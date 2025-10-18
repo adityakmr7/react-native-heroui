@@ -124,6 +124,92 @@ Available sizes: `sm`, `md`, `lg`.
 
 ---
 
+## Theming
+
+Button components automatically use the theme colors from the HeroUIProvider. You can customize the appearance using the theme system.
+
+### Using Theme Colors
+
+```tsx
+import { useTheme } from 'react-native-heroui';
+
+function ThemedButton() {
+  const { theme } = useTheme();
+
+  return (
+    <Button
+      colorScheme="primary" // Uses theme.colors.primary
+      style={{
+        borderRadius: theme.borderRadius['rounded-large'],
+      }}
+    >
+      Themed Button
+    </Button>
+  );
+}
+```
+
+### Available Theme Colors
+
+The Button component respects these theme colors:
+
+- **Primary**: `theme.colors.primary` - Default brand color (#0066FF in light mode)
+- **Secondary**: `theme.colors.secondary` - Secondary actions (#7C3AED in light mode)
+- **Success**: `theme.colors.success` - Success states (#10B981)
+- **Warning**: `theme.colors.warning` - Warning states (#F59E0B)
+- **Danger**: `theme.colors.danger` - Danger/error states (#EF4444)
+
+For the complete color palette and theming options, see the [Theming Guide](../theming.html).
+
+### Custom Theme Example
+
+Create a custom theme with your brand colors:
+
+```tsx
+import { HeroUIProvider, Button, lightTheme } from 'react-native-heroui';
+
+const customTheme = {
+  ...lightTheme,
+  colors: {
+    ...lightTheme.colors,
+    primary: '#FF6B6B',
+    secondary: '#4ECDC4',
+  },
+};
+
+function App() {
+  return (
+    <HeroUIProvider theme={customTheme}>
+      <Button colorScheme="primary">Custom Primary Color</Button>
+    </HeroUIProvider>
+  );
+}
+```
+
+### Dark Mode
+
+Buttons automatically adapt to dark mode when using the HeroUIProvider:
+
+```tsx
+import { HeroUIProvider, Button } from 'react-native-heroui';
+
+function App() {
+  return (
+    <HeroUIProvider initialTheme="dark">
+      <Button colorScheme="primary">Dark Mode Button</Button>
+    </HeroUIProvider>
+  );
+}
+```
+
+**Learn more about theming:**
+
+- [Interactive Theming Guide](../theming.html) - Visual color palettes and examples
+- [Theming Documentation](../theming.md) - Complete theming reference
+- [Quick Reference](../THEMING_QUICK_REFERENCE.md) - Theming cheat sheet
+
+---
+
 ## Accessibility
 
 - ✅ `accessibilityRole="button"`
