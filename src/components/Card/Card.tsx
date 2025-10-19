@@ -95,6 +95,8 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ children, style }) => {
   return <View style={[styles.header, style]}>{children}</View>;
 };
 
+CardHeader.displayName = 'Card.Header';
+
 export interface CardBodyProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
@@ -112,6 +114,8 @@ export const CardBody: React.FC<CardBodyProps> = ({ children, style }) => {
   return <View style={[styles.body, style]}>{children}</View>;
 };
 
+CardBody.displayName = 'Card.Body';
+
 export interface CardFooterProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
@@ -128,3 +132,23 @@ export const CardFooter: React.FC<CardFooterProps> = ({ children, style }) => {
 
   return <View style={[styles.footer, style]}>{children}</View>;
 };
+
+CardFooter.displayName = 'Card.Footer';
+
+// Type definition for compound component
+interface CardCompoundComponent
+  extends React.ForwardRefExoticComponent<
+    CardProps & React.RefAttributes<View>
+  > {
+  Header: typeof CardHeader;
+  Body: typeof CardBody;
+  Footer: typeof CardFooter;
+}
+
+// Attach compound components to Card
+(Card as CardCompoundComponent).Header = CardHeader;
+(Card as CardCompoundComponent).Body = CardBody;
+(Card as CardCompoundComponent).Footer = CardFooter;
+
+// Export Card with compound components type
+export default Card as CardCompoundComponent;

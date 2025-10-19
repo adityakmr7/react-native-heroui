@@ -2,6 +2,20 @@
 
 Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **27 production-ready components** in the library.
 
+## 🎨 Interactive Playground
+
+**[🎨 Open Storybook Playground →](./storybook/)**
+
+Explore all components interactively with Storybook! Features:
+
+- **Live component preview** - See components in action
+- **Interactive controls** - Modify props in real-time
+- **All variants** - Explore every color, size, and variant
+- **Theme switching** - Test light and dark modes
+- **Responsive testing** - View at different screen sizes
+
+---
+
 ## 🎨 Theming
 
 React Native HeroUI provides a comprehensive theming system with:

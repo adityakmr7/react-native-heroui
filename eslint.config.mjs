@@ -33,9 +33,21 @@ export default defineConfig([
     },
   },
   {
+    // Special rules for Storybook stories
+    files: ['stories/**/*.stories.tsx', 'stories/**/*.stories.ts'],
+    rules: {
+      'react-native/no-inline-styles': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+      'no-alert': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
+    },
+  },
+  {
     ignores: [
       'node_modules/',
-      'lib/'
+      'lib/',
+      'docs/storybook/',
+      'storybook-static/',
     ],
   },
 ]);
