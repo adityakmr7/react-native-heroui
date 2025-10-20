@@ -1,3 +1,23 @@
+# Components & Design System Summary
+
+## Themes & Design Tokens 🎨
+
+Comprehensive design token system with colors, typography, spacing, border radius, and shadows - all fully customizable with light and dark mode support.
+
+**Features:**
+
+- 100+ design tokens
+- Semantic color scales (50-900)
+- Typography system
+- Spacing units (4px base)
+- Border radius presets
+- Shadow elevation system
+- Full TypeScript support
+
+[View Themes Documentation](../themes.html) | [Full Themes Guide](../themes.md)
+
+---
+
 # New Components Summary
 
 ## BottomSheet ✨ NEW

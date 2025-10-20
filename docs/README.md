@@ -1,6 +1,22 @@
 # React Native HeroUI Documentation
 
-Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **27 production-ready components** in the library.
+Welcome to the React Native HeroUI documentation! This site provides comprehensive documentation for all **27 production-ready components** and a complete **design token system**.
+
+## 🎨 Design System
+
+### [Themes & Design Tokens](./themes.html)
+
+Comprehensive theming system with 100+ design tokens:
+
+- **Colors** - Semantic color scales (50-900) for light and dark modes
+- **Typography** - Font sizes, line heights, and weights
+- **Spacing** - Unit-based spacing with 4px base unit
+- **Border Radius** - Consistent rounded corners
+- **Shadows** - Elevation system for depth
+
+[View Interactive Themes Preview →](./themes.html) | [Read Full Guide →](./themes.md)
+
+---
 
 ## 📦 Components
 
