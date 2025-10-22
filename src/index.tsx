@@ -247,6 +247,18 @@ export {
 export { getColor, getSpacing, getFontSize } from './utils/styled';
 export { getSpacingStyles } from './utils/styleProps';
 
+// Theme Utils
+export {
+  createColorScale,
+  isValidColor,
+  mergeCustomColors,
+  createCustomTheme,
+  createBrandColors,
+  PRESET_THEMES,
+  type CustomColors,
+  type PresetThemeName,
+} from './utils/themeUtils';
+
 // Variants
 export { getButtonStyles, type ButtonVariants } from './variants/button';
 export { getInputStyles, type InputVariants } from './variants/input';

@@ -9,10 +9,13 @@ A beautiful, modern, and fully-featured React Native UI component library inspir
 
 - 🎯 **27+ Production-Ready Components** - Button, Input, InputOtp, Textarea, Modal, BottomSheet, Drawer, Card, Avatar, Badge, Chip, Switch, Spinner, Skeleton, Radio, Slider, Select, Progress, Image, Spacer, Accordion, Alert, Toast, Tooltip, Tabs, and more
 - 🌗 **Dark Mode Support** - Built-in light and dark themes
+- 🎨 **Complete Custom Color Theming** - Override any color with your brand colors
+- 🎨 **Preset Themes** - Professional pre-built themes (Modern Blue, Purple, Green)
+- 🎨 **Brand Color Helpers** - Easy brand color generation with complete color scales
 - 🎨 **Fully Customizable** - Comprehensive design token system
 - ♿️ **Accessibility First** - ARIA support and screen reader friendly
 - 📱 **React Native** - Works on iOS and Android
-- 🔧 **TypeScript** - Full type safety
+- 🔧 **TypeScript** - Full type safety with autocomplete for custom colors
 - 🎭 **Variants System** - Multiple variants for each component
 - ⚡️ **Animations** - Smooth, performant animations
 - 🏗️ **Factory Pattern** - Easily create your own styled components
@@ -444,23 +447,257 @@ function MyComponent() {
 }
 ```
 
-### Custom Theme
+### 🎨 Custom Colors (NEW!)
+
+React Native HeroUI now supports **complete custom color theming**! You can override any color in the theme system.
+
+#### Basic Custom Colors
 
 ```tsx
-import { ThemeProvider, lightTheme } from 'react-native-heroui';
+import { HeroUIProvider } from 'react-native-heroui';
 
-const customTheme = {
-  ...lightTheme,
-  colors: {
-    ...lightTheme.colors,
-    primary: '#FF6B6B',
-    secondary: '#4ECDC4',
+const customColors = {
+  light: {
+    primary: '#FF6B35', // Your custom primary color
+    secondary: '#004E89', // Your custom secondary color
+    success: '#28A745',
+    warning: '#FFC107',
+    danger: '#DC3545',
+  },
+  dark: {
+    primary: '#FF8A65', // Dark mode variant
+    secondary: '#1976D2',
+    success: '#4CAF50',
+    warning: '#FFB74D',
+    danger: '#F44336',
   },
 };
 
-<ThemeProvider initialTheme="light" customTheme={customTheme}>
-  {/* Your app */}
-</ThemeProvider>;
+function App() {
+  return (
+    <HeroUIProvider customColors={customColors}>
+      <YourApp />
+    </HeroUIProvider>
+  );
+}
+```
+
+#### Complete Color Override
+
+```tsx
+const myBrandTheme = {
+  light: {
+    // Layout colors
+    'background': '#F9FAFB',
+    'foreground': '#0F172A',
+    'divider': '#E2E8F0',
+
+    // Base colors
+    'primary': '#4F46E5',
+    'secondary': '#7C3AED',
+    'success': '#16A34A',
+    'warning': '#EAB308',
+    'danger': '#F43F5E',
+
+    // Complete color scales
+    'primary-50': '#EEF2FF',
+    'primary-100': '#E0E7FF',
+    'primary-200': '#C7D2FE',
+    'primary-300': '#A5B4FC',
+    'primary-400': '#818CF8',
+    'primary-500': '#6366F1',
+    'primary-600': '#4F46E5',
+    'primary-700': '#4338CA',
+    'primary-800': '#3730A3',
+    'primary-900': '#312E81',
+  },
+  dark: {
+    // Your dark mode colors...
+  },
+};
+```
+
+#### Using Preset Themes
+
+```tsx
+import { PRESET_THEMES } from 'react-native-heroui/utils/themeUtils';
+
+// Use pre-built professional themes
+<HeroUIProvider customColors={PRESET_THEMES.modernBlue}>
+  <YourApp />
+</HeroUIProvider>;
+
+// Available presets: modernBlue, purple, green
+```
+
+#### Brand Color Helper
+
+```tsx
+import { createBrandColors } from 'react-native-heroui/utils/themeUtils';
+
+const brandColors = createBrandColors(
+  '#FF6B6B', // Primary brand color
+  '#4ECDC4', // Secondary brand color
+  '#45B7D1', // Success color
+  '#FFA726', // Warning color
+  '#EF5350' // Danger color
+);
+
+const customColors = {
+  light: brandColors,
+  dark: {
+    ...brandColors,
+    // Adjust for dark mode
+    primary: '#FF8E8E',
+    secondary: '#6ED5CD',
+  },
+};
+```
+
+#### Partial Color Override
+
+```tsx
+// Override only specific colors
+const partialTheme = {
+  light: {
+    'primary': '#4F46E5', // Only change primary
+    'primary-500': '#4F46E5', // And its 500 variant
+    'success': '#16A34A', // And success color
+    // Everything else stays default
+  },
+};
+```
+
+### Available Color Properties
+
+You can customize any of these color properties:
+
+#### Layout Colors
+
+- `background` - Main background color
+- `foreground` - Main text color
+- `divider` - Divider color
+- `accent` - Accent color (light mode)
+- `focus` - Focus color (dark mode)
+
+#### Content Colors
+
+- `content1` - Primary content background
+- `content2` - Secondary content background
+- `content3` - Tertiary content background
+- `content4` - Quaternary content background
+
+#### Base Colors
+
+- `default` - Default color
+- `primary` - Primary brand color
+- `secondary` - Secondary brand color
+- `success` - Success color
+- `warning` - Warning color
+- `danger` - Danger color
+
+#### Color Scales
+
+Each base color has a complete scale from 50 to 900:
+
+- `primary-50` to `primary-900`
+- `secondary-50` to `secondary-900`
+- `success-50` to `success-900`
+- `warning-50` to `warning-900`
+- `danger-50` to `danger-900`
+- `default-50` to `default-900`
+
+### Advanced Theming
+
+#### Dynamic Theme Switching
+
+```tsx
+import { useState } from 'react';
+import { HeroUIProvider, PRESET_THEMES } from 'react-native-heroui';
+
+function App() {
+  const [currentTheme, setCurrentTheme] = useState('modernBlue');
+
+  const themes = {
+    modernBlue: PRESET_THEMES.modernBlue,
+    purple: PRESET_THEMES.purple,
+    green: PRESET_THEMES.green,
+  };
+
+  return (
+    <HeroUIProvider customColors={themes[currentTheme]}>
+      <Button onPress={() => setCurrentTheme('purple')}>
+        Switch to Purple Theme
+      </Button>
+    </HeroUIProvider>
+  );
+}
+```
+
+#### App-Specific Themes
+
+```tsx
+// E-commerce theme
+const ecommerceTheme = {
+  light: {
+    primary: '#FF6B35', // Orange
+    secondary: '#004E89', // Navy
+    success: '#28A745',
+    warning: '#FFC107',
+    danger: '#DC3545',
+  },
+  dark: {
+    primary: '#FF8A65',
+    secondary: '#1976D2',
+    success: '#4CAF50',
+    warning: '#FFB74D',
+    danger: '#F44336',
+  },
+};
+
+// Healthcare theme
+const healthcareTheme = {
+  light: {
+    primary: '#2196F3', // Medical blue
+    secondary: '#4CAF50', // Health green
+    success: '#4CAF50',
+    warning: '#FF9800',
+    danger: '#F44336',
+  },
+  dark: {
+    primary: '#64B5F6',
+    secondary: '#81C784',
+    success: '#81C784',
+    warning: '#FFB74D',
+    danger: '#EF5350',
+  },
+};
+```
+
+### TypeScript Support
+
+Full TypeScript support with autocomplete:
+
+```tsx
+import type { CustomColors } from 'react-native-heroui';
+
+const myColors: CustomColors = {
+  primary: '#FF6B6B',
+  secondary: '#4ECDC4',
+  // TypeScript will autocomplete all available color properties
+};
+```
+
+### Legacy Custom Theme (Deprecated)
+
+> **Note**: The old `customTheme` prop is deprecated. Use `customColors` instead for better performance and type safety.
+
+```tsx
+// ❌ Old way (deprecated)
+<ThemeProvider customTheme={customTheme}>
+
+// ✅ New way (recommended)
+<ThemeProvider customColors={customColors}>
 ```
 
 ### Design Tokens
@@ -632,7 +869,7 @@ const spacingStyles = getSpacingStyles(theme, { mx: 'md', py: 'lg' });
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import {
-  ThemeProvider,
+  HeroUIProvider,
   Button,
   Input,
   Card,
@@ -645,11 +882,32 @@ import {
   useTheme,
 } from 'react-native-heroui';
 
+// Custom brand colors
+const brandColors = {
+  light: {
+    primary: '#FF6B35', // Orange primary
+    secondary: '#004E89', // Navy secondary
+    success: '#28A745',
+    warning: '#FFC107',
+    danger: '#DC3545',
+  },
+  dark: {
+    primary: '#FF8A65', // Lighter orange for dark mode
+    secondary: '#1976D2', // Lighter navy
+    success: '#4CAF50',
+    warning: '#FFB74D',
+    danger: '#F44336',
+  },
+};
+
 function App() {
   const [darkMode, setDarkMode] = React.useState(false);
 
   return (
-    <ThemeProvider initialTheme={darkMode ? 'dark' : 'light'}>
+    <HeroUIProvider
+      initialTheme={darkMode ? 'dark' : 'light'}
+      customColors={brandColors}
+    >
       <ScrollView style={{ flex: 1 }}>
         <View style={{ padding: 20 }}>
           <Card variant="elevated">
@@ -698,7 +956,7 @@ function App() {
           </Card>
         </View>
       </ScrollView>
-    </ThemeProvider>
+    </HeroUIProvider>
   );
 }
 
