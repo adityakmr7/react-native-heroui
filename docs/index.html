@@ -636,6 +636,7 @@
             <nav class="nav-links">
                 <a href="#components">Components</a>
                 <a href="./themes.html">Themes</a>
+                <a href="./custom-colors.html">Custom Colors</a>
                 <a href="https://github.com/adityakmr7/react-native-heroui" target="_blank">GitHub</a>
                 <a href="https://www.npmjs.com/package/react-native-heroui" target="_blank">NPM</a>
             </nav>
@@ -666,8 +667,8 @@
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🎨</div>
-                <h3>Themeable</h3>
-                <p>Comprehensive design token system with light and dark mode support. Customize every aspect of your components.</p>
+                <h3>Custom Colors</h3>
+                <p>Complete custom color theming with preset themes and brand color helpers. Override any color in your theme.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
@@ -677,7 +678,7 @@
             <div class="feature-card">
                 <div class="feature-icon">🌗</div>
                 <h3>Light & Dark UI</h3>
-                <p>Automatic dark mode recognition. Seamlessly switch between light and dark themes.</p>
+                <p>Automatic dark mode recognition. Seamlessly switch between light and dark themes with custom colors.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔧</div>
@@ -693,16 +694,17 @@
         <div class="theming-content">
             <div class="theming-text">
                 <p style="font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
-                    React Native HeroUI provides a powerful theming system that allows you to customize the default themes or create your own.
+                    React Native HeroUI provides a powerful theming system that allows you to customize the default themes or create your own with complete custom color support.
                 </p>
                 <div class="theme-tabs">
                     <button class="theme-tab active">HeroUI</button>
-                    <button class="theme-tab">Modern</button>
-                    <button class="theme-tab">Elegant</button>
-                    <button class="theme-tab">Retro</button>
+                    <button class="theme-tab">Custom Colors</button>
+                    <button class="theme-tab">Preset Themes</button>
+                    <button class="theme-tab">Brand Colors</button>
                 </div>
                 <div class="code-preview">
-<pre style="margin: 0;">const customTheme = {
+<pre style="margin: 0;">// Basic theming
+const customTheme = {
   colors: {
     primary: '#0072F5',
     secondary: '#7828C8',
@@ -710,7 +712,29 @@
     warning: '#F5A524',
     danger: '#F31260',
   },
-};</pre>
+};
+
+// Custom colors with light/dark variants
+const customColors = {
+  light: {
+    primary: '#FF6B35', // Orange
+    secondary: '#004E89', // Navy
+    success: '#28A745',
+    warning: '#FFC107',
+    danger: '#DC3545',
+  },
+  dark: {
+    primary: '#FF8A65', // Lighter orange
+    secondary: '#1976D2',
+    success: '#4CAF50',
+    warning: '#FFB74D',
+    danger: '#F44336',
+  },
+};
+
+&lt;HeroUIProvider customColors={customColors}&gt;
+  &lt;App /&gt;
+&lt;/HeroUIProvider&gt;</pre>
                 </div>
             </div>
             <div class="preview-card">
@@ -757,8 +781,34 @@
         </div>
     </section>
 
-    <!-- Dark Mode Section -->
+    <!-- Custom Colors Section -->
     <section class="dark-mode-section">
+        <h2 class="section-title"><span class="gradient-text">Custom Colors</span><br>made simple.</h2>
+        <div class="dark-mode-content">
+            <div style="text-align: center;">
+                <div style="font-size: 120px; opacity: 0.8;">🎨</div>
+            </div>
+            <div>
+                <p style="font-size: 18px; opacity: 0.7; margin-bottom: 32px;">
+                    Override any color in your theme with complete control. Use preset themes or create your own brand colors.
+                </p>
+                <div class="code-preview">
+<pre style="margin: 0;">import { PRESET_THEMES } from 'react-native-heroui';
+
+// Use preset themes
+&lt;HeroUIProvider customColors={PRESET_THEMES.modernBlue}&gt;
+  &lt;App /&gt;
+&lt;/HeroUIProvider&gt;
+
+// Or create brand colors
+const brandColors = createBrandColors('#FF6B6B', '#4ECDC4');</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dark Mode Section -->
+    <section class="dark-mode-section" style="background: var(--content1);">
         <h2 class="section-title"><span class="gradient-text">Dark mode</span> is<br>effortless.</h2>
         <div class="dark-mode-content">
             <div style="text-align: center;">
