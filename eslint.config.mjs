@@ -2,6 +2,8 @@ import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import prettier from 'eslint-plugin-prettier';
+import testingLibrary from 'eslint-plugin-testing-library';
+import jestDom from 'eslint-plugin-jest-dom';
 import { defineConfig } from 'eslint/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -35,7 +37,10 @@ export default defineConfig([
   {
     ignores: [
       'node_modules/',
-      'lib/'
+      'lib/',
+      'coverage/',
+      'example/',
+      '**/*.d.ts'
     ],
   },
 ]);
