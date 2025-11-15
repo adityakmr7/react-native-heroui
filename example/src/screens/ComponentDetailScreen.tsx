@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import {
   Card,
   CardHeader,
@@ -1067,7 +1068,7 @@ const componentShowcases: Record<
 
 export default function ComponentDetailScreen() {
   const route = useRoute<ComponentDetailRouteProp>();
-  const { componentName } = route.params;
+  const componentName = route.params?.componentName ?? '';
   const { theme } = useTheme();
 
   const showcaseRenderer = componentShowcases[componentName];

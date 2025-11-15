@@ -1,7 +1,6 @@
-import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, CardBody, useTheme } from 'react-native-heroui';
 import type { RootStackParamList } from '../navigation';
 
@@ -57,15 +56,16 @@ export default function ComponentsListScreen() {
         {COMPONENTS.map((componentName) => (
           <Pressable
             key={componentName}
-            onPress={() =>
-              navigation.navigate('ComponentDetail', { componentName })
-            }
+            onPress={() => {
+              const screenName = componentName as keyof RootStackParamList;
+              navigation.navigate(screenName as any);
+            }}
           >
             <Card
               variant="bordered"
               style={[
                 styles.componentCard,
-                { borderColor: theme.colors.border },
+                { borderColor: theme.colors.accent },
               ]}
             >
               <CardBody style={styles.cardBody}>
