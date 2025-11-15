@@ -88,7 +88,7 @@ const componentShowcases: Record<
             variant="solid"
             colorScheme="primary"
             fullWidth
-            style={{ marginTop: 12 }}
+            style={styles.buttonMarginTop}
           >
             Full Width Button
           </Button>
@@ -97,7 +97,7 @@ const componentShowcases: Record<
             colorScheme="secondary"
             isLoading
             fullWidth
-            style={{ marginTop: 12 }}
+            style={styles.buttonMarginTop}
           >
             Loading Button
           </Button>
@@ -131,13 +131,13 @@ const componentShowcases: Record<
             placeholder="Enter password"
             secureTextEntry
             isRequired
-            style={{ marginTop: 16 }}
+            style={styles.inputMarginTop}
           />
           <Input
             label="Disabled Input"
             placeholder="Disabled"
             isDisabled
-            style={{ marginTop: 16 }}
+            style={styles.inputMarginTop}
           />
         </CardBody>
       </Card>
@@ -212,7 +212,7 @@ const componentShowcases: Record<
           </Text>
         </CardHeader>
         <CardBody>
-          <View style={{ gap: 12 }}>
+          <View style={styles.checkboxContainer}>
             <Checkbox
               radius="sm"
               isSelected={agreedToTerms}
@@ -299,7 +299,7 @@ const componentShowcases: Record<
               color="success"
             />
           </View>
-          <View style={[styles.switchRow, { marginTop: 16 }]}>
+          <View style={[styles.switchRow, styles.switchMarginTop]}>
             <Text style={[styles.label, { color: theme.colors.foreground }]}>
               Email Marketing
             </Text>
@@ -327,14 +327,14 @@ const componentShowcases: Record<
             <Spinner variant="simple" color="success" label="Simple" />
             <Spinner variant="gradient" color="secondary" label="Gradient" />
           </View>
-          <Divider style={{ marginVertical: 12 }} />
+          <Divider style={styles.dividerMarginVertical} />
           <View style={styles.chipContainer}>
             <Spinner variant="wave" color="warning" label="Wave" />
             <Spinner variant="dots" color="danger" label="Dots" />
             <Spinner variant="spinner" color="primary" label="Spinner" />
           </View>
-          <Divider style={{ marginVertical: 16 }} />
-          <View style={{ alignItems: 'center' }}>
+          <Divider style={styles.dividerMarginVerticalLarge} />
+          <View style={styles.centerAlign}>
             {isLoading ? (
               <Spinner
                 size="lg"
@@ -376,7 +376,7 @@ const componentShowcases: Record<
             description="Choose the one you use most often"
             value={selectedFramework}
             onValueChange={setSelectedFramework}
-            style={{ marginBottom: 20 }}
+            style={styles.radioGroupMarginBottom}
           >
             <Radio value="react">React</Radio>
             <Radio value="vue">Vue.js</Radio>
@@ -410,9 +410,9 @@ const componentShowcases: Record<
             </Text>
           </CardHeader>
           <CardBody>
-            <Skeleton style={{ width: '100%', height: 20, marginBottom: 8 }} />
-            <Skeleton style={{ width: '80%', height: 20, marginBottom: 8 }} />
-            <Skeleton style={{ width: '60%', height: 20 }} />
+            <Skeleton style={styles.skeletonFull} />
+            <Skeleton style={styles.skeletonEighty} />
+            <Skeleton style={styles.skeletonSixty} />
           </CardBody>
         </Card>
         <Card variant="elevated" style={styles.section}>
@@ -424,18 +424,18 @@ const componentShowcases: Record<
             </Text>
           </CardHeader>
           <CardBody>
-            <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
+            <View style={styles.skeletonRow}>
               <Skeleton isLoaded={contentLoaded}>
                 <Avatar
                   src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
                   size="lg"
                 />
               </Skeleton>
-              <View style={{ flex: 1, gap: 4 }}>
+              <View style={styles.skeletonContent}>
                 <Skeleton isLoaded={contentLoaded}>
                   <Text
                     style={[
-                      { fontSize: 18, fontWeight: 'bold' },
+                      styles.skeletonTitle,
                       { color: theme.colors.foreground },
                     ]}
                   >
@@ -463,7 +463,7 @@ const componentShowcases: Record<
         </Text>
       </CardHeader>
       <CardBody>
-        <View style={{ flexDirection: 'row', gap: 12, flexWrap: 'wrap' }}>
+        <View style={styles.imageRow}>
           <Image
             src="https://i.pravatar.cc/300?u=a042581f4e29026024d"
             width={150}
@@ -494,7 +494,7 @@ const componentShowcases: Record<
             Textarea Component
           </Text>
         </CardHeader>
-        <CardBody style={{ gap: 16 }}>
+        <CardBody style={styles.cardBodyGap}>
           <Textarea
             label="Message"
             placeholder="Enter your message"
@@ -526,7 +526,7 @@ const componentShowcases: Record<
             Slider Component
           </Text>
         </CardHeader>
-        <CardBody style={{ gap: 16 }}>
+        <CardBody style={styles.cardBodyGap}>
           <Slider
             label="Volume"
             value={sliderValue}
@@ -559,7 +559,7 @@ const componentShowcases: Record<
             Select Component
           </Text>
         </CardHeader>
-        <CardBody style={{ gap: 16 }}>
+        <CardBody style={styles.cardBodyGap}>
           <Select
             label="Country"
             placeholder="Select a country"
@@ -596,7 +596,7 @@ const componentShowcases: Record<
             Progress Component
           </Text>
         </CardHeader>
-        <CardBody style={{ gap: 16 }}>
+        <CardBody style={styles.cardBodyGap}>
           <Progress
             label="Loading"
             value={progressValue}
@@ -630,11 +630,11 @@ const componentShowcases: Record<
       </CardHeader>
       <CardBody>
         <Text
-          style={[{ color: theme.colors['default-600'], marginBottom: 12 }]}
+          style={[styles.spacerText, { color: theme.colors['default-600'] }]}
         >
           Spacer adds space between components:
         </Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={styles.spacerRow}>
           <Chip color="primary">Item 1</Chip>
           <Spacer x={2} />
           <Chip color="secondary">Item 2</Chip>
@@ -656,7 +656,7 @@ const componentShowcases: Record<
             Input OTP Component
           </Text>
         </CardHeader>
-        <CardBody style={{ gap: 16 }}>
+        <CardBody style={styles.cardBodyGap}>
           <InputOtp
             length={6}
             value={otpValue}
@@ -689,7 +689,7 @@ const componentShowcases: Record<
               Modal Component
             </Text>
           </CardHeader>
-          <CardBody style={{ gap: 12 }}>
+          <CardBody style={styles.cardBodyGapSmall}>
             <Button colorScheme="primary" onPress={() => setIsModalOpen(true)}>
               Open Modal
             </Button>
@@ -736,7 +736,7 @@ const componentShowcases: Record<
         </Text>
       </CardHeader>
       <CardBody>
-        <Accordion variant="light" defaultExpandedKeys={['1']}>
+        <Accordion variant="default" defaultExpandedKeys={['1']}>
           <AccordionItem
             itemKey="1"
             title="What is React Native HeroUI?"
@@ -765,7 +765,7 @@ const componentShowcases: Record<
         </Text>
       </CardHeader>
       <CardBody>
-        <View style={{ gap: 12 }}>
+        <View style={styles.alertContainer}>
           <Alert
             title="Success"
             description="Your changes have been saved successfully."
@@ -804,26 +804,18 @@ const componentShowcases: Record<
       <CardBody>
         <Tabs defaultSelectedKey="profile" color="primary" variant="solid">
           <Tab tabKey="profile" title="Profile">
-            <View style={{ padding: 16 }}>
+            <View style={styles.tabContent}>
               <Text
-                style={{
-                  color: theme.colors.foreground,
-                  fontSize: 16,
-                  fontWeight: '600',
-                }}
+                style={[styles.tabText, { color: theme.colors.foreground }]}
               >
                 Profile Settings
               </Text>
             </View>
           </Tab>
           <Tab tabKey="settings" title="Settings">
-            <View style={{ padding: 16 }}>
+            <View style={styles.tabContent}>
               <Text
-                style={{
-                  color: theme.colors.foreground,
-                  fontSize: 16,
-                  fontWeight: '600',
-                }}
+                style={[styles.tabText, { color: theme.colors.foreground }]}
               >
                 Application Settings
               </Text>
@@ -860,11 +852,7 @@ const componentShowcases: Record<
         >
           <BottomSheetHeader showCloseButton>
             <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: theme.colors.foreground,
-              }}
+              style={[styles.headerTitle, { color: theme.colors.foreground }]}
             >
               Bottom Sheet
             </Text>
@@ -914,11 +902,7 @@ const componentShowcases: Record<
         >
           <DrawerHeader showCloseButton>
             <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: theme.colors.foreground,
-              }}
+              style={[styles.headerTitle, { color: theme.colors.foreground }]}
             >
               Navigation Menu
             </Text>
@@ -941,20 +925,19 @@ const componentShowcases: Record<
         </Text>
       </CardHeader>
       <CardBody>
-        <Text style={{ color: theme.colors.foreground, marginBottom: 12 }}>
+        <Text style={[styles.dividerText, { color: theme.colors.foreground }]}>
           Horizontal Divider:
         </Text>
         <Divider />
-        <View style={{ marginVertical: 24 }}>
-          <Text style={{ color: theme.colors.foreground, marginBottom: 12 }}>
+        <View style={styles.dividerVerticalContainer}>
+          <Text
+            style={[styles.dividerText, { color: theme.colors.foreground }]}
+          >
             Vertical Divider:
           </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={styles.dividerRow}>
             <Text style={{ color: theme.colors.foreground }}>Left</Text>
-            <Divider
-              orientation="vertical"
-              style={{ height: 32, marginHorizontal: 16 }}
-            />
+            <Divider orientation="vertical" style={styles.dividerVertical} />
             <Text style={{ color: theme.colors.foreground }}>Right</Text>
           </View>
         </View>
@@ -973,7 +956,8 @@ const componentShowcases: Record<
         <Text
           style={[
             styles.helperText,
-            { color: theme.colors['default-600'], marginBottom: 16 },
+            styles.tooltipHelperText,
+            { color: theme.colors['default-600'] },
           ]}
         >
           Long press buttons to see tooltips
@@ -1141,5 +1125,105 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+  },
+  buttonMarginTop: {
+    marginTop: 12,
+  },
+  inputMarginTop: {
+    marginTop: 16,
+  },
+  checkboxContainer: {
+    gap: 12,
+  },
+  switchMarginTop: {
+    marginTop: 16,
+  },
+  dividerMarginVertical: {
+    marginVertical: 12,
+  },
+  dividerMarginVerticalLarge: {
+    marginVertical: 16,
+  },
+  centerAlign: {
+    alignItems: 'center',
+  },
+  radioGroupMarginBottom: {
+    marginBottom: 20,
+  },
+  skeletonFull: {
+    width: '100%',
+    height: 20,
+    marginBottom: 8,
+  },
+  skeletonEighty: {
+    width: '80%',
+    height: 20,
+    marginBottom: 8,
+  },
+  skeletonSixty: {
+    width: '60%',
+    height: 20,
+  },
+  skeletonRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 16,
+  },
+  skeletonContent: {
+    flex: 1,
+    gap: 4,
+  },
+  skeletonTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  imageRow: {
+    flexDirection: 'row',
+    gap: 12,
+    flexWrap: 'wrap',
+  },
+  cardBodyGap: {
+    gap: 16,
+  },
+  cardBodyGapSmall: {
+    gap: 12,
+  },
+  spacerText: {
+    marginBottom: 12,
+  },
+  spacerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tabContent: {
+    padding: 16,
+  },
+  tabText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  dividerText: {
+    marginBottom: 12,
+  },
+  dividerVerticalContainer: {
+    marginVertical: 24,
+  },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dividerVertical: {
+    height: 32,
+    marginHorizontal: 16,
+  },
+  alertContainer: {
+    gap: 12,
+  },
+  tooltipHelperText: {
+    marginBottom: 16,
   },
 });

@@ -44,11 +44,11 @@ export default function AccordionScreen() {
             <Text
               style={[styles.sectionTitle, { color: theme.colors.foreground }]}
             >
-              Light Variant
+              Default Variant
             </Text>
           </CardHeader>
           <CardBody>
-            <Accordion variant="light" defaultExpandedKeys={['1']}>
+            <Accordion variant="default" defaultExpandedKeys={['1']}>
               <AccordionItem
                 itemKey="1"
                 title="What is React Native HeroUI?"

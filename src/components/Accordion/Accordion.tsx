@@ -4,10 +4,7 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  type ViewProps,
-  type StyleProp,
   type ViewStyle,
-  type TextStyle,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -17,19 +14,23 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { useTheme } from '../../hooks/useTheme';
+import type {
+  AccordionVariant,
+  SelectionMode,
+  AccordionContextType,
+  AccordionProps,
+  IndicatorProps,
+  AccordionItemProps,
+} from './Accordion.types';
 
-export type AccordionVariant = 'light' | 'shadow' | 'bordered' | 'splitted';
-export type SelectionMode = 'single' | 'multiple' | 'none';
-
-export interface AccordionContextType {
-  expandedKeys: Set<string>;
-  toggleItem: (key: string) => void;
-  variant: AccordionVariant;
-  isCompact: boolean;
-  hideIndicator: boolean;
-  disableAnimation: boolean;
-  disabledKeys: string[];
-}
+export type {
+  AccordionVariant,
+  SelectionMode,
+  AccordionContextType,
+  AccordionProps,
+  IndicatorProps,
+  AccordionItemProps,
+};
 
 const AccordionContext = createContext<AccordionContextType | null>(null);
 
@@ -41,44 +42,11 @@ export const useAccordionContext = () => {
   return context;
 };
 
-export interface AccordionProps extends Omit<ViewProps, 'style'> {
-  /** Accordion content (AccordionItem components) */
-  children: React.ReactNode;
-  /** Visual variant of the accordion */
-  variant?: AccordionVariant;
-  /** Selection mode */
-  selectionMode?: SelectionMode;
-  /** Compact mode */
-  isCompact?: boolean;
-  /** Disable all items */
-  isDisabled?: boolean;
-  /** Show divider between items */
-  showDivider?: boolean;
-  /** Hide indicator */
-  hideIndicator?: boolean;
-  /** Disable animation */
-  disableAnimation?: boolean;
-  /** Disable indicator animation */
-  disableIndicatorAnimation?: boolean;
-  /** Keys of items that should be expanded by default */
-  defaultExpandedKeys?: string[];
-  /** Controlled expanded keys */
-  expandedKeys?: string[];
-  /** Keys of disabled items */
-  disabledKeys?: string[];
-  /** Full width */
-  fullWidth?: boolean;
-  /** Custom style */
-  style?: StyleProp<ViewStyle>;
-  /** Callback when selection changes */
-  onSelectionChange?: (keys: Set<string>) => void;
-}
-
 export const Accordion = React.forwardRef<View, AccordionProps>(
   (
     {
       children,
-      variant = 'light',
+      variant = 'default',
       selectionMode = 'single',
       isCompact = false,
       // isDisabled = false, // Reserved for future use
@@ -163,42 +131,6 @@ export const Accordion = React.forwardRef<View, AccordionProps>(
 );
 
 Accordion.displayName = 'Accordion';
-
-export interface IndicatorProps {
-  isOpen?: boolean;
-  isDisabled?: boolean;
-}
-
-export interface AccordionItemProps extends Omit<ViewProps, 'style'> {
-  /** Unique key for the item */
-  itemKey: string;
-  /** Title of the accordion item */
-  title: string | React.ReactNode;
-  /** Subtitle (optional) */
-  subtitle?: string | React.ReactNode;
-  /** Content to display when expanded */
-  children: React.ReactNode;
-  /** Start content (icon, image, etc.) */
-  startContent?: React.ReactNode;
-  /** Custom indicator or function */
-  indicator?: React.ReactNode | ((props: IndicatorProps) => React.ReactNode);
-  /** Whether this item is disabled */
-  isDisabled?: boolean;
-  /** Custom styles */
-  style?: StyleProp<ViewStyle>;
-  /** Custom class names for different parts */
-  classNames?: {
-    base?: StyleProp<ViewStyle>;
-    heading?: StyleProp<ViewStyle>;
-    trigger?: StyleProp<ViewStyle>;
-    titleWrapper?: StyleProp<ViewStyle>;
-    title?: StyleProp<TextStyle>;
-    subtitle?: StyleProp<TextStyle>;
-    startContent?: StyleProp<ViewStyle>;
-    indicator?: StyleProp<ViewStyle>;
-    content?: StyleProp<ViewStyle>;
-  };
-}
 
 export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
   (
@@ -303,7 +235,7 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
             backgroundColor: theme.colors.content1,
             ...theme.shadows['shadow-sm'],
           };
-        case 'light':
+        case 'default':
         default:
           return {
             backgroundColor: 'transparent',
@@ -324,7 +256,7 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
           ? theme.spacing['unit-2']
           : theme.spacing['unit-4'],
         backgroundColor:
-          context.variant === 'light' ? 'transparent' : theme.colors.content1,
+          context.variant === 'default' ? 'transparent' : theme.colors.content1,
         opacity: isDisabled ? 0.5 : 1,
       },
       triggerPressed: {
@@ -355,7 +287,7 @@ export const AccordionItem = React.forwardRef<View, AccordionItemProps>(
           : theme.spacing['unit-4'],
         paddingTop: 0,
         backgroundColor:
-          context.variant === 'light' ? 'transparent' : theme.colors.content1,
+          context.variant === 'default' ? 'transparent' : theme.colors.content1,
       },
       defaultIndicator: {
         fontSize: 20,

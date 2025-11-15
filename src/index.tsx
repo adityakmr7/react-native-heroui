@@ -76,6 +76,7 @@ export {
   type TextareaColor,
   type TextareaSize,
 } from './components/Textarea/Textarea';
+export { Text, type TextProps } from './components/Text/Text';
 export {
   Slider,
   type SliderProps,
@@ -262,3 +263,4 @@ export {
 // Variants
 export { getButtonStyles, type ButtonVariants } from './variants/button';
 export { getInputStyles, type InputVariants } from './variants/input';
+export { getTextStyles, type TextVariants } from './variants/text';
